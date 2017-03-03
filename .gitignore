@@ -1,0 +1,8 @@
+*.svg
+.idea
+test.py
+__pycache__
+*.xls*
+*.txt
+*.svg
+*.jpg
