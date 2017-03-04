@@ -1,15 +1,20 @@
+import json
 import logging
 import tornado.web as web
 import tornado.websocket as websocket
 import tornado.ioloop as loop
 import tornado.httpserver
 
-from config import Config
+from config import Config, Session
 
 
 class MainHandler(web.RequestHandler):
     def get(self):
-        self.render('main.html')
+        user_id = self.application.authorized(self.get_cookie('session'))
+        if user_id:
+            self.render('main.html')
+        else:
+            self.redirect('/auth')
 
     def post(self):
         pass
@@ -42,6 +47,9 @@ class Application(web.Application):
             'static_path': Config.TEMPLATE_PATH
         }
         super().__init__(handlers, **settings)
+
+    def authorized(self, session_name):
+        return Session.get(session_name)
 
 
 if __name__ == "__main__":

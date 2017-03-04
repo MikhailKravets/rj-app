@@ -57,10 +57,16 @@ class Session:
             file.close()
             return obj
         except ValueError:
-            return False
+            return None
+        except TypeError:
+            return None
         except FileNotFoundError:
-            return False
+            return None
         except PermissionError:
-            return False
+            return None
         except IsADirectoryError:
-            return False
+            return None
+
+
+class DBManager:
+    pass
