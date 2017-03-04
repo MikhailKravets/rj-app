@@ -2,6 +2,7 @@ import json
 import os
 import random as r
 import time
+import MySQLdb
 
 
 class Config:
@@ -10,6 +11,13 @@ class Config:
     PATH_SESSIONS = PATH + '/tmp'
 
     PORT = 83
+
+    DB = {
+        'host': 'localhost',
+        'user': 'rjournal',
+        'passwd': 'rjournal',
+        'db': 'rjdb'
+    }
 
     @staticmethod
     def rand_hexline(length, millis_time=True):
@@ -69,4 +77,17 @@ class Session:
 
 
 class DBManager:
-    pass
+    def __init__(self):
+        self.connection = MySQLdb.connect(**Config.DB)
+
+    def connect(self):
+        self.connection = MySQLdb.connect(**Config.DB)
+
+    def close(self):
+        try:
+            self.connection.close()
+        except MySQLdb.ProgrammingError:
+            pass
+
+    def __del__(self):
+        self.connection.close()

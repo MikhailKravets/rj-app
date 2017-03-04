@@ -5,7 +5,7 @@ import tornado.websocket as websocket
 import tornado.ioloop as loop
 import tornado.httpserver
 
-from config import Config, Session
+from config import *
 
 
 class MainHandler(web.RequestHandler):
@@ -46,6 +46,7 @@ class Application(web.Application):
             'compiled_template_cache': False,
             'static_path': Config.TEMPLATE_PATH
         }
+        self.db_manager = DBManager()
         super().__init__(handlers, **settings)
 
     def authorized(self, session_name):
