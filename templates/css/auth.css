@@ -1,0 +1,192 @@
+html, body{
+    text-align: center;
+    background-color: #ffffff;
+    height: 100%;
+    overflow: hidden;
+    font-family: Play, sans-serif;
+    font-size: 12pt;
+}
+#mainContainer{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 460px;
+    min-height: 500px;
+}
+#mainContainer form{
+    width: inherit;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.helper{
+    display:inline-block;
+    vertical-align:middle;
+    height: 100%;
+    width:0px;
+}
+#logo{
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #2c7699;
+    text-align: right;
+    line-height: 0;
+    transition: color 0.15s linear;
+    -webkit-transition: color 0.15s linear;
+}
+#logo:hover{
+    color: #2f95ba;
+}
+#reporting{
+    padding-right: 62pt;
+}
+#journal{
+    margin-top: -4pt;
+}
+
+.forHeader{
+    font-size: 1.7rem;
+    color: #2d6ca6;
+    text-align: left;
+}
+.meetingHeader{
+    font-size: 1.6rem;
+    color: #2d6ca6;
+    text-align: left;
+    margin-bottom: 20px;
+}
+.adviceHeader{
+    font-size: 1.3rem;
+    color: #2d6ca6;
+    text-align: left;
+    margin-top: 40px;
+    margin-bottom: -10px;
+}
+.inputField{
+    display: block;
+    position: relative;
+    vertical-align: middle;
+    width: 100%;
+    max-width: 450px;
+    background-color: white;
+    height: 50px;
+    margin-top: 25px;
+    text-align: left;
+    border-bottom: 2px solid #2d6ca6;
+   /* box-shadow: 0 0 2px 0 rgba(145, 145, 145, 0.9) inset; */
+}
+input[type=text], input[type=password], input[type="email"]{
+    font-family: inherit;
+    font-size: 1.2rem;
+    height: 40px;
+    width: 83%;
+    margin-left: 20px;
+    border: none;
+    color: #737373;
+}
+.signInIcon{
+    display: block;
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    opacity: 0.4;
+    top: 10px;
+    right: 10px;
+    fill: #2d6ca6;
+    transition: opacity 0.25s linear;
+    -webkit-transition: opacity 0.25s linear;
+}
+.wrongInput{
+    fill: #e6434f;
+}
+input[type=text]:focus, input[type=password]:focus,  input[type="email"]:focus{
+    outline: none;
+}
+input[type=text]:focus + svg, input[type=password]:focus + svg, input[type=password]:focus + svg + svg,  input[type="email"]:focus + svg{
+    opacity: 0.9;
+}
+.buttonContainer{
+    position: relative;
+    text-align: right;
+    margin-top: 0;
+    width: 100%;
+    height: 55px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 460px;
+}
+.customButton{
+    margin-right: 0;
+    margin-left: auto;
+    position: relative;
+    width: 175px;
+    cursor: pointer;
+}
+.buttonContainer button{
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 20px;
+
+    outline: none;
+    background: none;
+    border: none;
+    color: #2d6ca6;
+
+    height: 55px;
+    width: auto;
+
+    margin-right: 0;
+    margin-left: auto;
+    cursor: inherit;
+
+    font-family: inherit;
+    font-size: 1.1rem;
+
+    transition: all 0.08s linear;
+    -webkit-transition: all 0.08s linear;
+}
+.buttonContainer .buttonArrow{
+    position: absolute;
+    top: 12px;
+    right: 0;
+
+    height: auto;
+    width: 30px;
+    cursor: inherit;
+
+
+    transition: all 0.08s linear;
+    -webkit-transition: all 0.08s linear;
+}
+.buttonArrow svg{
+    height: 100%;
+    width: 100%;
+    fill: #2d6ca6;
+}
+.buttonContainer .customButton:hover button{
+    transform: translateX(-2px);
+    -webkit-transform: translateX(-2px);
+}
+.buttonContainer .customButton:hover .buttonArrow{
+    transform: translateX(5px);
+    -webkit-transform: translateX(5px);
+}
+#turnBack{
+    float: right;
+    width: calc(455px - 205px);
+}
+.meetingPict{
+    height: 300px;
+    width: auto;
+}
+.meetingPict svg{
+    height: 100%;
+    width: auto;
+}
+
+a{
+    text-decoration: none;
+}

@@ -18,11 +18,23 @@ class MainHandler(web.RequestHandler):
         return Config.TEMPLATE_PATH
 
 
+class AuthHandler(web.RequestHandler):
+    def get(self):
+        self.render('auth.html')
+
+    def post(self):
+        pass
+
+    def get_template_path(self):
+        return Config.TEMPLATE_PATH
+
+
 class Application(web.Application):
     def __init__(self):
         logging.basicConfig(format="%(filename)8s[line: %(lineno)s] %(levelname)3s - %(message)s", level=logging.DEBUG)
         handlers = [
-            (r"/", MainHandler)
+            (r"/", MainHandler),
+            (r"/auth", AuthHandler)
         ]
         settings = {
             'debug': True,
