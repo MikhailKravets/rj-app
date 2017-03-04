@@ -19,6 +19,8 @@ class Config:
         'db': 'rjdb'
     }
 
+    users = [] # list that contains connected users
+
     @staticmethod
     def rand_hexline(length, millis_time=True):
         if millis_time:
@@ -79,9 +81,15 @@ class Session:
 class DBManager:
     def __init__(self):
         self.connection = MySQLdb.connect(**Config.DB)
+        self.cursor = self.connection.cursor()
 
     def connect(self):
         self.connection = MySQLdb.connect(**Config.DB)
+        self.cursor = self.connection.cursor()
+
+    def execute(self, query):
+        self.cursor.execute(query)
+        yield from self.cursor.fetchall()
 
     def close(self):
         try:

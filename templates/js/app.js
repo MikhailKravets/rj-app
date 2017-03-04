@@ -19,4 +19,5 @@ function showNavigation(menuButtonElem, navigationElem){
 
 window.onload = function(){
     showNavigation($("#navigationButton"), $("#navigation"));
+    
 }
