@@ -1,0 +1,216 @@
+html, body{
+    background-color: white;
+    font-size: 12pt;
+    overflow: visible;
+    -webkit-backface-visibility: hidden;
+}
+
+#mainBlock{
+    margin-left: auto;
+    margin-right: auto;
+    width: 65%;
+    min-width: 600px;
+    max-width: 1000px;
+}
+#logo{
+    font-family: Play, sans-serif;
+    font-size: 1.9rem;
+    font-weight: bold;
+    color: #265B8C;
+    text-align: right;
+    line-height: 0;
+    transition: color 0.15s linear;
+    -webkit-transition: color 0.15s linear;
+    width: 205px;
+    margin-right: 0;
+    margin-left: auto;
+}
+#logo:hover{
+    color: #2d6ca6;
+}
+#reporting{
+    padding-right: 52pt;
+}
+#journal{
+    margin-top: -5pt;
+}
+
+hr{
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, #ebebeb, #dedede, #ebebeb);
+}
+
+/*menu style*/
+#navigation{
+    position: fixed;
+    background-color: #2d6ca6;
+    height: 100%;
+    line-height: 100%;
+    box-shadow:  2px 0 0 0 #2b5f97;
+    z-index: 7;
+}
+.navigation{
+    display: block;
+    top: 0;
+    width: 50px !important;
+    max-width: 50px;
+    padding-top: 60px;
+    transform-origin: left;
+    -webkit-transform-origin: left;
+    transform: translate(-8px);
+    -webkit-transform: translate(-8px);
+    transition: transform 0.2s ease-out;
+    -webkit-transition: transform 0.2s ease-out;
+}
+.navigationExpanded{
+    transform: translate(-8px) !important;
+    -webkit-transform: translate(-8px);
+}
+.navigationHidden{
+    transform: translate(-60px);!important;
+    -webkit-transform: translate(-60px);!important;
+}
+#navigationIcon{
+    position: fixed;
+    top: 5px;
+    left: 27px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 8;
+    transition: transform 0.2s ease-out;
+    -webkit-transition: transform 0.2s ease-out;
+}
+#navigationIcon svg{
+    fill: white;
+    width: inherit;
+    height: inherit;
+    transition: transform 0.1s ease-out, fill  0.1s ease-out;
+    -webkit-transition: transform 0.1s ease-out, fill  0.1s ease-out;
+}
+#navigationIcon:hover svg{
+    transform: scale(1.05, 1.05);
+    -webkit-transform: scale(1.05, 1.05);
+}
+.navigationIconHidden{
+    transform: translate(-27px);
+    -webkit-transform: translate(-27px);
+}
+.navigationIconHidden svg{
+    fill: #2d6ca6 !important;
+}
+.middle{
+    position: relative;
+}
+.showMoreIcons{
+    display: none;
+    background-color: #2d6ca6;
+    position: fixed;
+    bottom: 60px;
+    height: 30px;
+    width: 52px;
+    cursor: pointer;
+    z-index: 8;
+}
+.showMoreIcons svg {
+    fill: white;
+    width: 30px;
+    margin-left: 10px;
+    transition: transform 0.1s ease-out, fill  0.1s ease-out;
+    -webkit-transition: transform 0.1s ease-out, fill  0.1s ease-out;
+}
+.showMoreIcons:hover svg{
+    transform: scale(1.12);
+    -webkit-transform: scale(1.12);
+}
+.iconButtonExpanded {
+    background-color: #ffffff;
+}
+.iconButtonExpanded svg{
+    fill: #2d6ca6;
+}
+.moreIconsContainer {
+    display: none;
+    position: fixed;
+    bottom: 58px;
+    left: 51px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    height: 45px;
+    width: auto;
+    background-color: #ffffff;
+    border: 1px solid #cbd3e6;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    z-index: 7;
+}
+.moreIconsContainer .list {
+    position: static;
+    margin-left: auto;
+    margin-right: auto;
+    height: 45px;
+
+}
+
+.menuItem{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.3rem;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    box-shadow: -1px 1px 0 0 #327cb2, -1px -1px 0 0 #24587f;
+  /*  border-top: 1px solid #327cb2;
+    border-bottom: 1px solid #24587f; */
+    color: white;
+    cursor: pointer;
+    transition: background 0.1s linear, color 0.1s linear;
+    -webkit-transition: background 0.1s linear, color 0.1s linear;
+}
+.menuItem svg{
+    margin-top: 25%;
+    width: 50%;
+    height: 50%;
+    fill: white;
+    transition: transform 0.1s ease-out;
+}
+/* .menuItem:hover{
+    background-color: white;
+    color: #2d6ca6;
+} */
+.menuItem:hover svg{
+    transform: scale(1.2, 1.2);
+}
+.wrappedItem {
+    background: none !important;
+    box-shadow: none !important;
+    width: 50px !important;
+    height: 90% !important;
+    margin-bottom: 10px !important;
+    float: left !important;
+    border: none;
+}
+.wrappedItem svg {
+    fill: #2d6ca6 !important;
+}
+
+.menuLink{
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    text-align: center;
+}
+.menuItemFirst{
+    box-shadow: 0 1px 0 0 #327cb2 !important;
+}
+.menuItemLast{
+    box-shadow: 0 -1px 0 0 #24587f !important;
+}
+.menuItemActive{
+    box-shadow: -1px 1px 0 0 #327cb2, -1px -1px 0 0 #24587f;
+    background-color: white;
+    color: #2d6ca6
+}

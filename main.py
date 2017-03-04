@@ -9,10 +9,13 @@ from config import Config
 
 class MainHandler(web.RequestHandler):
     def get(self):
-        self.write('Hello world!')
+        self.render('main.html')
 
     def post(self):
         pass
+
+    def get_template_path(self):
+        return Config.TEMPLATE_PATH
 
 
 class Application(web.Application):
