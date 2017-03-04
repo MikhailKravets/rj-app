@@ -71,7 +71,7 @@ hr{
     transform: translate(-60px);!important;
     -webkit-transform: translate(-60px);!important;
 }
-#navigationIcon{
+#navigationButton{
     position: fixed;
     top: 5px;
     left: 27px;
@@ -82,22 +82,22 @@ hr{
     transition: transform 0.2s ease-out;
     -webkit-transition: transform 0.2s ease-out;
 }
-#navigationIcon svg{
+#navigationButton svg{
     fill: white;
     width: inherit;
     height: inherit;
     transition: transform 0.1s ease-out, fill  0.1s ease-out;
     -webkit-transition: transform 0.1s ease-out, fill  0.1s ease-out;
 }
-#navigationIcon:hover svg{
+#navigationButton:hover svg{
     transform: scale(1.05, 1.05);
     -webkit-transform: scale(1.05, 1.05);
 }
-.navigationIconHidden{
+.navigationButtonHidden{
     transform: translate(-27px);
     -webkit-transform: translate(-27px);
 }
-.navigationIconHidden svg{
+.navigationButtonHidden svg{
     fill: #2d6ca6 !important;
 }
 .middle{
@@ -163,8 +163,6 @@ hr{
     width: 100%;
     text-align: center;
     box-shadow: -1px 1px 0 0 #327cb2, -1px -1px 0 0 #24587f;
-  /*  border-top: 1px solid #327cb2;
-    border-bottom: 1px solid #24587f; */
     color: white;
     cursor: pointer;
     transition: background 0.1s linear, color 0.1s linear;
@@ -184,25 +182,7 @@ hr{
 .menuItem:hover svg{
     transform: scale(1.2, 1.2);
 }
-.wrappedItem {
-    background: none !important;
-    box-shadow: none !important;
-    width: 50px !important;
-    height: 90% !important;
-    margin-bottom: 10px !important;
-    float: left !important;
-    border: none;
-}
-.wrappedItem svg {
-    fill: #2d6ca6 !important;
-}
 
-.menuLink{
-    display: inline-block;
-    vertical-align: middle;
-    width: 100%;
-    text-align: center;
-}
 .menuItemFirst{
     box-shadow: 0 1px 0 0 #327cb2 !important;
 }
