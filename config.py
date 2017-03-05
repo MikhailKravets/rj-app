@@ -9,6 +9,7 @@ class Config:
     PATH = 'c:/rj'
     TEMPLATE_PATH = PATH + '/templates'
     PATH_SESSIONS = PATH + '/tmp/'
+    PATH_SVG = TEMPLATE_PATH + '/content/svg/'
 
     PORT = 83
 

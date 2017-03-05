@@ -3,14 +3,25 @@ function Application(jView){
     this.controller = '';
 }
 Application.prototype.get = function(url){
-    $.ajax({
-        url: url,
-        method: 'GET',
-        data: 'inline=1'
-    }).then(function(data){
-        this.view.html(data);
-        this.controller = controller;
-    });
+    var view = this.view;
+    var controller = this.controller;
+    view.addClass('view-faded');
+    window.history.pushState('page2', 'title', url);
+    setTimeout(function(){
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'html',
+            data: 'inline=1'
+        }).then(function(data){
+            view.html(data);
+            setTimeout(function(){
+                view.removeClass("view-faded");
+            }, 100)
+            controller = Controller;
+            controller();
+        });
+    }, 20);
 }
 
 
@@ -35,6 +46,8 @@ function showNavigation(menuButtonElem, navigationElem){
 
 window.onload = function(){
     var app = new Application($("#view"));
+    app.get('/profile');
+    
     showNavigation($("#navigationButton"), $("#navigation"));
     
     $("[profile]").on('click', function(e){

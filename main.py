@@ -28,7 +28,11 @@ class ProfileHandler(web.RequestHandler):
         inline = self.application.inline_get(self.get_argument('inline', '0'))
         if self.application.authorized(self.get_cookie('session')):
             if inline:
-                logging.debug('Its Ajax query')
+                user = Config.users[self.get_cookie('session')]
+                self.render('profile.html', login=user.login,
+                            last=user.name[2], middle=user.name[1], first=user.name[0],
+                            email=user.email,
+                            sex=user.sex)
             else:
                 self.render('main.html')
         else:
@@ -56,14 +60,14 @@ class AuthHandler(web.RequestHandler):
         if data[0] == 'LOGIN':
             result = False
             logging.debug("Data: {}".format(data))
-            query = """SELECT id, login, password, first, middle, last, email, access, pristine
+            query = """SELECT id, login, password, first, middle, last, email, sex, access, pristine
                         FROM users
                         WHERE login = '{0}' AND (password = SHA2('{1}', 224) OR password = '{1}')"""
             query = query.format(data[1], data[2])
             for retrieved in self.application.db_manager.execute(query):
-                id_user, log, passwd, fn, mn, ln, email, access, p = retrieved
+                id_user, log, passwd, fn, mn, ln, email, sex, access, p = retrieved
                 session_name = Session.create({'id': id_user})
-                Config.users[session_name] = User(id_user, log, passwd, (fn, mn, ln), access, email)
+                Config.users[session_name] = User(id_user, log, passwd, (fn, mn, ln), access, sex, email)
                 self.set_cookie('session', session_name)
                 result = True
             if result:

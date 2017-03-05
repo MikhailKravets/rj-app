@@ -41,6 +41,14 @@ hr{
     background: linear-gradient(to right, #ebebeb, #dedede, #ebebeb);
 }
 
+#view{
+    opacity: 1;
+    transition: opacity 0.07s ease-out;
+}
+.view-faded{
+    opacity: 0 !important;
+}
+
 /*menu style*/
 #navigation{
     position: fixed;
@@ -193,4 +201,9 @@ hr{
     box-shadow: -1px 1px 0 0 #327cb2, -1px -1px 0 0 #24587f;
     background-color: white;
     color: #2d6ca6
+}
+
+button{
+    margin-left: auto;
+    margin-right: auto;
 }
