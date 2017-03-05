@@ -48,6 +48,26 @@ class ProfileHandler(web.RequestHandler):
         return Config.TEMPLATE_PATH
 
 
+class InviteHandler(web.RequestHandler):
+    def get(self):
+        inline = self.application.inline_get(self.get_argument('inline', '0'))
+        if self.application.authorized(self.get_cookie('session')):
+            if inline:
+                # TODO: check here access rights
+                user = Config.users[self.get_cookie('session')]
+                self.render('invite.html')
+            else:
+                self.render('main.html')
+        else:
+            if inline:
+                self.write('DENIED')
+            else:
+                self.redirect('/auth')
+
+    def post(self):
+        pass
+
+
 class AuthHandler(web.RequestHandler):
     def get(self):
         if self.application.authorized(self.get_cookie('session')):
