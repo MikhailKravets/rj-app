@@ -14,12 +14,16 @@ Application.prototype.get = function(url){
             dataType: 'html',
             data: 'inline=1'
         }).then(function(data){
-            view.html(data);
-            setTimeout(function(){
-                view.removeClass("view-faded");
-            }, 100)
-            controller = Controller;
-            controller();
+            if(data == 'DENIED')
+                window.location.reload();
+            else{
+                view.html(data);
+                setTimeout(function(){
+                    view.removeClass("view-faded");
+                }, 100)
+                controller = Controller;
+                controller();
+            }
         });
     }, 20);
 }
