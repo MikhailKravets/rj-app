@@ -6,6 +6,10 @@ Application.prototype.get = function(url){
     var view = this.view;
     var controller = this.controller;
     view.addClass('view-faded');
+    
+    if(url === '/')
+        url = '/profile';
+    
     window.history.pushState('page2', 'title', url);
     setTimeout(function(){
         $.ajax({
@@ -50,7 +54,8 @@ function showNavigation(menuButtonElem, navigationElem){
 
 window.onload = function(){
     var app = new Application($("#view"));
-    app.get('/profile');
+    console.log(window.location.pathname);
+    app.get(window.location.pathname);
     
     showNavigation($("#navigationButton"), $("#navigation"));
     
