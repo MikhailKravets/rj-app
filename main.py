@@ -11,8 +11,7 @@ from system import User
 
 class MainHandler(web.RequestHandler):
     def get(self):
-        user_id = self.application.authorized(self.get_cookie('session'))
-        if user_id:
+        if self.application.authorized(self.get_cookie('session')):
             self.render('main.html')
         else:
             self.redirect('/auth')
@@ -24,10 +23,30 @@ class MainHandler(web.RequestHandler):
         return Config.TEMPLATE_PATH
 
 
+class ProfileHandler(web.RequestHandler):
+    def get(self):
+        inline = self.application.inline_get(self.get_argument('inline', '0'))
+        if self.application.authorized(self.get_cookie('session')):
+            if inline:
+                logging.debug('Its Ajax query')
+            else:
+                self.render('main.html')
+        else:
+            if inline:
+                self.write('DENIED')
+            else:
+                self.redirect('/auth')
+
+    def post(self):
+        pass
+
+    def get_template_path(self):
+        return Config.TEMPLATE_PATH
+
+
 class AuthHandler(web.RequestHandler):
     def get(self):
-        user_id = self.application.authorized(self.get_cookie('session'))
-        if user_id:
+        if self.application.authorized(self.get_cookie('session')):
             self.redirect('/')
         else:
             self.render('auth.html')
@@ -61,7 +80,8 @@ class Application(web.Application):
         logging.basicConfig(format="%(filename)8s[line: %(lineno)s] %(levelname)3s - %(message)s", level=logging.DEBUG)
         handlers = [
             (r"/", MainHandler),
-            (r"/auth", AuthHandler)
+            (r"/auth", AuthHandler),
+            (r"/profile", ProfileHandler)
         ]
         settings = {
             'debug': True,
@@ -77,6 +97,12 @@ class Application(web.Application):
             if session_obj['id'] == Config.users[session_name].id_user:
                 return True
         return False
+
+    def inline_get(self, argument):
+        if argument == '1':
+            return True
+        else:
+            return False
 
     def __create_god(self):
         login = 'admin'
