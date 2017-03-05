@@ -16,6 +16,7 @@
 .introProfile{
     float: left;
     width: 250px;
+    text-align: center;
 }
 .mainProfile{
     position: relative;
