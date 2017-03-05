@@ -107,6 +107,13 @@ input[type=text]:focus, input[type=password]:focus,  input[type="email"]:focus{
 input[type=text]:focus + svg, input[type=password]:focus + svg, input[type=password]:focus + svg + svg,  input[type="email"]:focus + svg{
     opacity: 0.9;
 }
+
+.statusCode{
+    display: none;
+    margin-top: 30px; 
+    color: #d4463f;
+}
+
 .buttonContainer{
     position: relative;
     text-align: right;

@@ -26,22 +26,31 @@ class MainHandler(web.RequestHandler):
 
 class AuthHandler(web.RequestHandler):
     def get(self):
-        self.render('auth.html')
+        user_id = self.application.authorized(self.get_cookie('session'))
+        if user_id:
+            self.redirect('/')
+        else:
+            self.render('auth.html')
 
     def post(self):
-        data = self.request.body
+        data = json.loads(self.request.body)
         if data[0] == 'LOGIN':
-            query = """SELECT login, password, first, middle, last, email, access, pristine
+            result = False
+            logging.debug("Data: {}".format(data))
+            query = """SELECT id, login, password, first, middle, last, email, access, pristine
                         FROM users
-                        WHERE name = {0} AND (password = SHA2('{1}', 224) OR password = '{1}')"""
+                        WHERE login = '{0}' AND (password = SHA2('{1}', 224) OR password = '{1}')"""
             query = query.format(data[1], data[2])
-            for log, passwd, fn, mn, ln, email, access, p in self.application.db_manager.execute(query):
-                if p == 0:
-                    Config.users.append(User(log, passwd, (fn, mn, ln), access, email))
-                    self.write(json.dumps(['OK']))
-                else:
-                    # TODO: finishing the registration here
-                    pass
+            for retrieved in self.application.db_manager.execute(query):
+                id_user, log, passwd, fn, mn, ln, email, access, p = retrieved
+                session_name = Session.create({'id': id_user})
+                Config.users[session_name] = User(id_user, log, passwd, (fn, mn, ln), access, email)
+                self.set_cookie('session', session_name)
+                result = True
+            if result:
+                self.write('OK')
+            else:
+                self.write('ERROR')
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -63,7 +72,11 @@ class Application(web.Application):
         super().__init__(handlers, **settings)
 
     def authorized(self, session_name):
-        return Session.get(session_name)
+        session_obj = Session.get(session_name)
+        if session_obj and session_name in Config.users:
+            if session_obj['id'] == Config.users[session_name].id_user:
+                return True
+        return False
 
     def __create_god(self):
         login = 'admin'

@@ -8,7 +8,7 @@ import MySQLdb
 class Config:
     PATH = 'c:/rj'
     TEMPLATE_PATH = PATH + '/templates'
-    PATH_SESSIONS = PATH + '/tmp'
+    PATH_SESSIONS = PATH + '/tmp/'
 
     PORT = 83
 
@@ -19,7 +19,7 @@ class Config:
         'db': 'rjdb'
     }
 
-    users = [] # list that contains connected users
+    users = {} # dict that contains connected users
 
     @staticmethod
     def rand_hexline(length, millis_time=True):
