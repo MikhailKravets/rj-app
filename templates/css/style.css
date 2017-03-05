@@ -49,6 +49,14 @@ hr{
     opacity: 0 !important;
 }
 
+.titleHeader{
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.3rem;
+    color: #5f5f5f;
+    font-weight: 500;
+    width: 100%;
+}
+
 /*menu style*/
 #navigation{
     position: fixed;
@@ -224,4 +232,107 @@ button:hover{
 }
 button:active{
     background-color: #3771A6;
+}
+
+
+
+
+
+/* TODO: have a deal with that shit */
+.inputTextShell{
+    position: relative;
+    height: 44px;
+    margin-top: 10px;
+    border: 1px solid #cbd3e6;
+    transition: border-color 0.2s linear;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: border-color 0.2s linear;
+}
+.blueBorderColored {
+    border-bottom-color: #6790B5;
+    border-bottom-width: 2px;
+}
+.textField{
+    display: inline-block;
+    background: none;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.84rem;
+    color: #313131;
+    height: 40px;/*25px*/
+    width: calc(100% - 10px);
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    transition: border-color 0.2s linear, box-shadow 0.2s linear;/*height: "23px", 'padding-bottom': "8px"*/
+    -webkit-transition: border-color 0.2s linear, box-shadow 0.2s linear;
+}
+.readonlyTextShell{
+    position: relative;
+    height: 40px;
+    overflow: visible;
+    margin-top: 10px;
+    background: #f9f9f9;
+    box-shadow: 3px 0 0 0 #a6a6a6 inset, 2px 2px 0 0 #ebebeb;
+    color: #a6a6a6;
+    transition: box-shadow 0.2s linear;
+    -webkit-transition: box-shadow 0.2s linear;
+}
+.textShellBlueShadowColor{
+    box-shadow: 3px 0 0 0 #5f80b2 inset, 2px 2px 0 0 #ebebeb;
+    color: #5f80b2;
+}
+.readonlyTextField{
+    background: none;
+    /*background-color: #ffedf0; */
+    height: 38px;/*25px*/
+    width: calc(100% - 20px);
+    padding-left: 10px;
+    margin-top: 0;
+    border: none;
+    outline: none;
+
+    font-size: 0.9rem;
+    text-align: right;
+    color: inherit;
+
+    transition: color 0.2s linear;/*height: "23px", 'padding-bottom': "8px"*/
+    -webkit-transition: color 0.2s linear;
+}
+.someUp{
+    margin-top: -4px !important;
+}
+.textFieldMinus100px{
+    width: calc(95% - 80px) !important;
+}
+.readonlyTextShell .prompt{
+    position: absolute;
+    font-size: 1rem;
+    height: 0;
+    color: inherit;
+    text-align: left;
+    text-indent: 10px;
+    width: 100%;
+    left: 0;
+    top: 12px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+
+    transform: scale(1, 1);
+    transform-origin: bottom;
+    -webkit-transform-origin: bottom;
+}
+.bottomPrompt{
+    position: absolute;
+    font-family: "Play", sans-serif;
+    font-size: 0.9rem;
+    color: #2d6ca6;
+    left: 8px;
+    bottom: 0;
+    height: 15px;
+    top: 20px !important;
+}
+.alwaysBlue{
+    box-shadow: 3px 0 0 0 #5f80b2 inset, 2px 2px 0 0 #ebebeb !important;
+    color: #2d6ca6 !important;
 }

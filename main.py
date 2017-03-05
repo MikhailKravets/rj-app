@@ -67,6 +67,9 @@ class InviteHandler(web.RequestHandler):
     def post(self):
         pass
 
+    def get_template_path(self):
+        return Config.TEMPLATE_PATH
+
 
 class AuthHandler(web.RequestHandler):
     def get(self):
@@ -105,7 +108,8 @@ class Application(web.Application):
         handlers = [
             (r"/", MainHandler),
             (r"/auth", AuthHandler),
-            (r"/profile", ProfileHandler)
+            (r"/profile", ProfileHandler),
+            (r"/invite", InviteHandler)
         ]
         settings = {
             'debug': True,

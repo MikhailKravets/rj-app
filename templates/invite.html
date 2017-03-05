@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="{{ static_url('css/invite.css') }}">
+<script src="{{ static_url('js/invite.js') }}"></script>
+
+<h4 class="titleHeader">Новый пользователь</h4>
+<div id="mainFrame" class="mainInvite">
+    <form name="inviteForm" novalidate>
+        <div class="inputTextShell centerOne">
+            <input type="text" class="textField" placeholder="Ник-нейм" required autocomplete="off">
+            <label class="prompt">Ник-нейм</label>
+        </div>
+        <div class="inputTextShell centerOne">
+            <input type="text" class="textField" placeholder="Фамилия" required autocomplete="off">
+            <label class="prompt">Фамилия</label>
+        </div>
+        <div class="inputTextShell centerOne">
+            <input type="text" name="firstName" class="textField" placeholder="Имя" required autocomplete="off">
+            <label class="prompt">Имя</label>
+        </div>
+        <div class="inputTextShell centerOne">
+            <input type="text" name="middleName" class="textField" placeholder="Отчество" autocomplete="off">
+            <label class="prompt">Отчество</label>
+        </div>
+        <div class="inputTextShell centerOne">
+            <input type="text" name="middleName" class="textField" placeholder="Права доступа" autocomplete="off">
+            <label class="prompt">Права доступа</label>
+        </div>
+        <div class="selectShell centerOne">
+            <select class="selectOne">
+                <option value="M" selected="selected">М</option>
+                <option value="F">Ж</option>
+            </select>
+            <label class="prompt promptExpanded">Пол</label>
+        </div>
+        
+        <button>Пригласить</button>
+        <div style="clear: both"></div>
+    </form>
+</div>
+
+
+
+
+<div id="invitedFrame" class="invitedFrame">
+    <h4 class="inviteHeader">Передайте эту информацию пользователю!</h4>
+    <div class="inviteLetterContent">
+        <div class="inviteLetterActions">
+            <div class="invitePrint" onclick="window.print()">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232 232" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 232 232">
+                    <g>
+                        <rect width="132" x="50" y="0.5" height="33"/>
+                        <path d="m232,49.5h-232v132h33v-49h165v49h34v-132zm-17,33h-16v-16h16v16z"/>
+                        <rect width="132" x="50" y="148.5" height="83"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="invitePrint">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="484.702px" height="484.703px" viewBox="0 0 484.702 484.703" style="enable-background:new 0 0 484.702 484.703;"
+                 xml:space="preserve">
+            <g>
+                <g>
+                    <path d="M451.655,414.239H33.048C14.798,414.239,0,428.659,0,446.91c0,18.25,14.798,32.67,33.048,32.67h418.607
+                        c18.249,0,33.047-14.42,33.047-32.67C484.702,428.659,469.904,414.239,451.655,414.239z"/>
+                    <path d="M217.351,370.521c13.862,19.657,37.98,17.842,50.002,0c30.482-45.242,126.299-177.947,126.299-177.947
+                        c7.233-10.19,6.901-23.929-0.812-33.762c-7.716-9.834-20.983-13.421-32.602-8.819l-73.499,29.111l9.703-143.854
+                        c0.531-7.827-2.223-15.52-7.6-21.238c-5.376-5.712-12.887-8.935-20.729-8.889h-51.525c-7.844-0.046-15.354,3.176-20.73,8.889
+                        c-5.376,5.718-8.13,13.412-7.6,21.238l9.704,143.854l-73.499-29.111c-11.617-4.602-24.886-1.015-32.602,8.819
+                        c-7.713,9.833-8.045,23.571-0.811,33.762C91.052,192.573,185.911,325.939,217.351,370.521z"/>
+                </g>
+            </g>
+            </svg>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        <p class="invitePrompt">Логин: </p>
+        <p id="gen-login" class="inviteData"></p>
+        <div style="clear: both"></div>
+        <p class="invitePrompt">Пароль: </p>
+        <p id="get-password" class="inviteData"></p>
+        <div style="clear: both"></div>
+    </div>
+    
+    <button>Вернуться</button>
+   <!-- <button type="button" class="sendTheFormButton">Вернуться</button> -->
+</div>

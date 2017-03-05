@@ -57,4 +57,8 @@ window.onload = function(){
     $("[profile]").on('click', function(e){
         app.get('/profile');
     });
+    
+    $("[invite]").on('click', function(e){
+        app.get('/invite');
+    });
 }
