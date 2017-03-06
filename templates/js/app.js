@@ -53,7 +53,11 @@ function queryServer(url, obj, callback){
         method: 'POST',
         data: JSON.stringify(obj)
     }).then(function(data){
-        callback(data);
+        if(data === 'DENIED')
+            window.location.reload();
+        else if(data === '405')
+            window.location.assign('/profile');
+        else callback(data);
     });
 }
 
