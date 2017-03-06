@@ -89,7 +89,7 @@ class AuthHandler(web.RequestHandler):
             query = query.format(data[1], data[2])
             for retrieved in self.application.db_manager.execute(query):
                 id_user, log, passwd, fn, mn, ln, email, sex, access, p = retrieved
-                session_name = Session.create({'id': id_user})
+                session_name = Config.rand_hexline(22)
                 Config.users[session_name] = User(id_user, log, passwd, (fn, mn, ln), access, sex, email)
                 self.set_cookie('session', session_name)
                 result = True
@@ -120,10 +120,8 @@ class Application(web.Application):
         super().__init__(handlers, **settings)
 
     def authorized(self, session_name):
-        session_obj = Session.get(session_name)
-        if session_obj and session_name in Config.users:
-            if session_obj['id'] == Config.users[session_name].id_user:
-                return True
+        if session_name in Config.users:
+            return True
         return False
 
     def inline_get(self, argument):
