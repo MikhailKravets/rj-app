@@ -53,9 +53,11 @@ class InviteHandler(web.RequestHandler):
         inline = self.application.inline_get(self.get_argument('inline', '0'))
         if self.application.authorized(self.get_cookie('session')):
             if inline:
-                # TODO: check here access rights
                 user = Config.users[self.get_cookie('session')]
-                self.render('invite.html')
+                if '4' in user.access:
+                    self.render('invite.html')
+                else:
+                    self.write('DENIED')
             else:
                 self.render('main.html')
         else:

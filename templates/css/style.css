@@ -89,6 +89,8 @@ hr{
 }
 #navigationButton{
     position: fixed;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
     top: 5px;
     left: 27px;
     width: 25px;
@@ -212,7 +214,8 @@ hr{
 }
 
 button{
-    font-family: inherit;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.83rem;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
@@ -227,46 +230,54 @@ button{
     outline: none;
     cursor: pointer;
 }
-button:hover{
-    
-}
 button:active{
     background-color: #3771A6;
 }
 
 
-
-
-
-/* TODO: have a deal with that shit */
 .inputTextShell{
     position: relative;
     height: 44px;
+    
     margin-top: 10px;
-    border: 1px solid #cbd3e6;
+    margin-left: auto;
+    margin-right: auto;
     transition: border-color 0.2s linear;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-transition: border-color 0.2s linear;
-}
-.blueBorderColored {
-    border-bottom-color: #6790B5;
-    border-bottom-width: 2px;
 }
 .textField{
     display: inline-block;
     background: none;
     font-family: "Open Sans", sans-serif;
     font-size: 0.84rem;
-    color: #313131;
-    height: 40px;/*25px*/
-    width: calc(100% - 10px);
-    padding-left: 10px;
     border: none;
     outline: none;
-    transition: border-color 0.2s linear, box-shadow 0.2s linear;/*height: "23px", 'padding-bottom': "8px"*/
+    border: 1px solid #cbd3e6;
+    box-sizing: content-box;
+    color: #313131;
+    text-indent: 10px;
+    height: 100%;
+    width: 100%;
+    transition: border-color 0.2s linear, box-shadow 0.2s linear;
     -webkit-transition: border-color 0.2s linear, box-shadow 0.2s linear;
+}
+.textField:focus{
+    border-bottom-color: #6790B5;
+    border-bottom-width: 2px;
+}
+.prompt{
+    position: absolute;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.8rem;
+    color: #6790B5;
+    right: 4px;
+    top: -1px;
+    opacity: 0;
+    transition: opacity 0.2s ease-out, transform 0.15s ease-out;
+    transform: translateY(-8px);
+}
+.promptExpanded{
+    opacity: 1;
+    transform: translateY(0px);
 }
 .readonlyTextShell{
     position: relative;

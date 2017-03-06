@@ -1,0 +1,108 @@
+#mainFrame{
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.selectOne{
+    width: 100%;
+    height: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.84rem;
+    background: none;
+    color: inherit;
+    text-indent: 10px;
+    border: none;
+    outline: none;
+}
+.selectShell{
+    position: relative;
+    height: 40px;
+    width: calc(100% - 2px);
+    overflow: visible;
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #d4ddf0;
+    box-shadow: 2px 2px 0 0 #cfd8eb;
+    color: #2d6ca6;
+    transition: box-shadow 0.2s linear;
+    -webkit-transition: box-shadow 0.2s linear;
+}
+.selectShell select:focus{
+    background: #f1f8ff;
+}
+select:focus{
+    background: none;
+}
+select:focus option{
+    background: #ffffff;
+}
+select:focus::-ms-value {background-color: white; color: inherit}
+
+.inviteHeader{
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.15rem;
+    color: #5f5f5f;
+    font-weight: 500;
+}
+#invitedFrame{
+    display: none;
+    width: 100%;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.inviteLetterContent{
+    position: relative;
+    width: auto;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid #d4ddf0;
+    box-shadow: 2px 2px 0 0 #cfd8eb;
+}
+.inviteLetterActions{
+    width: 100%;
+}
+.invitePrint{
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.1s ease-out;
+    -webkit-transition: transform 0.1s ease-out;
+}
+.invitePrint:hover{
+    transform: scale(1.2, 1.2);
+}
+.invitePrint svg{
+    width: 60%;
+    margin-left: 6px;
+    margin-top: 6px;
+    height: auto;
+    fill: #6790B5;;
+}
+.invitePrompt{
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    color: #9b9b9b;
+    float: left;
+    vertical-align: baseline;
+}
+.inviteData{
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    color: #555555;
+    float: left;
+    padding-left: 10px;
+    vertical-align: baseline;
+}
+
+@media print {
+    #navigationIcon, #navigation, .inviteLetterContent .inviteLetterActions, #mainBlock > a, .invitedFrame button, .titleHeader, .inviteHeader {
+        display: none;
+    }
+
+    .inviteLetterContent {
+        box-shadow: none;
+    }
+}

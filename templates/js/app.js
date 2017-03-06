@@ -1,3 +1,17 @@
+function regInputs(jInput){
+    jInput.on('input', function(e){
+        if(e.target.value === ""){
+            console.log('fdsfsdfds0');
+            if($(e.target).next().hasClass('promptExpanded'))
+                $(e.target).next().removeClass('promptExpanded');
+        }
+        else{
+            if(!$(e.target).next().hasClass('promptExpanded'))
+                $(e.target).next().addClass('promptExpanded');
+        }
+    });
+}
+
 function Application(jView){
     this.view = jView;
     this.controller = '';
@@ -10,6 +24,7 @@ Application.prototype.get = function(url){
     if(url === '/')
         url = '/profile';
     
+    // TODO: register events of back/forward browser buttons
     window.history.pushState('page2', 'title', url);
     setTimeout(function(){
         $.ajax({
@@ -27,6 +42,7 @@ Application.prototype.get = function(url){
                 }, 100)
                 controller = Controller;
                 controller();
+                regInputs($('input'));
             }
         });
     }, 20);
