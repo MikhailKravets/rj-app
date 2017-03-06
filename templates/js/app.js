@@ -12,6 +12,51 @@ function regInputs(jInput){
     });
 }
 
+function initModel(model){
+    var melem = $("[model]");
+    for(var i = 0; i < melem.length; i++)
+        model[$(melem[i]).attr('model')] = melem[i].value;
+}
+function nullModel(model){
+    $("[model]").val('');
+    initModel(model);
+}
+
+function showMessage(jElem, msg){
+    jElem.html(msg);
+    jElem.css('display', 'block');
+}
+function hideMessage(jElem){
+    jElem.css('display', 'none');
+}
+
+function checkRequired(jElem){
+    for(var i = 0; i < jElem.length; i++)
+        if(jElem[i].value === '')
+            return false;
+    return true;
+}
+function checkLatin(str){
+    pattern = /[A-Za-z0-9]+/i;
+    return pattern.test(str);
+}
+function checkNumeric(str){
+    pattern = /[^0-9]+/i;
+    if(pattern.test(str))
+        return false;
+    else return true;
+}
+
+function queryServer(url, obj, callback){
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: JSON.stringify(obj)
+    }).then(function(data){
+        callback(data);
+    });
+}
+
 function Application(jView){
     this.view = jView;
     this.controller = '';

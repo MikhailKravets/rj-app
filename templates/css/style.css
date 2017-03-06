@@ -193,10 +193,6 @@ hr{
     fill: white;
     transition: transform 0.1s ease-out;
 }
-/* .menuItem:hover{
-    background-color: white;
-    color: #2d6ca6;
-} */
 .menuItem:hover svg{
     transform: scale(1.2, 1.2);
 }
@@ -213,7 +209,19 @@ hr{
     color: #2d6ca6;
 }
 
+.message{
+    display: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    color: #d4463f;
+    line-height: 1.5;
+}
+
+
 button{
+    display: block;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.83rem;
     margin-top: 30px;

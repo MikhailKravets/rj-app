@@ -81,16 +81,23 @@ class Session:
 
 class DBManager:
     def __init__(self):
-        self.connection = MySQLdb.connect(**Config.DB)
+        self.connection = MySQLdb.connect(**Config.DB, charset='utf8')
         self.cursor = self.connection.cursor()
 
     def connect(self):
-        self.connection = MySQLdb.connect(**Config.DB)
+        self.connection = MySQLdb.connect(**Config.DB, charset='utf8')
         self.cursor = self.connection.cursor()
 
     def execute(self, query):
-        self.cursor.execute(query)
-        yield from self.cursor.fetchall()
+        try:
+            self.cursor.execute(query)
+            yield from self.cursor.fetchall()
+        except MySQLdb.IntegrityError:
+            yield 'IntegrityError'
+        except MySQLdb.OperationalError:
+            yield 'OperationalError'
+        except MySQLdb.Error:
+            yield 'Error'
 
     def close(self):
         try:

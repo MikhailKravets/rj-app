@@ -4,35 +4,34 @@
 <h4 class="titleHeader">Новый пользователь</h4>
 <div id="mainFrame">
     <div class="inputTextShell centerOne">
-        <input type="text" class="textField" placeholder="Ник-нейм" required autocomplete="off">
+        <input type="text" class="textField" placeholder="Ник-нейм" required latin model="login">
         <label class="prompt">Ник-нейм</label>
     </div>
     <div class="inputTextShell centerOne">
-        <input type="text" class="textField" placeholder="Фамилия" required autocomplete="off">
+        <input type="text" class="textField" placeholder="Фамилия" required autocomplete="off" model="last">
         <label class="prompt">Фамилия</label>
     </div>
     <div class="inputTextShell centerOne">
-        <input type="text" name="firstName" class="textField" placeholder="Имя" required autocomplete="off">
+        <input type="text" name="firstName" class="textField" placeholder="Имя" required autocomplete="off" model="first">
         <label class="prompt">Имя</label>
     </div>
     <div class="inputTextShell centerOne">
-        <input type="text" name="middleName" class="textField" placeholder="Отчество" autocomplete="off">
+        <input type="text" name="middleName" class="textField" placeholder="Отчество" autocomplete="off" model="middle">
         <label class="prompt">Отчество</label>
     </div>
     <div class="inputTextShell centerOne">
-        <input type="text" name="middleName" class="textField" placeholder="Права доступа" autocomplete="off">
+        <input type="text" name="middleName" class="textField" placeholder="Права доступа" numeric access-prompt model="access">
         <label class="prompt">Права доступа</label>
     </div>
     <div class="selectShell centerOne">
-        <select class="selectOne">
+        <select class="selectOne" model="sex" value="">
             <option value="M" selected="selected">М</option>
             <option value="F">Ж</option>
         </select>
         <label class="prompt promptExpanded">Пол</label>
     </div>
-
-    <button>Пригласить</button>
-    <div style="clear: both"></div>
+    <button id="inviteButton">Пригласить</button>
+    <div class="message"></div>
 </div>
 
 <div id="invitedFrame">
