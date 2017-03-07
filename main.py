@@ -59,7 +59,7 @@ class InviteHandler(web.RequestHandler):
                 if '3' in user.access:
                     self.render('invite.html')
                 else:
-                    self.write('NO ACCESS')
+                    self.write('405')
             else:
                 self.render('main.html', access=Config.users[self.get_cookie('session')].access)
         else:
@@ -124,7 +124,7 @@ class AuthHandler(web.RequestHandler):
             for retrieved in self.application.db_manager.execute(query):
                 id_user, log, passwd, fn, mn, ln, email, sex, access, p = retrieved
                 session_name = Config.rand_hexline(22)
-                Config.users[session_name] = User(id_user, log, passwd, (fn, mn, ln), access, sex, email, p)
+                Config.users[session_name] = User(id_user, log, (fn, mn, ln), access, sex, email, p)
                 self.set_cookie('session', session_name)
                 result = True
             if result:
@@ -163,7 +163,36 @@ class EndregHandler(web.RequestHandler):
                 self.redirect('/auth')
 
     def post(self):
-        pass
+        data = json.loads(self.request.body)
+        result = False
+        if data[0] == 'EMAIL':
+            logging.debug('Email gained')
+
+            data[1] = Config.escape(data[1])
+            query = """SELECT id FROM users WHERE email='{}' LIMIT 1""".format(data[1])
+            duplicate = False
+            for retr in self.application.db_manager.execute(query):
+                duplicate = True
+            if duplicate:
+                result = ['ERROR', 'duplicate']
+            else:
+                Config.users[self.get_cookie('session')].email = data[1]
+                finish = Config.users[self.get_cookie('session')].update_endreg(self.application.db_manager)
+                if finish:
+                    result = finish
+                else:
+                    data = Config.users[self.get_cookie('session')].endreg_step()
+                    result = ['NEXT', data]
+        elif data[0] == 'PASSWORD':
+            logging.debug('Password gained')
+            Config.users[self.get_cookie('session')].password = data[1]
+            finish = Config.users[self.get_cookie('session')].update_endreg(self.application.db_manager)
+            if finish:
+                result = finish
+            else:
+                data = Config.users[self.get_cookie('session')].endreg_step()
+                result = ['NEXT', data]
+        self.write(json.dumps(result))
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH

@@ -29,7 +29,7 @@ class Config:
 
     @staticmethod
     def escape(string):
-        return MySQLdb.escape_string(string)
+        return MySQLdb.escape_string(string).decode('utf8')
 
     @staticmethod
     def rand_hexline(length, millis_time=True):
@@ -105,7 +105,8 @@ class DBManager:
             yield 'IntegrityError'
         except MySQLdb.OperationalError:
             yield 'OperationalError'
-        except MySQLdb.Error:
+        except MySQLdb.Error as error:
+            logging.error('MySQL error: {}'.format(error))
             yield 'Error'
 
     def close(self):

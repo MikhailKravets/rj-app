@@ -1,12 +1,14 @@
+import logging
+
 from config import Config
 
 
 class User:
-    def __init__(self, id_user, login, password, name, access='1', sex='M', email=None, pristine=0, ws=None):
+    def __init__(self, id_user, login, name, access='1', sex='M', email=None, pristine=0, ws=None):
         self.id_user = id_user
         self.login = login
         self.name = name
-        self.password = password
+        self.password = False
         self.access = access
         self.email = email
         self.sex = sex
@@ -22,8 +24,22 @@ class User:
                 with open(Config.PATH_CONTENT + 'endreg{}.html'.format(self.endreg), 'rb') as endf:
                     return endf.read().decode('utf8')
             else:
-                # TODO: update here DB
                 return None
 
-    def update_endreg(self):
-        self.endreg += 1
+    def update_endreg(self, db=None):
+        if self.endreg == Config.MAX_REGISTRATION_STEP:
+            if db:
+                logging.debug("Finish this shit")
+                self.email = Config.escape(self.email)
+                self.password = Config.escape(self.password)
+                query = """UPDATE users SET email='{}', password=SHA2('{}', 224), pristine=0 WHERE id={}"""
+                query = query.format(self.email, self.password, self.id_user)
+                logging.debug("QUery: {}".format(query))
+                for retr in db.execute(query):
+                    logging.debug('Res: {}'.format(retr))
+                    if 'Integrity' in retr:
+                        return ['ERROR', 'duplicate']
+                self.pristine = 0
+            return ['FINISH']
+        else:
+            self.endreg += 1
