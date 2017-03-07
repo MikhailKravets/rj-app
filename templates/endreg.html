@@ -1,25 +1,52 @@
-<div class="meetingHeader">Добро пожаловать, {{ first }} {{ middle }}!</div>
-<img class="meetingPict" src="{{ static_url('content/svg/meeting.pict' + pict_number + '.svg') }}">
-<div class="adviceHeader">Завершение регистрации. Шаг {{ step }} из {{ max_step }}</div>
-<form name="endregForm" method="post" autocomplete="off" novalidate>
-    <!-- Here are steps of registration ending -->
-    {% raw step_view %}
-</form>
-<div class="buttonContainer" style="margin-top: 30px">
-    <div class="statusCode"></div>
-    <div class="customButton">
-        <button id="endregButton" class="loginButton" autofocus> <!-- end-reg="endregdata" status="status" pass-error="invalidPass" form-name="endregForm"  -->
-            <span>Дальше</span>
-        </button>
-        <div class="buttonArrow">
-            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                             viewBox="0 0 477.175 477.175" style="enable-background:new 0 0 477.175 477.175;" xml:space="preserve">
-                        <g>
-                            <path d="M360.731,229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1,0s-5.3,13.8,0,19.1l215.5,215.5l-215.5,215.5
-                                c-5.3,5.3-5.3,13.8,0,19.1c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-4l225.1-225.1C365.931,242.875,365.931,234.275,360.731,229.075z
-                                "/>
-                        </g>
-            </svg>
+<!DOCTYPE html>
+<html ng-app="loginApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Welcome</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Play&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ static_url('css/auth.css') }}">
+    
+    <script src="{{ static_url('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ static_url('js/auth.js') }}"></script>
+</head>
+    
+<body>
+    <div id="mainContainer">
+        <div id="logo">
+            <p id="reporting">Reporting</p>
+            <p id="journal">Journal</p>
+        </div>
+        
+         <div id="view">
+            <div class="meetingHeader">Добро пожаловать, {{ first }} {{ middle }}!</div>
+            <img class="meetingPict" src="{{ static_url('content/svg/meeting.pict' + pict_number + '.svg') }}">
+            <div class="adviceHeader">Завершение регистрации. Шаг {{ step }} из {{ max_step }}</div>
+            <form name="endregForm" method="post" autocomplete="off" novalidate>
+                <!-- Here are steps of registration ending -->
+                {% raw step_view %}
+            </form>
+            <div class="buttonContainer" style="margin-top: 30px">
+                <div class="statusCode"></div>
+                <div class="customButton">
+                    <button id="endregButton" class="loginButton" autofocus> <!-- end-reg="endregdata" status="status" pass-error="invalidPass" form-name="endregForm"  -->
+                        <span>Дальше</span>
+                    </button>
+                    <div class="buttonArrow">
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                         viewBox="0 0 477.175 477.175" style="enable-background:new 0 0 477.175 477.175;" xml:space="preserve">
+                                    <g>
+                                        <path d="M360.731,229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1,0s-5.3,13.8,0,19.1l215.5,215.5l-215.5,215.5
+                                            c-5.3,5.3-5.3,13.8,0,19.1c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-4l225.1-225.1C365.931,242.875,365.931,234.275,360.731,229.075z
+                                            "/>
+                                    </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+    <div class="helper"></div>
+</body>
