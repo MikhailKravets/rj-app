@@ -12,7 +12,7 @@ from system import User
 class MainHandler(web.RequestHandler):
     def get(self):
         if self.application.authorized(self.get_cookie('session')):
-            self.render('main.html')
+            self.render('main.html', access=Config.users[self.get_cookie('session')].access)
         else:
             self.redirect('/auth')
 
@@ -34,7 +34,7 @@ class ProfileHandler(web.RequestHandler):
                             email=user.email,
                             sex=user.sex)
             else:
-                self.render('main.html')
+                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
         else:
             if inline:
                 self.write('DENIED')
@@ -59,7 +59,7 @@ class InviteHandler(web.RequestHandler):
                 else:
                     self.write('NO ACCESS')
             else:
-                self.render('main.html')
+                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
         else:
             if inline:
                 self.write('DENIED')

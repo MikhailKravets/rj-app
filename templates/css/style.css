@@ -197,10 +197,10 @@ hr{
     transform: scale(1.2, 1.2);
 }
 
-.menuItemFirst{
+.menuItem:first-child{
     box-shadow: 0 1px 0 0 #327cb2 !important;
 }
-.menuItemLast{
+.menuItem:last-child{
     box-shadow: 0 -1px 0 0 #24587f !important;
 }
 .menuItemActive{
