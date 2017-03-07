@@ -10,7 +10,8 @@ class Config:
     PATH = 'c:/rj'
     TEMPLATE_PATH = PATH + '/templates'
     PATH_SESSIONS = PATH + '/tmp/'
-    PATH_SVG = TEMPLATE_PATH + '/content/svg/'
+    PATH_CONTENT = TEMPLATE_PATH + '/content/'
+    PATH_SVG = PATH_CONTENT + 'svg/'
 
     PORT = 83
 
@@ -22,6 +23,9 @@ class Config:
     }
 
     users = {} # dict that contains connected users
+
+    MAX_REGISTRATION_STEP = 2
+    MAX_REGISTRATIO_PICT_NUMBER = 5
 
     @staticmethod
     def escape(string):

@@ -42,6 +42,8 @@ window.onload = function(){
                 if(data === 'OK'){
                     window.location.replace('/');
                 }
+                else if(data === 'REGISTER')
+                    window.location.assign('/register');
                 else if(data === 'ERROR'){
                     showStatus(status, "Неправильное сочетание имени и пароля");
                 }

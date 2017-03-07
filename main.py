@@ -1,5 +1,7 @@
 import json
 import logging
+import random
+
 import tornado.web as web
 import tornado.websocket as websocket
 import tornado.ioloop as loop
@@ -102,7 +104,13 @@ class AuthHandler(web.RequestHandler):
         if self.application.authorized(self.get_cookie('session')):
             self.redirect('/')
         else:
-            self.render('auth.html')
+            if self.get_cookie('session') in Config.users:
+                if Config.users[self.get_cookie('session')].pristine == 1:
+                    self.redirect('/register')
+                else:
+                    self.render('auth.html')
+            else:
+                self.render('auth.html')
 
     def post(self):
         data = json.loads(self.request.body)
@@ -116,13 +124,46 @@ class AuthHandler(web.RequestHandler):
             for retrieved in self.application.db_manager.execute(query):
                 id_user, log, passwd, fn, mn, ln, email, sex, access, p = retrieved
                 session_name = Config.rand_hexline(22)
-                Config.users[session_name] = User(id_user, log, passwd, (fn, mn, ln), access, sex, email)
+                Config.users[session_name] = User(id_user, log, passwd, (fn, mn, ln), access, sex, email, p)
                 self.set_cookie('session', session_name)
                 result = True
             if result:
-                self.write('OK')
+                if Config.users[session_name].pristine == 1:
+                    self.write('REGISTER')
+                else:
+                    self.write('OK')
             else:
                 self.write('ERROR')
+
+    def get_template_path(self):
+        return Config.TEMPLATE_PATH
+
+
+class EndregHandler(web.RequestHandler):
+    def get(self):
+        if self.application.authorized(self.get_cookie('session')):
+            self.redirect('/')
+        else:
+            if self.get_cookie('session') in Config.users:
+                if Config.users[self.get_cookie('session')].pristine == 0:
+                    self.redirect('/')
+                else:
+                    data = Config.users[self.get_cookie('session')].endreg_step()
+                    if data:
+                        user = Config.users[self.get_cookie('session')]
+                        self.render('endreg.html', first=user.name[0],
+                                    middle=user.name[1],
+                                    step=user.endreg,
+                                    max_step=Config.MAX_REGISTRATION_STEP,
+                                    step_view=data,
+                                    pict_number=str(random.randint(0, Config.MAX_REGISTRATIO_PICT_NUMBER)))
+                    else:
+                        self.redirect('/')
+            else:
+                self.redirect('/auth')
+
+    def post(self):
+        pass
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -134,6 +175,7 @@ class Application(web.Application):
         handlers = [
             (r"/", MainHandler),
             (r"/auth", AuthHandler),
+            (r"/register", EndregHandler),
             (r"/profile", ProfileHandler),
             (r"/invite", InviteHandler)
         ]
@@ -147,7 +189,8 @@ class Application(web.Application):
 
     def authorized(self, session_name):
         if session_name in Config.users:
-            return True
+            if Config.users[session_name].pristine != 1:
+                return True
         return False
 
     def inline_get(self, argument):
