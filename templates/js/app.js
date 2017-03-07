@@ -84,8 +84,10 @@ Application.prototype.get = function(url){
             dataType: 'html',
             data: 'inline=1'
         }).then(function(data){
-            if(data == 'DENIED')
+            if(data === 'DENIED')
                 window.location.reload();
+            else if(data === 'NO ACCESS')
+                window.location.assign('/profile');
             else{
                 view.html(data);
                 setTimeout(function(){

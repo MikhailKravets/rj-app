@@ -57,7 +57,7 @@ class InviteHandler(web.RequestHandler):
                 if '3' in user.access:
                     self.render('invite.html')
                 else:
-                    self.write('DENIED')
+                    self.write('NO ACCESS')
             else:
                 self.render('main.html')
         else:
@@ -72,6 +72,7 @@ class InviteHandler(web.RequestHandler):
                 data = json.loads(self.request.body)
                 if data[0] == 'INVITE':
                     insert = data[1]
+                    insert = self.application.escape_data(insert)
                     insert['password'] = Config.rand_hexline(6, millis_time=False)
                     logging.debug(f"INVITE {insert}")
                     query = """INSERT INTO users (login, password, first, middle, last, access, sex)
@@ -160,6 +161,17 @@ class Application(web.Application):
             if access_level in Config.users[session]:
                 return True
         return False
+
+    def escape_data(self, data):
+        if type(data) == list:
+            for i in range(1, len(data)):
+                data[i] = Config.escape(data[i])
+        elif type(data) == dict:
+            for k in data.keys():
+                data[k] = Config.escape(data[k])
+        elif type(data) == str:
+            data = Config.escape(data)
+        return data
 
     def __create_god(self):
         login = 'admin'

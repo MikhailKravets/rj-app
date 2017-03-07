@@ -3,6 +3,7 @@ import os
 import random as r
 import time
 import MySQLdb
+import logging
 
 
 class Config:
@@ -21,6 +22,10 @@ class Config:
     }
 
     users = {} # dict that contains connected users
+
+    @staticmethod
+    def escape(string):
+        return MySQLdb.escape_string(string)
 
     @staticmethod
     def rand_hexline(length, millis_time=True):
@@ -90,7 +95,6 @@ class DBManager:
 
     def execute(self, query):
         try:
-            query = MySQLdb.escape_string(query)
             self.cursor.execute(query)
             yield from self.cursor.fetchall()
         except MySQLdb.IntegrityError:
