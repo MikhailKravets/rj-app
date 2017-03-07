@@ -45,6 +45,7 @@ select:focus::-ms-value {background-color: white; color: inherit}
     color: #5f5f5f;
     font-weight: 500;
 }
+
 #invitedFrame{
     display: none;
     width: 100%;
@@ -62,39 +63,10 @@ select:focus::-ms-value {background-color: white; color: inherit}
 .inviteLetterActions{
     width: 100%;
 }
-.invitePrint{
-    width: 25px;
-    height: 25px;
-    float: left;
-    margin-right: 10px;
-    cursor: pointer;
-    transition: transform 0.1s ease-out;
-    -webkit-transition: transform 0.1s ease-out;
-}
-.invitePrint:hover{
-    transform: scale(1.2, 1.2);
-}
-.invitePrint svg{
-    width: 60%;
-    margin-left: 6px;
-    margin-top: 6px;
-    height: auto;
-    fill: #6790B5;;
-}
 .invitePrompt{
     font-family: "Open Sans", sans-serif;
     font-size: 1rem;
-    color: #9b9b9b;
-    float: left;
-    vertical-align: baseline;
-}
-.inviteData{
-    font-family: "Open Sans", sans-serif;
-    font-size: 1rem;
-    color: #555555;
-    float: left;
-    padding-left: 10px;
-    vertical-align: baseline;
+    color: #5f5f5f;
 }
 
 @media print {

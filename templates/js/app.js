@@ -37,8 +37,10 @@ function checkRequired(jElem){
     return true;
 }
 function checkLatin(str){
-    pattern = /[A-Za-z0-9]+/i;
-    return pattern.test(str);
+    pattern = /[^A-Za-z0-9]+/i;
+    if(pattern.test(str))
+        return false;
+    else return true;
 }
 function checkNumeric(str){
     pattern = /[^0-9]+/i;

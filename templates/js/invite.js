@@ -57,7 +57,12 @@ function Controller(){
             queryServer('/invite', ['INVITE', model], function(data){
                 data = JSON.parse(data);
                 if(data[0] === "OK")
+                {
+                    $("#gen-login").text(model['login']);
+                    $("#gen-password").text(data[1]);
+                    $("#invitedFrame").css('display', 'block');
                     nullModel(model);
+                }
                 else if(data[0] === 'ERROR'){
                     if(data[1] === 'duplicate')
                         showMessage($(".message"), 'Пользователь с таким ник-неймом уже существует');

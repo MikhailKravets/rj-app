@@ -68,7 +68,7 @@ class InviteHandler(web.RequestHandler):
 
     def post(self):
         if self.application.authorized(self.get_cookie('session')):
-            if '3' in Config.users[self.get_cookie('session')]:
+            if '3' in Config.users[self.get_cookie('session')].access:
                 data = json.loads(self.request.body)
                 if data[0] == 'INVITE':
                     insert = data[1]
