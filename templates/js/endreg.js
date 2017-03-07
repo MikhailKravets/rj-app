@@ -45,6 +45,18 @@ function queryServer(url, obj, callback){
     });
 }
 
+function quit(){
+    $.ajax({
+        url: '/',
+        method: 'POST',
+        data: JSON.stringify(['QUIT'])
+    }).then(function(data){
+        console.log(data);
+        if(data === 'OK')
+            window.location.assign('/auth');
+    });
+}
+
 window.onload = function(e){
     var step = parseInt($("#step").text());
     console.log(step);
@@ -91,5 +103,9 @@ window.onload = function(e){
                 });
             }
         }
+    });
+    
+    $("#quit").on('click', function(e){
+        quit();
     });
 }

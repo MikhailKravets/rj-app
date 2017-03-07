@@ -63,6 +63,18 @@ function queryServer(url, obj, callback){
     });
 }
 
+function quit(){
+    $.ajax({
+        url: '/',
+        method: 'POST',
+        data: JSON.stringify(['QUIT'])
+    }).then(function(data){
+        console.log(data);
+        if(data === 'OK')
+            window.location.assign('/auth');
+    });
+}
+
 function Application(jView){
     this.view = jView;
     this.controller = '';
@@ -123,10 +135,12 @@ function showNavigation(menuButtonElem, navigationElem){
 
 window.onload = function(){
     var app = new Application($("#view"));
-    console.log(window.location.pathname);
     app.get(window.location.pathname);
-    
     showNavigation($("#navigationButton"), $("#navigation"));
+    
+    $("[quit]").on('click', function(e){
+        quit();
+    });
     
     $("[profile]").on('click', function(e){
         app.get('/profile');
