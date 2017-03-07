@@ -90,6 +90,7 @@ class DBManager:
 
     def execute(self, query):
         try:
+            query = MySQLdb.escape_string(query)
             self.cursor.execute(query)
             yield from self.cursor.fetchall()
         except MySQLdb.IntegrityError:
