@@ -11,7 +11,7 @@
 }
 .selectShell{
     position: relative;
-    height: 40px;
+    height: 44px;
     width: calc(100% - 2px);
     overflow: visible;
     margin-top: 10px;

@@ -19,9 +19,12 @@
         <input type="text" class="textField" placeholder="Форма обучения" required autocomplete="off">
         <label class="prompt">Форма обучения</label>
     </div>
-    <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Форма финансирования" required autocomplete="off">
-        <label class="prompt">Форма финансирования</label>
+    <div class="selectShell rightHalf">
+        <select class="selectOne" model="sex" default="Б">
+            <option value="Б" selected="selected">Бюджет</option>
+            <option value="К">Контракт</option>
+        </select>
+        <label class="prompt promptExpanded">Форма финансирования</label>
     </div>
     <div style="clear: both;"></div>
     <div class="inputTextShell centerOne">
@@ -55,33 +58,36 @@
                 <td class="little">Пол</td>
                 <td class="little">Льготн.</td>
                 <td class="little">Финанс.</td>
+                <td class="smallest"></td>
             </tr>
         </thead>
         
-        <tbody>
+        <tbody list-model>
             <tr>
                 <td>
-                    <input type="text" placeholder="Иванов">
+                    <input type="text" placeholder="Иванов" model-key="last">
                 </td>
                 <td>
-                    <input type="text" placeholder="Иван">
+                    <input type="text" placeholder="Иван" model-key="first">
                 </td>
                 <td>
-                    <input type="text" placeholder="Иванович">
+                    <input type="text" placeholder="Иванович" model-key="middle">
                 </td>
                 <td class="little">
-                   <select class="selectOne">
+                   <select class="selectOne" model-key="sex" novalidate="true">
                         <option value="M" selected="selected">М</option>
                         <option value="F">Ж</option>
                    </select>
                 </td>
                 <td class="little">
-                    <input type="text" placeholder="Д">
+                    <input type="text" placeholder="Д" model-key="privilege">
                 </td>
                 <td class="little">
-                    <input type="text" placeholder="Бюджет">
+                    <input type="text" placeholder="Бюджет" model-key="finance">
                 </td>
+                <td>x</td>
             </tr>
         </tbody>
     </table>
+    <button id="addButton">Добавить</button>
 </div>

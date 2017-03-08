@@ -2,6 +2,41 @@
     max-width: 700px !important;
 }
 
+.selectOne{
+    width: 100%;
+    height: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.84rem;
+    background: none;
+    color: inherit;
+    text-indent: 10px;
+    border: none;
+    outline: none;
+}
+.selectShell{
+    position: relative;
+    height: 44px;
+    width: calc(100% - 2px);
+    overflow: visible;
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #d4ddf0;
+    box-shadow: 2px 2px 0 0 #cfd8eb;
+    color: #2d6ca6;
+    transition: box-shadow 0.2s linear;
+    -webkit-transition: box-shadow 0.2s linear;
+}
+.selectShell select:focus{
+    background: #f1f8ff;
+}
+select:focus{
+    background: none;
+}
+select:focus option{
+    background: #ffffff;
+}
+select:focus::-ms-value {background-color: white; color: inherit}
+
 .table-students{
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9rem;
@@ -31,6 +66,10 @@
 .table-students .little{
     width: 70px;
 }
+.table-students .smallest{
+    width: 30px;
+    cursor: pointer;
+}
 .table-students input{
     height: 100%;
     width: 100% !important;
@@ -51,6 +90,9 @@
     text-indent: 10px;
     border: none;
     outline: none;
+}
+.table-students select:focus{
+    box-shadow: inset 0px 3px 10px -5px #5083B2;
 }
 
 .leftHalf{
