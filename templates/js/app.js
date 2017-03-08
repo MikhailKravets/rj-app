@@ -37,17 +37,14 @@ function checkRequired(jElem){
     return true;
 }
 function checkLatin(str){
-    pattern = /[^A-Za-z0-9]+/i;
+    var pattern = /[^A-Za-z0-9]+/i;
     if(pattern.test(str))
         return false;
     else return true;
 }
-function checkEmail(jElem){
-    var pat = /@{1}/;
-    for(var i = 0; i < jElem.length; i++)
-        if(!pat.test(jElem[i].value))
-            return false;
-    return true;
+function checkEmail(str){
+    var pattern = /[A-Za-z0-9]+@{1}[A-Za-z0-9]+\.[A-Za-z0-9]+/i;
+    return pattern.test(str);
 }
 function checkNumeric(str){
     pattern = /[^0-9]+/i;

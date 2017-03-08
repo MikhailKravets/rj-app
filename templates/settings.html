@@ -3,11 +3,11 @@
 <h4 class="titleHeader">Настройки</h4>
 <div id="mainFrame">
     <div class="inputTextShell centerOne">
-        <input id="login" type="text" class="textField" placeholder="Логин" value="{{ login }}" required model="login" default="{{ login }}">
+        <input id="login" type="text" class="textField" placeholder="Логин" value="{{ login }}" required latin model="login" default="{{ login }}">
         <label class="prompt promptExpanded">Логин</label>
     </div>
     <div class="inputTextShell centerOne">
-        <input id="email" type="email" class="textField" placeholder="Эл. почта" value="{{ email }}" required model="email" default="{{ email }}">
+        <input id="email" type="email" class="textField" placeholder="Эл. почта" value="{{ email }}" required email model="email" default="{{ email }}">
         <label class="prompt promptExpanded">Эл. почта</label>
     </div>
     <div style="clear: both"></div>
@@ -21,20 +21,21 @@
         <label class="prompt promptExpanded">Имя</label>
     </div>
     <div class="inputTextShell centerOne">
-        <input id="middle" type="text" class="textField" placeholder="Отчество" value="{{ middle }}" required model="middle" default="{{ middle }}">
+        <input id="middle" type="text" class="textField" placeholder="Отчество" value="{{ middle }}" model="middle" default="{{ middle }}">
         <label class="prompt promptExpanded">Отчество</label>
     </div>
     <div style="clear: both"></div>
 
     <h4 class="additionalHeader">Сменить пароль</h4>
     <div class="inputTextShell centerOne">
-        <input type="password" class="textField" placeholder="Новый пароль" autocomplete="off" model="password">
+        <input type="password" class="textField" placeholder="Новый пароль" autocomplete="off" equal model="password">
         <label class="prompt">Новый пароль</label>
     </div>
     <div class="inputTextShell centerOne">
-        <input type="password" class="textField" placeholder="Подтвердите пароль" autocomplete="off">
+        <input type="password" class="textField" placeholder="Подтвердите пароль" autocomplete="off" equal>
         <label class="prompt">Подтвердите пароль</label>
     </div>
     <div style="clear: both"></div>
+    <div class="message"></div>
     <button id="saveButton">Сохранить</button>
 </div>

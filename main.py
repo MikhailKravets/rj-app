@@ -123,7 +123,11 @@ class SettingsHandler(web.RequestHandler):
                 self.redirect('/auth')
 
     def post(self):
-        pass
+        if self.application.authorized(self.get_cookie('session')):
+            data = json.loads(self.request.body)
+            logging.debug("SETTINGS: {}".format(data))
+        else:
+            self.write('DENIED')
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
