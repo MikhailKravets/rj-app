@@ -42,11 +42,25 @@ function checkLatin(str){
         return false;
     else return true;
 }
+function checkEmail(jElem){
+    var pat = /@{1}/;
+    for(var i = 0; i < jElem.length; i++)
+        if(!pat.test(jElem[i].value))
+            return false;
+    return true;
+}
 function checkNumeric(str){
     pattern = /[^0-9]+/i;
     if(pattern.test(str))
         return false;
     else return true;
+}
+function checkEqual(jElem){
+    var val = jElem[0].value;
+    for(var i = 1; i < jElem.length; i++)
+        if(jElem[i].value !== val)
+            return false;
+    return true;
 }
 
 function queryServer(url, obj, callback){
@@ -148,5 +162,9 @@ window.onload = function(){
     
     $("[invite]").on('click', function(e){
         app.get('/invite');
+    });
+    
+    $("[settings]").on('click', function(e){
+        app.get('/settings');
     });
 }

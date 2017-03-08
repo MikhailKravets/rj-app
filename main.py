@@ -33,7 +33,7 @@ class MainHandler(web.RequestHandler):
 
 class ProfileHandler(web.RequestHandler):
     def get(self):
-        inline = self.application.inline_get(self.get_argument('inline', '0'))
+        inline = self.application.inline_get(self.get_argument('inline', False))
         if self.application.authorized(self.get_cookie('session')):
             if inline:
                 user = Config.users[self.get_cookie('session')]
@@ -100,6 +100,30 @@ class InviteHandler(web.RequestHandler):
                 self.write('405')
         else:
             self.write('DENIED')
+
+    def get_template_path(self):
+        return Config.TEMPLATE_PATH
+
+
+class SettingsHandler(web.RequestHandler):
+    def get(self):
+        inline = self.application.inline_get(self.get_argument('inline', False))
+        if self.application.authorized(self.get_cookie('session')):
+            if inline:
+                user = Config.users[self.get_cookie('session')]
+                self.render('settings.html', login=user.login,
+                            last=user.name[2], middle=user.name[1], first=user.name[0],
+                            email=user.email)
+            else:
+                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+        else:
+            if inline:
+                self.write('DENIED')
+            else:
+                self.redirect('/auth')
+
+    def post(self):
+        pass
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -212,7 +236,8 @@ class Application(web.Application):
             (r"/auth", AuthHandler),
             (r"/register", EndregHandler),
             (r"/profile", ProfileHandler),
-            (r"/invite", InviteHandler)
+            (r"/invite", InviteHandler),
+            (r"/settings", SettingsHandler)
         ]
         settings = {
             'debug': True,
