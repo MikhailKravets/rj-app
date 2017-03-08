@@ -177,6 +177,10 @@ window.onload = function(){
         app.get('/invite');
     });
     
+    $("[addgroup]").on('click', function(e){
+        app.get('/group/add');
+    });
+    
     $("[settings]").on('click', function(e){
         app.get('/settings');
     });

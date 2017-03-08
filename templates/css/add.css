@@ -1,0 +1,44 @@
+#mainFrame{
+    max-width: 700px !important;
+}
+
+.leftHalf{
+    width: calc(50% - 5px);
+    clear:both;
+    float: left;
+}
+.left60percHalf{
+    width: calc(60% - 5px);
+    clear:both;
+    float: left;
+}
+.right40percHalf{
+    width: calc(40% - 5px);
+    float: right;
+    margin-right: 0px !important;
+}
+.rightHalf{
+    width: calc(50% - 5px);
+    float: right;
+    margin-right: 0px !important;
+}
+.leftThird{
+    width: calc(33% - 5px);
+    clear:both;
+    float: left;
+}
+.centerThird{
+    width: calc(33% - 5px);
+    float: left;
+    margin-left: 8px;
+}
+.rightThird{
+    width: calc(33% - 5px);
+    float: right;
+    margin-right: 0;
+}
+.centerOne{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}

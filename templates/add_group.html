@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="{{ static_url('css/add.css') }}">
+<script src="{{ static_url('js/add_group.js') }}"></script>
+
+<h4 class="titleHeader">Новая группа</h4>
+<div id="mainFrame">
+    <div class="inputTextShell centerOne">
+        <input type="text" class="textField" placeholder="Шифр группы" required autocomplete="off">
+        <label class="prompt">Шифр группы</label>
+    </div>
+    <div class="inputTextShell leftHalf">
+        <input type="text" class="textField" placeholder="Отрасль знаний" required autocomplete="off">
+        <label class="prompt">Отрасль знаний</label>
+    </div>
+    <div class="inputTextShell rightHalf">
+        <input type="text" class="textField" placeholder="Направление подготовки" required autocomplete="off">
+        <label class="prompt">Направление подготовки</label>
+    </div>
+    <div class="inputTextShell leftHalf">
+        <input type="text" class="textField" placeholder="Форма обучения" required autocomplete="off">
+        <label class="prompt">Форма обучения</label>
+    </div>
+    <div class="inputTextShell rightHalf">
+        <input type="text" class="textField" placeholder="Форма финансирования" required autocomplete="off">
+        <label class="prompt">Форма финансирования</label>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="inputTextShell centerOne">
+        <input type="text" class="textField" placeholder="Специальность" required autocomplete="off">
+        <label class="prompt">Специальность</label>
+    </div>
+    <div class="inputTextShell leftHalf">
+        <input type="text" class="textField" placeholder="Факультет, отделение" required autocomplete="off">
+        <label class="prompt">Факультет, отделение</label>
+    </div>
+    <div class="inputTextShell rightHalf">
+        <input type="text" class="textField" placeholder="Декан, завотдел." required autocomplete="off">
+        <label class="prompt">Декан, завотдел.</label>
+    </div>
+    <div class="inputTextShell leftHalf">
+        <input type="text" class="textField" placeholder="ВУЗ" required autocomplete="off">
+        <label class="prompt">ВУЗ</label>
+    </div>
+    <div class="inputTextShell rightHalf">
+        <input type="text" class="textField" placeholder="Квалиф. уровень" required autocomplete="off">
+        <label class="prompt">Квалификационный уровень</label>
+    </div>
+    <div style="clear: both"></div>
+    <h2 class="additionalHeader">Список студентов</h2>
+    <div class="inputStudents">
+        <div class="tableWrapper">
+            <table class="studentList" id="studentListTable">
+                <thead class="studentListH">
+                <tr id="studentListHeader">
+                    <td style="width: 40px; border-right: 1px solid white;">№</td>
+                    <td>Имя</td>
+                    <td style="width: 70px;border-left: 1px solid white; border-right: 1px solid white;">ФФ</td>
+                    <td style="width: 40px;">ЛК</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="ordinaryTableRow" ng-repeat="student in groupInfo.studList" tabindex="1">
+                    <td class="ordinaryTableCell" style="width: 40px;"></td>
+                    <td contenteditable="true" ng-model="student.name" ng-bind="student.name" class="ordinaryTableCell"></td>
+                    <td contenteditable="true" ng-model="student.FF" ng-bind="student.FF" class="ordinaryTableCell" style="width: 70px;"></td>
+                    <td contenteditable="true" ng-model="student.LK" ng-bind="student.LK" class="ordinaryTableCell" style="width: 40px;"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="textFieldContainer">
+            <input type="text" class="promptlessTextField" id="studentNameInputField" placeholder="Ф.И.О. студента">
+            <div class="iconTextFieldHolder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+                <div class="helper"></div>
+            </div>
+        </div>
+    </div>
+</div>

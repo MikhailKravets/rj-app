@@ -135,6 +135,37 @@ class SettingsHandler(web.RequestHandler):
         return Config.TEMPLATE_PATH
 
 
+class GroupHandler(web.RequestHandler):
+    def get(self, what):
+        inline = self.application.inline_get(self.get_argument('inline', '0'))
+        if self.application.authorized(self.get_cookie('session')):
+            if inline:
+                user = Config.users[self.get_cookie('session')]
+                if '2' in user.access:
+                    logging.debug('WHAT: "{}"'.format(what))
+                    if what == 'add':
+                        self.render('add_group.html')
+                    elif what == 'edit':
+                        self.render('edit_group.html')
+                    else:
+                        self.redirect('/group/add')
+                else:
+                    self.write('405')
+            else:
+                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+        else:
+            if inline:
+                self.write('DENIED')
+            else:
+                self.redirect('/auth')
+
+    def post(self):
+        pass
+
+    def get_template_path(self):
+        return Config.TEMPLATE_PATH
+
+
 class AuthHandler(web.RequestHandler):
     def get(self):
         if self.application.authorized(self.get_cookie('session')):
@@ -241,7 +272,8 @@ class Application(web.Application):
             (r"/register", EndregHandler),
             (r"/profile", ProfileHandler),
             (r"/invite", InviteHandler),
-            (r"/settings", SettingsHandler)
+            (r"/settings", SettingsHandler),
+            (r"/group/([a-z]*)", GroupHandler)
         ]
         settings = {
             'debug': True,
