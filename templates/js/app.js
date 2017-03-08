@@ -22,7 +22,7 @@ function nullModel(model, initModel=true){
     for(var i = 0; i < target.length; i++){
         var def = $(target[i]).attr('default');
         if(def !== undefined)
-            $(target[i]),val(def)
+            $(target[i]).val(def)
         else $(target[i]).val('');
     }
     if(initModel)
