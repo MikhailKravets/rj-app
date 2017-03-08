@@ -187,8 +187,8 @@ class EndregHandler(web.RequestHandler):
                     data = Config.users[self.get_cookie('session')].endreg_step()
                     if data:
                         user = Config.users[self.get_cookie('session')]
-                        self.render('endreg.html', first=user.name[0],
-                                    middle=user.name[1],
+                        self.render('endreg.html', first=user.first,
+                                    middle=user.middle,
                                     step=user.endreg,
                                     max_step=Config.MAX_REGISTRATION_STEP,
                                     step_view=data,
@@ -202,8 +202,6 @@ class EndregHandler(web.RequestHandler):
         data = json.loads(self.request.body)
         result = False
         if data[0] == 'EMAIL':
-            logging.debug('Email gained')
-
             data[1] = Config.escape(data[1])
             query = """SELECT id FROM users WHERE email='{}' LIMIT 1""".format(data[1])
             duplicate = False
