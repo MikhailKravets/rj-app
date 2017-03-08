@@ -220,3 +220,10 @@ input[type=text]:focus + svg, input[type=password]:focus + svg, input[type=passw
 a{
     text-decoration: none;
 }
+
+@media screen and (max-height: 600px){
+    html, body{
+        height: auto;!important;
+        overflow: visible;!important;
+    }
+}
