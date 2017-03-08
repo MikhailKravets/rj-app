@@ -46,33 +46,42 @@
     </div>
     <div style="clear: both"></div>
     <h2 class="additionalHeader">Список студентов</h2>
-    <div class="inputStudents">
-        <div class="tableWrapper">
-            <table class="studentList" id="studentListTable">
-                <thead class="studentListH">
-                <tr id="studentListHeader">
-                    <td style="width: 40px; border-right: 1px solid white;">№</td>
-                    <td>Имя</td>
-                    <td style="width: 70px;border-left: 1px solid white; border-right: 1px solid white;">ФФ</td>
-                    <td style="width: 40px;">ЛК</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="ordinaryTableRow" ng-repeat="student in groupInfo.studList" tabindex="1">
-                    <td class="ordinaryTableCell" style="width: 40px;"></td>
-                    <td contenteditable="true" ng-model="student.name" ng-bind="student.name" class="ordinaryTableCell"></td>
-                    <td contenteditable="true" ng-model="student.FF" ng-bind="student.FF" class="ordinaryTableCell" style="width: 70px;"></td>
-                    <td contenteditable="true" ng-model="student.LK" ng-bind="student.LK" class="ordinaryTableCell" style="width: 40px;"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="textFieldContainer">
-            <input type="text" class="promptlessTextField" id="studentNameInputField" placeholder="Ф.И.О. студента">
-            <div class="iconTextFieldHolder">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-                <div class="helper"></div>
-            </div>
-        </div>
-    </div>
+    <table class="table-students">
+        <thead>
+            <tr>
+                <td>Фамилия</td>
+                <td>Имя</td>
+                <td>Отчество</td>
+                <td class="little">Пол</td>
+                <td class="little">Льготн.</td>
+                <td class="little">Финанс.</td>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" placeholder="Иванов">
+                </td>
+                <td>
+                    <input type="text" placeholder="Иван">
+                </td>
+                <td>
+                    <input type="text" placeholder="Иванович">
+                </td>
+                <td class="little">
+                   <select class="selectOne">
+                        <option value="M" selected="selected">М</option>
+                        <option value="F">Ж</option>
+                   </select>
+                </td>
+                <td class="little">
+                    <input type="text" placeholder="Д">
+                </td>
+                <td class="little">
+                    <input type="text" placeholder="Бюджет">
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

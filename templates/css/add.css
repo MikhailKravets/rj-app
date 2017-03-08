@@ -2,6 +2,57 @@
     max-width: 700px !important;
 }
 
+.table-students{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+}
+.table-students thead{
+    text-align: center;
+    /* #eaeef5 */
+    background-color: #5083B2;
+    color: white;
+}
+.table-students thead td{
+    border: none;
+    border-right: 1px dashed white;
+}
+
+.table-students td{
+    border: 1px solid #cbd3e6;
+    height: 30px;
+    padding: 0;
+    text-align: center;
+}
+.table-students .little{
+    width: 70px;
+}
+.table-students input{
+    height: 100%;
+    width: 100% !important;
+    text-indent: 10px;
+    border: none;
+    outline: none;
+}
+.table-students input:focus{
+    box-shadow: inset 0px 3px 10px -5px #5083B2;
+}
+.table-students select{
+    width: 100%;
+    height: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.84rem;
+    background-color: #F7FBFF;
+    color: inherit;
+    text-indent: 10px;
+    border: none;
+    outline: none;
+}
+
 .leftHalf{
     width: calc(50% - 5px);
     clear:both;
