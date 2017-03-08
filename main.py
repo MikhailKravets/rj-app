@@ -38,7 +38,7 @@ class ProfileHandler(web.RequestHandler):
             if inline:
                 user = Config.users[self.get_cookie('session')]
                 self.render('profile.html', login=user.login,
-                            last=user.name[2], middle=user.name[1], first=user.name[0],
+                            last=user.last, middle=user.middle, first=user.first,
                             email=user.email,
                             sex=user.sex)
             else:
@@ -112,7 +112,7 @@ class SettingsHandler(web.RequestHandler):
             if inline:
                 user = Config.users[self.get_cookie('session')]
                 self.render('settings.html', login=user.login,
-                            last=user.name[2], middle=user.name[1], first=user.name[0],
+                            last=user.last, middle=user.middle, first=user.first,
                             email=user.email)
             else:
                 self.render('main.html', access=Config.users[self.get_cookie('session')].access)
@@ -125,7 +125,9 @@ class SettingsHandler(web.RequestHandler):
     def post(self):
         if self.application.authorized(self.get_cookie('session')):
             data = json.loads(self.request.body)
-            logging.debug("SETTINGS: {}".format(data))
+            if data[0] == 'UPDATE':
+                retr = Config.users[self.get_cookie('session')].update_settings(data[1])
+                self.write(json.dumps(retr))
         else:
             self.write('DENIED')
 

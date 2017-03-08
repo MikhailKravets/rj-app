@@ -17,9 +17,25 @@ function initModel(model){
     for(var i = 0; i < melem.length; i++)
         model[$(melem[i]).attr('model')] = melem[i].value;
 }
-function nullModel(model){
-    $("[model]").val('');
-    initModel(model);
+function nullModel(model, initModel=true){
+    var target = $("[model]");
+    for(var i = 0; i < target.length; i++){
+        var def = $(target[i]).attr('default');
+        if(def !== undefined)
+            $(target[i]),val(def)
+        else $(target[i]).val('');
+    }
+    if(initModel)
+        initModel(model);
+}
+function defaultify(){
+    var target = $("[model]");
+    for(var i = 0; i < target.length; i++){
+        var def = $(target[i]).attr('default');
+        if(def !== undefined)
+            $(target[i]).attr('default', $(target[i]).val());
+        else $(target[i]).val('');
+    }
 }
 
 function showMessage(jElem, msg){
