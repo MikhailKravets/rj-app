@@ -211,7 +211,7 @@ class EndregHandler(web.RequestHandler):
                 result = ['ERROR', 'duplicate']
             else:
                 Config.users[self.get_cookie('session')].email = data[1]
-                finish = Config.users[self.get_cookie('session')].update_endreg(self.application.db_manager)
+                finish = Config.users[self.get_cookie('session')].update_endreg()
                 if finish:
                     result = finish
                 else:
@@ -220,7 +220,7 @@ class EndregHandler(web.RequestHandler):
         elif data[0] == 'PASSWORD':
             logging.debug('Password gained')
             Config.users[self.get_cookie('session')].password = data[1]
-            finish = Config.users[self.get_cookie('session')].update_endreg(self.application.db_manager)
+            finish = Config.users[self.get_cookie('session')].update_endreg()
             if finish:
                 result = finish
             else:

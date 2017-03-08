@@ -1,6 +1,6 @@
 import logging
 
-from config import Config
+from config import Config, DBManager
 
 
 class User:
@@ -15,6 +15,7 @@ class User:
         self.ws = ws
         self.pristine = pristine
         self.endreg = False if pristine == 0 else 1
+        self.db = DBManager()
 
     def endreg_step(self):
         if not self.endreg:
@@ -26,16 +27,16 @@ class User:
             else:
                 return None
 
-    def update_endreg(self, db=None):
+    def update_endreg(self):
         if self.endreg == Config.MAX_REGISTRATION_STEP:
-            if db:
+            if self.db:
                 logging.debug("Finish this shit")
                 self.email = Config.escape(self.email)
                 self.password = Config.escape(self.password)
                 query = """UPDATE users SET email='{}', password=SHA2('{}', 224), pristine=0 WHERE id={}"""
                 query = query.format(self.email, self.password, self.id_user)
                 logging.debug("QUery: {}".format(query))
-                for retr in db.execute(query):
+                for retr in self.db.execute(query):
                     logging.debug('Res: {}'.format(retr))
                     if 'Integrity' in retr:
                         return ['ERROR', 'duplicate']
