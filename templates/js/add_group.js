@@ -72,7 +72,7 @@ function Controller(){
     
     $("#addButton").on('click', function(e){
         if(!checkRequired($("[required]")))
-            showMessage($(".message"), 'Не все поля заполненны!');
+            showMessage($(".message"), 'Не все поля заполнены!');
         else{
             hideMessage($(".message"));
             console.log(model);

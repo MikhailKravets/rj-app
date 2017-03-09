@@ -212,7 +212,7 @@ class DisciplineHandler(web.RequestHandler):
         if self.application.authorized(self.get_cookie('session')):
             if inline:
                 user = Config.users[self.get_cookie('session')]
-                if '2' in user.access:
+                if '3' in user.access:
                     logging.debug('WHAT: "{}"'.format(what))
                     if what == 'add':
                         self.render('add_discipline.html')

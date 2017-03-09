@@ -177,6 +177,10 @@ window.onload = function(){
         app.get('/invite');
     });
     
+    $("[addDiscipline]").on('click', function(e){
+        app.get('/discipline/add');
+    });
+    
     $("[addgroup]").on('click', function(e){
         app.get('/group/add');
     });
