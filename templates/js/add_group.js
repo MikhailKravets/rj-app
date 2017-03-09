@@ -1,7 +1,17 @@
 function Controller(){
-    var model = {};
+    var model = {
+        name: '',
+        specialty: '',
+        finance_form: '',
+        study_form: '',
+        university: '',
+        cvalification: ''
+    };
     var students = [];
     var studentsView = $("[list-model]");
+    
+    
+    nullModel(model, true);
     
     studentsView.find('[model-key]').on('change', function(e){
         var closest = $(e.target).closest('tr');
@@ -38,6 +48,24 @@ function Controller(){
         if(isNull){
             delete students.splice(index, 1);
             closest.remove();
+        }
+    });
+    
+    $('[model]').on('change', function(e){
+        model[$(e.target).attr('model')] = e.target.value;
+    });
+    
+    $("#addButton").on('click', function(e){
+        if(!checkRequired($("[required]")))
+            showMessage($(".message"), 'Не все поля заполненны!');
+        else{
+            hideMessage($(".message"));
+            console.log(model);
+            console.log(students);
+            model.students = students;
+            queryServer('/group/post', ['ADD', model], function(data){
+                console.log(data);
+            })
         }
     });
 }

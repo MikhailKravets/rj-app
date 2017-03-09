@@ -159,8 +159,11 @@ class GroupHandler(web.RequestHandler):
             else:
                 self.redirect('/auth')
 
-    def post(self):
-        pass
+    def post(self, what):
+        if self.application.authorized(self.get_cookie('session')):
+            if '2' in Config.users[self.get_cookie('session')].access:
+                data = json.loads(self.request.body)
+                logging.debug("Gained: {}".format(data))
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH

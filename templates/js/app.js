@@ -17,7 +17,7 @@ function initModel(model){
     for(var i = 0; i < melem.length; i++)
         model[$(melem[i]).attr('model')] = melem[i].value;
 }
-function nullModel(model, initModel=true){
+function nullModel(model, init=true){
     var target = $("[model]");
     for(var i = 0; i < target.length; i++){
         var def = $(target[i]).attr('default');
@@ -25,7 +25,7 @@ function nullModel(model, initModel=true){
             $(target[i]).val(def)
         else $(target[i]).val('');
     }
-    if(initModel)
+    if(init)
         initModel(model);
 }
 function defaultify(){

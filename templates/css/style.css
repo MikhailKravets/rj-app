@@ -232,6 +232,11 @@ hr{
     color: #d4463f;
     line-height: 1.5;
 }
+.center{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 button{

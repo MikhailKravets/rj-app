@@ -4,23 +4,18 @@
 <h4 class="titleHeader">Новая группа</h4>
 <div id="mainFrame">
     <div class="inputTextShell centerOne">
-        <input type="text" class="textField" placeholder="Шифр группы" required autocomplete="off">
-        <label class="prompt">Шифр группы</label>
+        <input type="text" class="textField" placeholder="Название группы" model="name" required autocomplete="off">
+        <label class="prompt">Название группы</label>
     </div>
-    <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Отрасль знаний" required autocomplete="off">
-        <label class="prompt">Отрасль знаний</label>
-    </div>
-    <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Направление подготовки" required autocomplete="off">
-        <label class="prompt">Направление подготовки</label>
-    </div>
-    <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Форма обучения" required autocomplete="off">
-        <label class="prompt">Форма обучения</label>
+    <div class="selectShell leftHalf">
+        <select class="selectOne" default="Д" model="study_form" value="Д">
+            <option value="Д" selected="selected">Дневная</option>
+            <option value="З">Заочная</option>
+        </select>
+        <label class="prompt promptExpanded">Форма обучения</label>
     </div>
     <div class="selectShell rightHalf">
-        <select class="selectOne" model="sex" default="Б">
+        <select class="selectOne" default="Б" model="finance_form" value="Б">
             <option value="Б" selected="selected">Бюджет</option>
             <option value="К">Контракт</option>
         </select>
@@ -28,23 +23,15 @@
     </div>
     <div style="clear: both;"></div>
     <div class="inputTextShell centerOne">
-        <input type="text" class="textField" placeholder="Специальность" required autocomplete="off">
+        <input type="text" class="textField" placeholder="Специальность" model="specialty" required autocomplete="off">
         <label class="prompt">Специальность</label>
     </div>
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Факультет, отделение" required autocomplete="off">
-        <label class="prompt">Факультет, отделение</label>
-    </div>
-    <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Декан, завотдел." required autocomplete="off">
-        <label class="prompt">Декан, завотдел.</label>
-    </div>
-    <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="ВУЗ" required autocomplete="off">
+        <input type="text" class="textField" placeholder="ВУЗ" model="university" required autocomplete="off">
         <label class="prompt">ВУЗ</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Квалиф. уровень" required autocomplete="off">
+        <input type="text" class="textField" placeholder="Квалиф. уровень" model="cvalification" required autocomplete="off">
         <label class="prompt">Квалификационный уровень</label>
     </div>
     <div style="clear: both"></div>
@@ -80,14 +67,18 @@
                    </select>
                 </td>
                 <td class="little">
-                    <input type="text" placeholder="Д" model-key="privilege">
+                    <input type="text" model-key="privilege">
                 </td>
                 <td class="little">
-                    <input type="text" placeholder="Бюджет" model-key="finance">
+                    <select class="selectOne" model-key="finance_form" novalidate="true">
+                        <option value="Б" selected="selected">Бюджет</option>
+                        <option value="К">Контракт</option>
+                   </select>
                 </td>
                 <td>x</td>
             </tr>
         </tbody>
     </table>
+    <div class="message center"></div>
     <button id="addButton">Добавить</button>
 </div>
