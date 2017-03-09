@@ -19,6 +19,11 @@ class User:
         self.endreg = False if pristine == 0 else 1
         self.db = DBManager()
 
+        self.teacher = None
+        self.admin = None
+        self.low = None
+        self.high = None
+
     def endreg_step(self):
         if not self.endreg:
             return None
@@ -76,6 +81,16 @@ class User:
         self.__update_session(data)
         return ['OK']
 
+    def __specify(self):
+        if '1' in self.access:
+            self.teacher = Teacher()
+        if '2' in self.access:
+            self.low = LowModerator()
+        if '3' in self.access:
+            self.high = HighModerator()
+        if '4' in self.access:
+            self.admin = Admin()
+
     def __update_session(self, data):
         if 'login' in data:
             self.login = data['login']
@@ -87,3 +102,24 @@ class User:
             self.middle = data['middle']
         if 'last' in data:
             self.last = data['last']
+
+
+class LowModerator:
+    def low(self):
+        pass
+
+
+class HighModerator:
+    def high(self):
+        pass
+
+
+class Teacher:
+    def teach(self):
+        pass
+
+
+class Admin:
+    def admin(self):
+        pass
+
