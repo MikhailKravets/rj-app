@@ -181,6 +181,10 @@ window.onload = function(){
         app.get('/group/add');
     });
     
+    $("[addload]").on('click', function(e){
+        app.get('/load/add');
+    });
+    
     $("[settings]").on('click', function(e){
         app.get('/settings');
     });
