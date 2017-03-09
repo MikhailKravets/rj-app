@@ -23,6 +23,7 @@ class User:
         self.admin = None
         self.low = None
         self.high = None
+        self.__specify()
 
     def endreg_step(self):
         if not self.endreg:
@@ -83,13 +84,13 @@ class User:
 
     def __specify(self):
         if '1' in self.access:
-            self.teacher = Teacher()
+            self.teacher = Teacher(self.db)
         if '2' in self.access:
-            self.low = LowModerator()
+            self.low = LowModerator(self.db)
         if '3' in self.access:
-            self.high = HighModerator()
+            self.high = HighModerator(self.db)
         if '4' in self.access:
-            self.admin = Admin()
+            self.admin = Admin(self.db)
 
     def __update_session(self, data):
         if 'login' in data:
@@ -105,21 +106,60 @@ class User:
 
 
 class LowModerator:
-    def low(self):
-        pass
+    def __init__(self, db):
+        self.db = db
+
+    def new_group(self, data):
+        self.db.connection.autocommit(False)
+        query = """INSERT INTO groups (name, specialty, finance_form, study_form, university, qualification)
+                   VALUES
+                   ('{0[name]}', '{0[specialty]}', '{0[finance_form]}',
+                   '{0[study_form]}', '{0[university]}', '{0[qualification]}')"""
+        query = query.format(data)
+        for retr in self.db.execute(query):
+            logging.debug(retr)
+            if 'Integrity' in retr:
+                self.db.connection.rollback()
+                return ['ERROR', 'duplicate']
+            elif 'Operational' in retr:
+                self.db.connection.rollback()
+                return ['ERROR', 'operational']
+            elif 'Error' in retr:
+                self.db.connection.rollback()
+                return ['ERROR', 'unknown']
+
+        last_id = self.db.cursor.lastrowid
+        query = """INSERT INTO students (group_id, first, middle, last, sex, privilege, finance_form)
+                   VALUES """
+        for v in data['students']:
+            query += "({1}, '{0[first]}', '{0[middle]}', '{0[last]}', '{0[sex]}', '{0[privilege]}', '{0[finance_form]}'), ".format(v, last_id)
+        query = query[:-2]
+        for retr in self.db.execute(query):
+            logging.debug(retr)
+            if 'Error' in retr:
+                self.db.connection.rollback()
+                return ['ERROR', 'unknown']
+        self.db.connection.commit()
+        return ['OK']
 
 
 class HighModerator:
+    def __init__(self, db):
+        self.db = db
+
     def high(self):
         pass
 
 
 class Teacher:
-    def teach(self):
-        pass
+    def __init__(self, db):
+        self.db = db
 
 
 class Admin:
+    def __init__(self, db):
+        self.db = db
+
     def admin(self):
         pass
 

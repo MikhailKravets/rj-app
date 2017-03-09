@@ -163,7 +163,9 @@ class GroupHandler(web.RequestHandler):
         if self.application.authorized(self.get_cookie('session')):
             if '2' in Config.users[self.get_cookie('session')].access:
                 data = json.loads(self.request.body)
-                logging.debug("Gained: {}".format(data))
+                if data[0] == 'ADD':
+                    result = Config.users[self.get_cookie('session')].low.new_group(data[1])
+                self.write(json.dumps(result))
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH

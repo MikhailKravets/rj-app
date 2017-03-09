@@ -1,15 +1,30 @@
-function Controller(){
+function Controller(){    
     var model = {
         name: '',
         specialty: '',
         finance_form: '',
         study_form: '',
         university: '',
-        cvalification: ''
+        qualification: ''
     };
     var students = [];
     var studentsView = $("[list-model]");
     
+    
+    function nullifyStudents(){
+        students = [];
+        var list_model = $("[list-model]");
+        var first_copy = list_model.find('tr').first().clone(true);
+        
+        var model_keys = first_copy.find('[model-key]');
+        for(var i = 0; i < model_keys.length; i++){
+            if($(model_keys[i]).attr('novalidate') === undefined)
+                $(model_keys[i]).val("");
+        }
+        
+        list_model.html("")
+        list_model.append(first_copy);
+    }
     
     nullModel(model, true);
     
@@ -64,7 +79,21 @@ function Controller(){
             console.log(students);
             model.students = students;
             queryServer('/group/post', ['ADD', model], function(data){
+                data = JSON.parse(data)
                 console.log(data);
+                
+                if(data[0] === 'OK'){
+                    showMessage($(".message"), '<span style="color: #2DA655">Группа добавлена в базу</span>');
+                    defaultify();
+                    nullModel(model, true);
+                    nullifyStudents()
+                }
+                else if(data[0] === 'ERROR'){
+                    if(data[1] === 'duplicity')
+                        showMessage($(".message"), 'Группа с таким названием уже существует!');
+                    else
+                        showMessage($(".message"), 'Нам пришлось нейтрализировать ошибку, угрожавшую безопасности приложения, поэтому нам не удалось сохранить изменения в базу. Сожалеем :(');
+                }
             })
         }
     });
