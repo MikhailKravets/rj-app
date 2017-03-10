@@ -101,7 +101,7 @@ class DBManager:
         try:
             self.cursor.execute(query)
             yield from self.cursor.fetchall()
-        except MySQLdb.IntegrityError:
+        except MySQLdb.IntegrityError as error:
             yield 'IntegrityError'
         except MySQLdb.OperationalError:
             yield 'OperationalError'

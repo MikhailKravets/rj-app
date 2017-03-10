@@ -134,6 +134,7 @@ class LowModerator:
         for v in data['students']:
             query += "({1}, '{0[first]}', '{0[middle]}', '{0[last]}', '{0[sex]}', '{0[privilege]}', '{0[finance_form]}'), ".format(v, last_id)
         query = query[:-2]
+
         for retr in self.db.execute(query):
             logging.debug(retr)
             if 'Error' in retr:
