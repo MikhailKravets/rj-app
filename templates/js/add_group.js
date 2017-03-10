@@ -75,8 +75,6 @@ function Controller(){
             showMessage($(".message"), 'Не все поля заполнены!');
         else{
             hideMessage($(".message"));
-            console.log(model);
-            console.log(students);
             model.students = students;
             queryServer('/group/post', ['ADD', model], function(data){
                 data = JSON.parse(data)
@@ -86,7 +84,7 @@ function Controller(){
                     showMessage($(".message"), '<span style="color: #2DA655">Группа добавлена в базу</span>');
                     defaultify();
                     nullModel(model, true);
-                    nullifyStudents()
+                    nullifyStudents();
                 }
                 else if(data[0] === 'ERROR'){
                     if(data[1] === 'duplicity')

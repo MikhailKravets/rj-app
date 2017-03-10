@@ -140,6 +140,7 @@ class LowModerator:
                 self.db.connection.rollback()
                 return ['ERROR', 'unknown']
         self.db.connection.commit()
+        self.db.connection.autocommit(True)
         return ['OK']
 
 
@@ -147,8 +148,20 @@ class HighModerator:
     def __init__(self, db):
         self.db = db
 
-    def high(self):
-        pass
+    def add_discipline(self, data):
+        query = """INSERT INTO disciplines (name, feature, cycle, code)
+                   VALUES ('{0[name]}', '{0[feature]}', '{0[cycle]}', '{0[code]}')"""
+        query = query.format(data)
+        logging.debug("Query: {}".format(query))
+        for retr in self.db.execute(query):
+            if 'Integrity' in retr:
+                self.db.connection.rollback()
+                return ['ERROR', 'duplicate']
+            elif 'Error' in retr:
+                self.db.connection.rollback()
+                return ['ERROR', 'unknown']
+        #self.db.connection.commit()
+        return ['OK']
 
 
 class Teacher:

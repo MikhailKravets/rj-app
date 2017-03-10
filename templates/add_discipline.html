@@ -1,1 +1,24 @@
-Add discipline
+<link rel="stylesheet" href="{{ static_url('css/add.css') }}">
+<script src="{{ static_url('js/add_discipline.js') }}"></script>
+
+<h4 class="titleHeader">Новая дисциплина</h4>
+<div id="mainFrame">
+    <div class="inputTextShell centerOne">
+        <input type="text" class="textField" placeholder="Название дисциплины" model="name" required autocomplete="off">
+        <label class="prompt">Название дисциплины</label>
+    </div>
+    <div class="inputTextShell centerOne">
+        <input type="text" class="textField" placeholder="Характеристика дисциплины" model="feature" required autocomplete="off">
+        <label class="prompt">Характеристика дисциплины</label>
+    </div>
+    <div class="inputTextShell centerOne">
+        <input type="text" class="textField" placeholder="Цикл дисциплины" model="cycle" required autocomplete="off">
+        <label class="prompt">Цикл дисциплины</label>
+    </div>
+    <div class="inputTextShell centerOne">
+        <input type="text" class="textField" placeholder="Шифр (согласно стандарту)" model="code" required autocomplete="off">
+        <label class="prompt">Шифр</label>
+    </div>
+    <div class="message center"></div>
+    <button id="addButton">Добавить</button>
+</div>

@@ -164,6 +164,8 @@ class GroupHandler(web.RequestHandler):
             if '2' in Config.users[self.get_cookie('session')].access:
                 data = json.loads(self.request.body)
                 if data[0] == 'ADD':
+                    data[1] = self.application.escape_data(data[1])
+                    data[1]['students'] = self.application.escape_data(data[1]['students'])
                     result = Config.users[self.get_cookie('session')].low.new_group(data[1])
                 self.write(json.dumps(result))
             else:
@@ -231,7 +233,17 @@ class DisciplineHandler(web.RequestHandler):
                 self.redirect('/auth')
 
     def post(self, what):
-        pass
+        if self.application.authorized(self.get_cookie('session')):
+            if '3' in Config.users[self.get_cookie('session')].access:
+                data = json.loads(self.request.body)
+                if data[0] == 'ADD':
+                    result = Config.users[self.get_cookie('session')].high.add_discipline(self.application.escape_data(data[1]))
+                self.write(json.dumps(result))
+            else:
+                self.write('405')
+        else:
+            self.write('DENIED')
+
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -377,10 +389,16 @@ class Application(web.Application):
     def escape_data(self, data):
         if type(data) == list:
             for i in range(1, len(data)):
-                data[i] = Config.escape(data[i])
+                try:
+                    data[i] = Config.escape(data[i])
+                except Exception as error:
+                    logging.debug("Escaping error list: {}".format(error))
         elif type(data) == dict:
             for k in data.keys():
-                data[k] = Config.escape(data[k])
+                try:
+                    data[k] = Config.escape(data[k])
+                except Exception as error:
+                    logging.debug("Escaping error dict: {}".format(error))
         elif type(data) == str:
             data = Config.escape(data)
         return data
