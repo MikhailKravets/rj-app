@@ -173,7 +173,6 @@ function Controller() {
         var container = $(e.target).closest(".inputTextShell").find(".comboContainer");
         var key = input.attr("model");
         
-        // queryServer('/load/post', ["CHOICE", key, $(e.target).val()], function (data)
         if(key === 'teacher'){
             if(teach_choice.length !== 0)
                 updateChoiceView(container, teach_choice, true);

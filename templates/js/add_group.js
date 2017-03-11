@@ -74,6 +74,8 @@ function Controller(){
     $("#addButton").on('click', function(e){
         if(!checkRequired($("[required]")))
             showMessage($(".message"), 'Не все поля заполнены!');
+        else if(students.length === 0)
+            showMessage($(".message"), 'Добавьте студентов в группу!');
         else{
             hideMessage($(".message"));
             trimModel(model);

@@ -291,6 +291,12 @@ button:active{
     border-bottom-color: #6790B5;
     border-bottom-width: 2px;
 }
+.unvalidated{
+    border-color: #E6CBCB !important;
+}
+.unvalidated:focus{
+    border-bottom-color: #B56767 !important;
+}
 .prompt{
     position: absolute;
     font-family: "Open Sans", sans-serif;

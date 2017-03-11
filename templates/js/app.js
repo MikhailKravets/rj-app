@@ -51,9 +51,13 @@ function hideMessage(jElem){
 }
 
 function checkRequired(jElem){
-    for(var i = 0; i < jElem.length; i++)
-        if(jElem[i].value === '')
+    for(var i = 0; i < jElem.length; i++){
+        if(jElem[i].value === ''){
+            $(jElem[i]).addClass('unvalidated');
             return false;
+        }
+        else $(jElem[i]).removeClass('unvalidated');
+    }
     return true;
 }
 function checkLatin(str){
