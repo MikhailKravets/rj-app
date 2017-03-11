@@ -187,7 +187,7 @@ function Controller() {
                 else if (key === 'group' && group_choice.length !== 0)
                     $(e.target).val(group_choice[0].first);
                 
-                updateModel(key, input.val());
+                updateModel(key, e.target.value);
                 updateChoiceView(container, [], true);
             }
         }
