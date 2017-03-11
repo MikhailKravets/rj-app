@@ -1,7 +1,6 @@
 function regInputs(jInput){
-    jInput.on('input', function(e){
+    jInput.on('input blur', function(e){
         if(e.target.value === ""){
-            console.log('fdsfsdfds0');
             if($(e.target).next().hasClass('promptExpanded'))
                 $(e.target).next().removeClass('promptExpanded');
         }

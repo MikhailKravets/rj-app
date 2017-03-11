@@ -158,7 +158,7 @@ class LowModerator:
         query = """SELECT CONCAT(last, ' ', first, ' ', middle, ' ') as n, email
                    FROM users
                    WHERE access LIKE '%1%' AND (CONCAT(last, ' ', first, ' ', middle, ' ') LIKE '%{0}%')
-                   ORDER BY n"""
+                   ORDER BY n LIMIT 10"""
         query = query.format(data)
         return self.__exec_choice(query)
 
@@ -166,13 +166,13 @@ class LowModerator:
         query = """SELECT name as n, specialty
                    FROM groups
                    WHERE name LIKE '%{0}%'
-                   ORDER BY n"""
+                   ORDER BY n LIMIT 10"""
         query = query.format(data)
         return self.__exec_choice(query)
 
     def __discipline_choice(self, data):
         query = """SELECT name, code FROM disciplines
-                   WHERE name LIKE '%{0}%' ORDER BY name"""
+                   WHERE name LIKE '%{0}%' ORDER BY name LIMIT 10"""
         query = query.format(data)
         return self.__exec_choice(query)
 

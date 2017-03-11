@@ -21,13 +21,15 @@ function Controller() {
     }
     
     function registerComboEvents(jContainer){
-        jContainer.find(".comboItem").on('click', function(e){
+        var comboItem = jContainer.find(".comboItem");
+        
+        comboItem.on('click', function(e){
             var archi = $(e.target).closest(".inputTextShell");
             var container = archi.find(".comboContainer");
-            var i = $(e.target).index();
+            var i = $(e.target).closest(".comboItem").index();
             var input = archi.find('input');
             var key = input.attr('model');
-            console.log(key);
+            
             if (key === 'teacher')
                 $(input).val(teach_choice[i].first);
             else if (key === 'discipline')
@@ -37,7 +39,6 @@ function Controller() {
             input.focus();
             updateChoiceView(container, [], true);
         });
-        var comboItem = jContainer.find(".comboItem");
         comboItem .on('keydown', function(e){
             if(e.keyCode === 13)
                 $(e.target).click();
@@ -80,6 +81,7 @@ function Controller() {
             jContainer.html("");
             jContainer.css('display', 'none');
         }
+        //jContainer.closest(".inputTextShell").find('input').focus();
     }
 
     $("[choice]").on('input', function (e) {
@@ -89,7 +91,7 @@ function Controller() {
         }
         if (!isWait) {
             var key = $(e.target).attr('model');
-            if(e.target.value){
+            if(e.target.value !== ""){
                 t = setTimeout(function () {
                     isWait = true;
                     var right = -1;
@@ -143,7 +145,7 @@ function Controller() {
         setTimeout(function(){
             var archi = $(e.target).closest(".inputTextShell");
             if(!archi.find(".comboItem").is(":focus"))
-                updateChoiceView(archi.find(".comboContainer"), [], true);
+                updateChoiceView(archi.find(".comboContainer"), [], false);
         }, 30);
     });
     $("[choice]").on('keydown', function(e){
@@ -166,6 +168,45 @@ function Controller() {
             container.find(".comboItem").first().focus();
         }
     });
-    
-    // TODO: handle svg triangle button
+    $(".comboTriangle").on('click', function(e){
+        var input = $(e.target).closest(".inputTextShell").find("input");
+        var container = $(e.target).closest(".inputTextShell").find(".comboContainer");
+        var key = input.attr("model");
+        
+        // queryServer('/load/post', ["CHOICE", key, $(e.target).val()], function (data)
+        if(key === 'teacher'){
+            if(teach_choice.length !== 0)
+                updateChoiceView(container, teach_choice, true);
+            else
+                queryServer('/load/post', ["CHOICE", key, $(e.target).val()], function (data){
+                    data = JSON.parse(data);
+                    
+                    teach_choice = data[1];
+                    updateChoiceView(container, teach_choice, true);
+                });
+                
+        }
+        else if(key === 'discipline'){
+            if(disc_choice.length !== 0)
+                updateChoiceView(container, disc_choice, true);
+            else
+                queryServer('/load/post', ["CHOICE", key, $(e.target).val()], function (data){
+                    data = JSON.parse(data);
+                    
+                    disc_choice = data[1];
+                    updateChoiceView(container, disc_choice, true);
+                });
+        }
+        else if(key === 'group'){
+            if(group_choice.length !== 0)
+                updateChoiceView(container, group_choice, true);
+            else
+                queryServer('/load/post', ["CHOICE", key, $(e.target).val()], function (data){
+                    data = JSON.parse(data);
+                    
+                    group_choice = data[1];
+                    updateChoiceView(container, group_choice, true);
+                });
+        }
+    });
 }

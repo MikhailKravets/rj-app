@@ -205,6 +205,7 @@ class LoadHandler(web.RequestHandler):
         if self.application.authorized(self.get_cookie('session')):
             if '2' in Config.users[self.get_cookie('session')].access:
                 data = json.loads(self.request.body)
+
                 if data[0] == 'ADD':
                     result = Config.users[self.get_cookie('session')].low.add_load(self.application.escape_data(data[1]))
                 elif data[0] == 'CHOICE':
