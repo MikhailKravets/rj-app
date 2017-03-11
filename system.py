@@ -165,15 +165,16 @@ class LowModerator:
     def __group_choice(self, data):
         query = """SELECT name as n, specialty
                    FROM groups
-                   WHERE name LIKE %{0}%
+                   WHERE name LIKE '%{0}%'
                    ORDER BY n"""
         query = query.format(data)
         return self.__exec_choice(query)
 
     def __discipline_choice(self, data):
         query = """SELECT name, code FROM disciplines
-                   WHERE name LIKE %{0}% ORDER BY name"""
-        query.format(data)
+                   WHERE name LIKE '%{0}%' ORDER BY name"""
+        query = query.format(data)
+        logging.debug("Query: {}".format(query))
         return self.__exec_choice(query)
 
     def __exec_choice(self, query):

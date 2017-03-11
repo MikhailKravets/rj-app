@@ -123,6 +123,49 @@ select:focus::-ms-value {background-color: white; color: inherit}
     transform: scale(1.2);
     -webkit-transform: scale(1.2);
 }
+.comboContainer {
+    display: none;
+    position: absolute;
+    background: #ffffff;
+    border: 1px solid #cbd3e6;
+    border-top: none;
+    width: 100%;
+    top: 48px;
+    height: auto;
+    max-height: 500px;
+    z-index: 2;
+}
+.comboItem {
+    display: block;
+    position: static;
+    width: inherit;
+    height: 45px;
+    border-bottom: 1px dashed #cbd3e6;
+    padding-top: 10px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.95rem;
+    text-align: left;
+    text-indent: 10px;
+    cursor: pointer;
+    outline: none;
+}
+.comboItem:last-of-type{
+    border-bottom: none;
+}
+.comboItem:focus, .comboItem:hover{
+    background: #f7f7fa;
+}
+.firstComboHeader{
+    display: block;
+    color: #59595a;
+    line-height: 1.5;
+}
+.secondComboHeader{
+    display: block;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: #9a9a9b;
+}
 
 .leftHalf{
     width: calc(50% - 5px);
