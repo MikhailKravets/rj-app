@@ -208,9 +208,7 @@ class LoadHandler(web.RequestHandler):
                 if data[0] == 'ADD':
                     result = Config.users[self.get_cookie('session')].low.add_load(self.application.escape_data(data[1]))
                 elif data[0] == 'CHOICE':
-                    logging.debug("Choice: {}".format(data))
                     result = Config.users[self.get_cookie('session')].low.choice(self.application.escape_data(data))
-                    logging.debug("Result: {}".format(result))
                 self.write(json.dumps(result))
             else:
                 self.write('405')

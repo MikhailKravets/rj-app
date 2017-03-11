@@ -174,7 +174,6 @@ class LowModerator:
         query = """SELECT name, code FROM disciplines
                    WHERE name LIKE '%{0}%' ORDER BY name"""
         query = query.format(data)
-        logging.debug("Query: {}".format(query))
         return self.__exec_choice(query)
 
     def __exec_choice(self, query):
