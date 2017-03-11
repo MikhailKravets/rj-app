@@ -25,6 +25,7 @@ function Controller(){
                 showMessage($(".message"), 'Введенные пароли не совадают');
             else {
                 hideMessage($(".message"));
+                trimModel(model);
                 queryServer('/settings', ["UPDATE", model], function(data){
                     data = JSON.parse(data);
                     console.log(data);

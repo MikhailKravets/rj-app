@@ -11,6 +11,11 @@ function regInputs(jInput){
     });
 }
 
+function trimModel(obj){
+    var keys = Object.keys(obj);
+    for(var i = 0; i < keys.length; i++)
+        obj[keys[i]] = obj[keys[i]].trim();
+}
 function initModel(model){
     var melem = $("[model]");
     for(var i = 0; i < melem.length; i++)

@@ -15,7 +15,7 @@ function Controller(){
             showMessage($(".message"), 'Не все поля заполнены!');
         else{
             hideMessage($(".message"));
-            console.log(model);
+            trimModel(model);
             queryServer('/discipline/post', ["ADD", model], function(data){
                 data = JSON.parse(data);
                 if(data[0] === 'OK'){

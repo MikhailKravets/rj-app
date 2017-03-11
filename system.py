@@ -155,9 +155,9 @@ class LowModerator:
             return ['ERROR', 'unknown']
 
     def __teacher_choice(self, data):
-        query = """SELECT CONCAT(last, ' ', first, ' ', middle, ' ') as n, email
+        query = """SELECT CONCAT(last, ' ', first, ' ', middle) as n, email
                    FROM users
-                   WHERE access LIKE '%1%' AND (CONCAT(last, ' ', first, ' ', middle, ' ') LIKE '%{0}%')
+                   WHERE access LIKE '%1%' AND (CONCAT(last, ' ', first, ' ', middle) LIKE '%{0}%')
                    ORDER BY n LIMIT 10"""
         query = query.format(data)
         return self.__exec_choice(query)

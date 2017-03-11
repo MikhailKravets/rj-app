@@ -57,6 +57,7 @@ function Controller(){
             if($(finded[i]).attr('novalidate') === undefined)
                 if(students[index][keys[i]] !== ""){
                     isNull = false;
+                    students[index][keys[i]]
                     break;
                 }
         }
@@ -75,6 +76,9 @@ function Controller(){
             showMessage($(".message"), 'Не все поля заполнены!');
         else{
             hideMessage($(".message"));
+            trimModel(model);
+            for(var i = 0; i < students.length; i++)
+                trimModel(students[i]);
             model.students = students;
             queryServer('/group/post', ['ADD', model], function(data){
                 data = JSON.parse(data)

@@ -54,6 +54,7 @@ function Controller(){
         else if(!checkLatin($("[numeric]").val()))
             showMessage($(".message"), 'Обратите внимание на правила ввода прав доступа');
         else {
+            trimModel(model);
             queryServer('/invite', ['INVITE', model], function(data){
                 data = JSON.parse(data);
                 if(data[0] === "OK")
