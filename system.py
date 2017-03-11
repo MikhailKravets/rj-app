@@ -144,6 +144,47 @@ class LowModerator:
         self.db.connection.autocommit(True)
         return ['OK']
 
+    def choice(self, data):
+        if data[1] == 'teacher':
+            return self.__teacher_choice(data[2])
+        elif data[1] == 'group':
+            return self.__group_choice(data[2])
+        elif data[1] == 'discipline':
+            return self.__discipline_choice(data[2])
+        else:
+            return ['ERROR', 'unknown']
+
+    def __teacher_choice(self, data):
+        query = """SELECT CONCAT(last, ' ', first, ' ', middle, ' ') as n, email
+                   FROM users
+                   WHERE access LIKE '%1%' AND (CONCAT(last, ' ', first, ' ', middle, ' ') LIKE '%{0}%')
+                   ORDER BY n"""
+        query = query.format(data)
+        return self.__exec_choice(query)
+
+    def __group_choice(self, data):
+        query = """SELECT name as n, specialty
+                   FROM groups
+                   WHERE name LIKE %{0}%
+                   ORDER BY n"""
+        query = query.format(data)
+        return self.__exec_choice(query)
+
+    def __discipline_choice(self, data):
+        query = """SELECT name, code FROM disciplines
+                   WHERE name LIKE %{0}% ORDER BY name"""
+        query.format(data)
+        return self.__exec_choice(query)
+
+    def __exec_choice(self, query):
+        result = []
+        for retr in self.db.execute(query):
+            if 'Error' in retr:
+                return ['ERROR']
+            else:
+                result.append({'first': retr[0], 'second': retr[1]})
+        return ['OK', result]
+
 
 class HighModerator:
     def __init__(self, db):

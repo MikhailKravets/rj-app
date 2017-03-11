@@ -4,7 +4,7 @@
 <h4 class="titleHeader">Новая нагрузка</h4>
 <div id="mainFrame">
     <div class="inputTextShell centerOne">
-        <input type="text" class="textField" placeholder="Преподаватель" autocomplete="off">
+        <input type="text" class="textField" placeholder="Преподаватель" autocomplete="off" choice model="teacher">
         <label class="prompt">Преподаватель</label>
         <div class="comboTriangle">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.677 18.52c.914 1.523-.183 3.472-1.967 3.472h-19.414c-1.784 0-2.881-1.949-1.967-3.472l9.709-16.18c.891-1.483 3.041-1.48 3.93 0l9.709 16.18z"/></svg>
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Дисциплина" autocomplete="off">
+        <input type="text" class="textField" placeholder="Дисциплина" autocomplete="off" choice model="discipline">
         <label class="prompt">Дисциплина</label>
         <div class="comboTriangle">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.677 18.52c.914 1.523-.183 3.472-1.967 3.472h-19.414c-1.784 0-2.881-1.949-1.967-3.472l9.709-16.18c.891-1.483 3.041-1.48 3.93 0l9.709 16.18z"/></svg>
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="inputTextShell rightHalf"command="combo group">
-        <input name="groupCypher" type="text" class="textField" placeholder="Группа" autocomplete="off">
+        <input name="groupCypher" type="text" class="textField" placeholder="Группа" autocomplete="off" choice model="group">
         <label class="prompt">Группа</label>
         <div class="comboTriangle">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.677 18.52c.914 1.523-.183 3.472-1.967 3.472h-19.414c-1.784 0-2.881-1.949-1.967-3.472l9.709-16.18c.891-1.483 3.041-1.48 3.93 0l9.709 16.18z"/></svg>
@@ -49,11 +49,11 @@
     <div style="clear: both"></div>
     <h2 class="additionalHeader">Характеристика дисциплины</h2>
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField integer" placeholder="Семестр" required autocomplete="off">
+        <input type="text" class="textField integer" placeholder="Семестр" required number autocomplete="off">
         <label class="prompt">Семестр</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input  type="text" class="textField" placeholder="Год подготовки" required autocomplete="off">
+        <input  type="text" class="textField" placeholder="Год подготовки" required number autocomplete="off">
         <label class="prompt">Год подготовки</label>
     </div>
     <div style="clear: both"></div>
@@ -70,38 +70,38 @@
     <div style="clear: both"></div>
     <h2 class="additionalHeader">Аудиторные часы</h2>
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Лекции" autocomplete="off">
+        <input type="text" class="textField" placeholder="Лекции" autocomplete="off" number>
         <label class="prompt">Лекции</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Практика" autocomplete="off">
+        <input type="text" class="textField" placeholder="Практика" autocomplete="off" number>
         <label class="prompt">Практика</label>
     </div>
 
     <div class="inputTextShell leftHalf">
-        <input type="text" name="laborAudit" class="textField" placeholder="Лабораторн." autocomplete="off">
+        <input type="text" name="laborAudit" class="textField" placeholder="Лабораторн." autocomplete="off" number>
         <label class="prompt">Лабораторн.</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Семинар" autocomplete="off">
+        <input type="text" class="textField" placeholder="Семинар" autocomplete="off" number>
         <label class="prompt">Семинар</label>
     </div>
     <div style="clear: both"></div>
     <h2 class="additionalHeader">Самостоятельные часы</h2>
     <div class="inputTextShell leftHalf">
-        <input type="text" name="selfLectureHours" class="textField"  placeholder="Лецкии" autocomplete="off">
+        <input type="text" name="selfLectureHours" class="textField"  placeholder="Лецкии" autocomplete="off" number>
         <label class="prompt">Лекции</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" name="selfPracticeHours" class="textField"  placeholder="Практика" autocomplete="off">
+        <input type="text" name="selfPracticeHours" class="textField"  placeholder="Практика" autocomplete="off" number>
         <label class="prompt">Практика</label>
     </div>
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField"  placeholder="Лабораторн." autocomplete="off">
+        <input type="text" class="textField"  placeholder="Лабораторн." autocomplete="off" number>
         <label class="prompt">Лабораторн.</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" class="textField selfHoursTextField integer"  placeholder="Семинар" autocomplete="off">
+        <input type="text" class="textField selfHoursTextField integer"  placeholder="Семинар" autocomplete="off" number>
         <label class="prompt">Семинар</label>
     </div>
     <div style="clear: both"></div>
