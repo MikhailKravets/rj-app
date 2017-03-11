@@ -207,7 +207,7 @@ class LoadHandler(web.RequestHandler):
                 data = json.loads(self.request.body)
 
                 if data[0] == 'ADD':
-                    result = Config.users[self.get_cookie('session')].low.add_load(self.application.escape_data(data[1]))
+                    result = Config.users[self.get_cookie('session')].low.new_load(self.application.escape_data(data[1]))
                 elif data[0] == 'CHOICE':
                     result = Config.users[self.get_cookie('session')].low.choice(self.application.escape_data(data))
                 self.write(json.dumps(result))

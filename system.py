@@ -120,12 +120,15 @@ class LowModerator:
             logging.debug(retr)
             if 'Integrity' in retr:
                 self.db.connection.rollback()
+                self.db.connection.autocommit(True)
                 return ['ERROR', 'duplicate']
             elif 'Operational' in retr:
                 self.db.connection.rollback()
+                self.db.connection.autocommit(True)
                 return ['ERROR', 'operational']
             elif 'Error' in retr:
                 self.db.connection.rollback()
+                self.db.connection.autocommit(True)
                 return ['ERROR', 'unknown']
 
         last_id = self.db.cursor.lastrowid
@@ -143,6 +146,50 @@ class LowModerator:
         self.db.connection.commit()
         self.db.connection.autocommit(True)
         return ['OK']
+
+    def new_load(self, data):
+        self.db.connection.autocommit(False)
+        query = """INSERT INTO loads
+                   (teacher_id, discipline_id, group_id, semester, year,
+                    lecture, practice, labor, seminar,
+                    self_lecture, self_practice, self_labor, self_seminar)
+                    VALUES
+                    ((SELECT id FROM users WHERE CONCAT(last, ' ', first, ' ', middle) = '{0[teacher]}'),
+                     (SELECT id FROM disciplines WHERE name='{0[discipline]}'),
+                     (SELECT id FROM groups WHERE name='{0[group]}'),
+                     {0[semester]}, {0[year]},
+                     {0[lecture]}, {0[practice]}, {0[labor]}, {0[seminar]},
+                     {0[self_lecture]}, {0[self_practice]}, {0[self_labor]}, {0[self_seminar]})"""
+        query = query.format(data)
+
+        for retr in self.db.execute(query):
+            if 'Error' in retr:
+                self.db.connection.rollback()
+                self.db.connection.autocommit(True)
+                return ['ERROR', 'unknown']
+
+        query = """SELECT COUNT(id) FROM loads WHERE
+                    teacher_id=(SELECT id FROM users WHERE CONCAT(last, ' ', first, ' ', middle) = '{0[teacher]}')
+                    AND
+                    discipline_id=(SELECT id FROM disciplines WHERE name='{0[discipline]}')
+                    AND
+                    group_id=(SELECT id FROM groups WHERE name='{0[group]}')
+                    AND
+                    semester={0[semester]}"""
+        query = query.format(data)
+
+        length = 0
+        for retr in self.db.execute(query):
+            length = retr[0]
+        logging.debug('LENGTH: {}'.format(length))
+        if length > 1:
+            self.db.connection.rollback()
+            self.db.connection.autocommit(True)
+            return ['ERROR', 'multiple']
+        else:
+            self.db.connection.commit()
+            self.db.connection.autocommit(True)
+            return ['OK']
 
     def choice(self, data):
         if data[1] == 'teacher':

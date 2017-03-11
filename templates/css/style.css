@@ -292,7 +292,7 @@ button:active{
     border-bottom-width: 2px;
 }
 .unvalidated{
-    border-color: #E6CBCB !important;
+    border-color: #E6A8A8 !important;
 }
 .unvalidated:focus{
     border-bottom-color: #B56767 !important;

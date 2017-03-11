@@ -83,7 +83,7 @@ function Controller(){
                 trimModel(students[i]);
             model.students = students;
             queryServer('/group/post', ['ADD', model], function(data){
-                data = JSON.parse(data)
+                data = JSON.parse(data);
                 console.log(data);
                 
                 if(data[0] === 'OK'){

@@ -1,5 +1,15 @@
 function Controller() {
-    var model = {};
+    var model = {
+        lecture: "0",
+        practice: "0",
+        labor: "0",
+        seminar: "0",
+        
+        self_lecture: "0",
+        self_practice: "0",
+        self_labor: "0",
+        self_seminar: "0"
+    };
     
     var teach_choice = [];
     var disc_choice = [];
@@ -9,6 +19,19 @@ function Controller() {
     var t;
     var isWait = false;
 
+    function updateModel(key, val){
+        model[key] = val;
+    }
+    
+    function intifyModel(){
+        var keys = Object.keys(model);
+        for(var i = 0; i < keys.length; i++){
+            var n = parseInt(model[keys[i]]);
+            if(!isNaN(n))
+                model[keys[i]] = n;
+        }
+    }
+    
     function checkList(list, value) {
         var new_list = [];
         for(var i = 0; i < list.length; i++){
@@ -37,6 +60,8 @@ function Controller() {
             else if (key === 'group')
                 $(input).val(group_choice[i].first);
             input.focus();
+            
+            updateModel(key, input.val());
             updateChoiceView(container, [], true);
         });
         comboItem .on('keydown', function(e){
@@ -161,6 +186,8 @@ function Controller() {
                     $(e.target).val(disc_choice[0].first);
                 else if (key === 'group' && group_choice.length !== 0)
                     $(e.target).val(group_choice[0].first);
+                
+                updateModel(key, input.val());
                 updateChoiceView(container, [], true);
             }
         }
@@ -206,6 +233,37 @@ function Controller() {
                     group_choice = data[1];
                     updateChoiceView(container, group_choice, true);
                 });
+        }
+    });
+    
+    $('[model]').on('change', function(e){
+        model[$(e.target).attr('model')] = e.target.value;
+    });
+    
+    $("#addButton").on('click', function(e){
+        if(!checkRequired($("[required]")))
+            showMessage($(".message"), 'Не все поля заполнены!');
+        else if(!checkNumeric($("[numeric]")))
+            showMessage($(".message"), 'В некоторые поля можно ввести только числовые значения!');
+        else{
+            trimModel(model);
+           // intifyModel(model);
+            console.log(model);
+            queryServer('/load/post', ['ADD', model], function(data){
+                data = JSON.parse(data);
+                console.log(data);
+                if(data[0] === 'OK'){
+                    showMessage($(".message"), '<span style="color: #2DA655">Нагрузка добавлена в базу</span>');
+                    defaultify();
+                    nullModel(model, true);
+                }
+                else if(data[0] === 'ERROR'){
+                    if(data[1] === 'multiple')
+                        showMessage($(".message"), 'У данного преподавателя в заданном семестре уже существет такая нагрузка!');
+                    else
+                        showMessage($(".message"), 'Нам пришлось нейтрализировать ошибку, угрожавшую безопасности приложения, поэтому нам не удалось сохранить изменения в базу. Сожалеем :(');
+                }
+            });
         }
     });
 }

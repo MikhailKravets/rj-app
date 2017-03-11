@@ -37,7 +37,7 @@ function defaultify(){
     for(var i = 0; i < target.length; i++){
         var def = $(target[i]).attr('default');
         if(def !== undefined)
-            $(target[i]).attr('default', $(target[i]).val());
+            $(target[i]).val($(target[i]).attr('default'));
         else $(target[i]).val('');
     }
 }
@@ -70,11 +70,16 @@ function checkEmail(str){
     var pattern = /[A-Za-z0-9]+@{1}[A-Za-z0-9]+\.[A-Za-z0-9]+/i;
     return pattern.test(str);
 }
-function checkNumeric(str){
+function checkNumeric(jElem){
     pattern = /[^0-9]+/i;
-    if(pattern.test(str))
-        return false;
-    else return true;
+    for(var i = 0; i < jElem.length; i++){
+        if(pattern.test(jElem[i].value)){
+            $(jElem[i]).addClass('unvalidated');
+            return false;
+        }
+        else $(jElem[i]).removeClass('unvalidated');
+    }
+    return true;
 }
 function checkEqual(jElem){
     var val = jElem[0].value;
