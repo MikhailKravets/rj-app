@@ -19,7 +19,49 @@ function Controller() {
             return -1; // return list of indeces of right answers
         else return new_list;
     }
-
+    
+    function registerComboEvents(jContainer){
+        jContainer.find(".comboItem").on('click', function(e){
+            var archi = $(e.target).closest(".inputTextShell");
+            var container = archi.find(".comboContainer");
+            var i = $(e.target).index();
+            var input = archi.find('input');
+            var key = input.attr('model');
+            console.log(key);
+            if (key === 'teacher')
+                $(input).val(teach_choice[i].first);
+            else if (key === 'discipline')
+                $(input).val(disc_choice[i].first);
+            else if (key === 'group')
+                $(input).val(group_choice[i].first);
+            input.focus();
+            updateChoiceView(container, [], true);
+        });
+        var comboItem = jContainer.find(".comboItem");
+        comboItem .on('keydown', function(e){
+            if(e.keyCode === 13)
+                $(e.target).click();
+            else if(e.keyCode === 38){
+                e.preventDefault();
+                if($(e.target).index() === 0){
+                    $(e.target).closest(".inputTextShell").find('input').focus();
+                }
+                else
+                    $(e.target).prev().focus();
+            }
+            else if(e.keyCode === 40){
+                e.preventDefault();
+                $(e.target).next().focus();
+            }
+        });
+        comboItem.on('blur', function(e){
+            setTimeout(function(){
+                if(!comboItem.is(":focus") && !jContainer.closest(".inputTextShell").find('input').is(":focus"))
+                    updateChoiceView(jContainer, [], true);
+            }, 30);
+        });
+    }
+    
     function updateChoiceView(jContainer, list, nullify=false){
         if(nullify)
             jContainer.html("");
@@ -31,10 +73,11 @@ function Controller() {
                 str += '</div>';
                 jContainer.html(jContainer.html() + str);
             }
+            registerComboEvents(jContainer);
             jContainer.css('display', 'block');
         }
         else {
-            jContainer.html();
+            jContainer.html("");
             jContainer.css('display', 'none');
         }
     }
@@ -96,4 +139,33 @@ function Controller() {
             }
         }
     });
+    $("[choice]").on('blur', function(e){
+        setTimeout(function(){
+            var archi = $(e.target).closest(".inputTextShell");
+            if(!archi.find(".comboItem").is(":focus"))
+                updateChoiceView(archi.find(".comboContainer"), [], true);
+        }, 30);
+    });
+    $("[choice]").on('keydown', function(e){
+        var container = $(e.target).closest(".inputTextShell").find(".comboContainer");
+        
+        if(e.keyCode == 13){
+            if(e.target.value !== ''){
+                var key = $(e.target).attr('model');
+
+                if (key === 'teacher' && teach_choice.length !== 0)
+                    $(e.target).val(teach_choice[0].first);
+                else if (key === 'discipline' && disc_choice.length !== 0)
+                    $(e.target).val(disc_choice[0].first);
+                else if (key === 'group' && group_choice.length !== 0)
+                    $(e.target).val(group_choice[0].first);
+                updateChoiceView(container, [], true);
+            }
+        }
+        else if(e.keyCode === 40){
+            container.find(".comboItem").first().focus();
+        }
+    });
+    
+    // TODO: handle svg triangle button
 }
