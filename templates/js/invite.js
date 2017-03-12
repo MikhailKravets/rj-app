@@ -51,7 +51,7 @@ function Controller(){
             showMessage($(".message"), 'Не все поля заполнены!');
         else if(!checkLatin($("[latin]").val()))
             showMessage($(".message"), 'В ник-нейме допустимо использовать только латинские символы и цифры');
-        else if(!checkLatin($("[numeric]").val()))
+        else if(!checkLatin($("[numeric]").val()) || !checkNumeric($("[numeric]")))
             showMessage($(".message"), 'Обратите внимание на правила ввода прав доступа');
         else {
             trimModel(model);
