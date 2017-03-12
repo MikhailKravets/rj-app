@@ -24,7 +24,7 @@ function Controller(){
     $("[numeric]").on('blur', function(e){
         if(e.target.value !== ''){
             console.log(checkNumeric(e.target.value));
-            if(!checkNumeric(e.target.value))
+            if(!checkNumeric($(e.target)))
                 showMessage($(".message"), 'Здесь можно ввести всего несколько цифр подряд. Я же Вам, кажется, даже говорил какие!?');
             else hideMessage($(".message"));
         }
