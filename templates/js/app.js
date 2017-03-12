@@ -205,4 +205,8 @@ window.onload = function(){
     $("[settings]").on('click', function(e){
         app.get('/settings');
     });
+    
+    $("[addjournal]").on('click', function(e){
+        app.get('/journal/add');
+    });
 }

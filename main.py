@@ -256,6 +256,36 @@ class DisciplineHandler(web.RequestHandler):
         else:
             self.write('DENIED')
 
+    def get_template_path(self):
+        return Config.TEMPLATE_PATH
+
+
+class JournalHandler(web.RequestHandler):
+    def get(self, what):
+        inline = self.application.inline_get(self.get_argument('inline', '0'))
+        if self.application.authorized(self.get_cookie('session')):
+            if inline:
+                user = Config.users[self.get_cookie('session')]
+                if '1' in user.access:
+                    logging.debug('WHAT: "{}"'.format(what))
+                    if what == 'add':
+                        self.render('add_journal.html')
+                    elif what == 'edit':
+                        self.render('edit_journal.html')
+                    else:
+                        self.redirect('/journal/add')
+                else:
+                    self.write('405')
+            else:
+                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+        else:
+            if inline:
+                self.write('DENIED')
+            else:
+                self.redirect('/auth')
+
+    def post(self):
+        pass
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -370,7 +400,8 @@ class Application(web.Application):
             (r"/settings", SettingsHandler),
             (r"/group/([a-z]*)", GroupHandler),
             (r"/load/([a-z]*)", LoadHandler),
-            (r"/discipline/([a-z]*)", DisciplineHandler)
+            (r"/discipline/([a-z]*)", DisciplineHandler),
+            (r"/journal/([a-z]*)", JournalHandler)
         ]
         settings = {
             'debug': True,
