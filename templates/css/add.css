@@ -166,6 +166,21 @@ select:focus::-ms-value {background-color: white; color: inherit}
     line-height: 1.5;
     color: #9a9a9b;
 }
+.screenholder{
+    text-align: center;
+}
+.screenholder svg{
+    fill: rgba(45, 108, 166, 0.7);
+    width: 35%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+.screenholder p{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1rem;
+    color: #2d6ca6;
+}
 
 .leftHalf{
     width: calc(50% - 5px);

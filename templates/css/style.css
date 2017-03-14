@@ -40,6 +40,10 @@ hr{
     height: 1px;
     background: linear-gradient(to right, #ebebeb, #dedede, #ebebeb);
 }
+.margined-vert{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 #view{
     opacity: 1;

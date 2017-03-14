@@ -284,8 +284,17 @@ class JournalHandler(web.RequestHandler):
             else:
                 self.redirect('/auth')
 
-    def post(self):
-        pass
+    def post(self, what):
+        if self.application.authorized(self.get_cookie('session')):
+            if '1' in Config.users[self.get_cookie('session')].access:
+                data = json.loads(self.request.body)
+                if data[0] == 'CHOICE':
+                    result = Config.users[self.get_cookie('session')].teacher.choice(Config.users[self.get_cookie('session')].id_user, self.application.escape_data(data[1]))
+                self.write(json.dumps(result))
+            else:
+                self.write('405')
+        else:
+            self.write('DENIED')
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH

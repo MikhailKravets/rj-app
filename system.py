@@ -257,6 +257,25 @@ class Teacher:
     def __init__(self, db):
         self.db = db
 
+    def choice(self, id_user, data_like):
+        query = """SELECT d.name, l.semester
+                   FROM disciplines AS d
+                   INNER JOIN loads as l ON d.id=l.discipline_id
+                   WHERE d.name LIKE '%{}%'
+                   AND
+                   l.teacher_id={}
+                   AND
+                   l.id NOT IN (SELECT load_id FROM journal_hours)""".format(data_like, id_user)
+        return self.__exec_choice(query)
+
+    def __exec_choice(self, query):
+        result = []
+        for retr in self.db.execute(query):
+            if 'Error' in retr:
+                return ['ERROR']
+            else:
+                result.append({'first': retr[0], 'second': '{} семестр'.format(retr[1])})
+        return ['OK', result]
 
 class Admin:
     def __init__(self, db):
