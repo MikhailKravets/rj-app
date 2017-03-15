@@ -3,8 +3,9 @@ import logging
 from config import Config, DBManager
 
 
-class User:
-    def __init__(self, id_user, login, name, access='1', sex='M', email=None, pristine=0, ws=None):
+class _Interface:
+    def __init__(self, obj, id_user, login, name, access, sex, email, pristine, ws):
+        self.obj = obj
         self.id_user = id_user
         self.login = login
         self.first = name[0]
@@ -17,13 +18,10 @@ class User:
         self.ws = ws
         self.pristine = pristine
         self.endreg = False if pristine == 0 else 1
-        self.db = DBManager()
+        self.db = None #DBManager()
 
-        self.teacher = None
-        self.admin = None
-        self.low = None
-        self.high = None
-        self.__specify()
+    def init_db(self):
+        self.db = DBManager()
 
     def endreg_step(self):
         if not self.endreg:
@@ -82,16 +80,6 @@ class User:
         self.__update_session(data)
         return ['OK']
 
-    def __specify(self):
-        if '1' in self.access:
-            self.teacher = Teacher(self.db)
-        if '2' in self.access:
-            self.low = LowModerator(self.db)
-        if '3' in self.access:
-            self.high = HighModerator(self.db)
-        if '4' in self.access:
-            self.admin = Admin(self.db)
-
     def __update_session(self, data):
         if 'login' in data:
             self.login = data['login']
@@ -104,11 +92,58 @@ class User:
         if 'last' in data:
             self.last = data['last']
 
+    # low moder
+    def new_group(self, data):
+        self.obj.new_group(data)
 
-class LowModerator:
-    def __init__(self, db):
-        self.db = db
+    def new_load(self, data):
+        self.obj.new_load(data)
 
+    def choice(self, data):
+        self.obj.choice_load(data)
+
+    # high moder
+    def add_discipline(self, data):
+        self.obj.add_discipline(data)
+
+    # teacher
+    def choice_load(self, id_user, data_like):
+        self.obj.choice_load(id_user, data_like)
+
+    # admin
+
+
+class User:
+    def __init__(self, id_user, login, name, access='1', sex='M', email=None, pristine=0, ws=None):
+        self.id_user = id_user
+        self.login = login
+        self.first = name[0]
+        self.middle = name[1]
+        self.last = name[2]
+        self.password = False
+        self.access = access
+        self.email = email
+        self.sex = sex
+        self.ws = ws
+        self.pristine = pristine
+        self.endreg = False if pristine == 0 else 1
+
+    def specify(self):
+        tup = self.id_user, self.login, (self.first, self.middle, self.last), self.access, self.sex, self.email, self.pristine, self.ws
+        obj = self
+        if '1' in self.access:
+            obj = Teacher(obj, *tup)
+        if '2' in self.access:
+            obj = LowModerator(obj, *tup)
+        if '3' in self.access:
+            obj = HighModerator(obj, *tup)
+        if '4' in self.access:
+            obj = Admin(obj, *tup)
+        obj.init_db()
+        return obj
+
+
+class LowModerator(_Interface):
     def new_group(self, data):
         self.db.connection.autocommit(False)
         query = """INSERT INTO groups (name, specialty, finance_form, study_form, university, qualification)
@@ -233,10 +268,7 @@ class LowModerator:
         return ['OK', result]
 
 
-class HighModerator:
-    def __init__(self, db):
-        self.db = db
-
+class HighModerator(_Interface):
     def add_discipline(self, data):
         query = """INSERT INTO disciplines (name, feature, cycle, code)
                    VALUES ('{0[name]}', '{0[feature]}', '{0[cycle]}', '{0[code]}')"""
@@ -253,11 +285,8 @@ class HighModerator:
         return ['OK']
 
 
-class Teacher:
-    def __init__(self, db):
-        self.db = db
-
-    def choice(self, id_user, data_like):
+class Teacher(_Interface):
+    def choice_load(self, id_user, data_like):
         query = """SELECT d.name, l.semester
                    FROM disciplines AS d
                    INNER JOIN loads as l ON d.id=l.discipline_id
@@ -277,10 +306,7 @@ class Teacher:
                 result.append({'first': retr[0], 'second': '{} семестр'.format(retr[1])})
         return ['OK', result]
 
-class Admin:
-    def __init__(self, db):
-        self.db = db
 
-    def admin(self):
-        pass
+class Admin(_Interface):
+    pass
 

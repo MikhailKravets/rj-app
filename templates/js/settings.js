@@ -30,8 +30,8 @@ function Controller(){
                     data = JSON.parse(data);
                     console.log(data);
                     if(data[0] == 'OK'){
-                        defaultify();
                         model = {}
+                        $("[equal]").val('');
                         showMessage($(".message"), '<span style="color: #2DA655">Изменения сохранены</span>');
                     }
                     else if(data[0] == 'ERROR'){

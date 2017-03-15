@@ -166,7 +166,7 @@ class GroupHandler(web.RequestHandler):
                 if data[0] == 'ADD':
                     data[1] = self.application.escape_data(data[1])
                     data[1]['students'] = self.application.escape_data(data[1]['students'])
-                    result = Config.users[self.get_cookie('session')].low.new_group(data[1])
+                    result = Config.users[self.get_cookie('session')].new_group(data[1])
                 self.write(json.dumps(result))
             else:
                 self.write('405')
@@ -207,9 +207,9 @@ class LoadHandler(web.RequestHandler):
                 data = json.loads(self.request.body)
 
                 if data[0] == 'ADD':
-                    result = Config.users[self.get_cookie('session')].low.new_load(self.application.escape_data(data[1]))
+                    result = Config.users[self.get_cookie('session')].new_load(self.application.escape_data(data[1]))
                 elif data[0] == 'CHOICE':
-                    result = Config.users[self.get_cookie('session')].low.choice(self.application.escape_data(data))
+                    result = Config.users[self.get_cookie('session')].choice(self.application.escape_data(data))
                 self.write(json.dumps(result))
             else:
                 self.write('405')
@@ -249,7 +249,7 @@ class DisciplineHandler(web.RequestHandler):
             if '3' in Config.users[self.get_cookie('session')].access:
                 data = json.loads(self.request.body)
                 if data[0] == 'ADD':
-                    result = Config.users[self.get_cookie('session')].high.add_discipline(self.application.escape_data(data[1]))
+                    result = Config.users[self.get_cookie('session')].add_discipline(self.application.escape_data(data[1]))
                 self.write(json.dumps(result))
             else:
                 self.write('405')
@@ -289,7 +289,7 @@ class JournalHandler(web.RequestHandler):
             if '1' in Config.users[self.get_cookie('session')].access:
                 data = json.loads(self.request.body)
                 if data[0] == 'CHOICE':
-                    result = Config.users[self.get_cookie('session')].teacher.choice(Config.users[self.get_cookie('session')].id_user, self.application.escape_data(data[1]))
+                    result = Config.users[self.get_cookie('session')].choice_load(Config.users[self.get_cookie('session')].id_user, self.application.escape_data(data[1]))
                 self.write(json.dumps(result))
             else:
                 self.write('405')
@@ -325,7 +325,7 @@ class AuthHandler(web.RequestHandler):
             for retrieved in self.application.db_manager.execute(query):
                 id_user, log, passwd, fn, mn, ln, email, sex, access, p = retrieved
                 session_name = Config.rand_hexline(22)
-                Config.users[session_name] = User(id_user, log, (fn, mn, ln), access, sex, email, p)
+                Config.users[session_name] = User(id_user, log, (fn, mn, ln), access, sex, email, p).specify()
                 self.set_cookie('session', session_name)
                 result = True
             if result:
