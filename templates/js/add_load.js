@@ -46,7 +46,6 @@ function Controller() {
     
     function validateTeacher(value){
         right = checkList(teach_choice, value);
-        console.log(right);
         return right !== -1
     }
     function validateDisc(value){

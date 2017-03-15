@@ -24,12 +24,17 @@ function Controller(){
     function checkList(list, value) {
         var new_list = [];
         for(var i = 0; i < list.length; i++){
-            if(list[i].first.toLowerCase().search(value) !== -1)
+            if(list[i].first.toLowerCase().search(value.toLowerCase()) !== -1)
                 new_list.push(list[i]);
         }
         if(new_list.length == 0)
             return -1; // return list of indeces of right answers
         else return new_list;
+    }
+    
+    function validateLoad(value){
+        right = checkList(load_choice, value);
+        return right !== -1
     }
     
     function registerComboEvents(jContainer){
@@ -47,6 +52,10 @@ function Controller(){
             
             updateModel(key, input.val());
             updateChoiceView(container, [], true);
+            
+            setTimeout(function(){
+                input.blur();
+            }, 100);
         });
         comboItem .on('keydown', function(e){
             if(e.keyCode === 13)
@@ -79,7 +88,7 @@ function Controller(){
             for(var i = 0; i < list.length; i++){
                 var str = '<div class="comboItem" tabindex="1">';
                 str += '<div class="firstComboHeader">' + list[i].first + '</div>';
-                str += '<div class="secondComboHeader">'+ list[i].second +'</div>';
+                str += '<div class="secondComboHeader">'+ list[i].second +' семестр</div>';
                 str += '</div>';
                 jContainer.html(jContainer.html() + str);
             }
@@ -133,8 +142,21 @@ function Controller(){
     $("[choice]").on('blur', function(e){
         setTimeout(function(){
             var archi = $(e.target).closest(".inputTextShell");
-            if(!archi.find(".comboItem").is(":focus"))
+            if(!archi.find(".comboItem").is(":focus")){
                 updateChoiceView(archi.find(".comboContainer"), [], false);
+                if(!validateLoad(e.target.value))
+                    $(e.target).addClass('unvalidated');
+                else{
+                    $(e.target).removeClass('unvalidated');
+                    data = checkList(load_choice, e.target.value);
+                    queryServer('/journal/post', ["STEP", data.first, data.secon, data.third], function (data) {
+                        data = JSON.parse(data);
+                        console.log(data);
+                        $("#beforeView").css('display', 'none');
+                        $("#stepView").html(data);
+                    });
+                }
+            }
         }, 30);
     });
     $("[choice]").on('keydown', function(e){

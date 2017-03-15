@@ -41,9 +41,7 @@ class _Interface:
                 self.password = Config.escape(self.password)
                 query = """UPDATE users SET email='{}', password=SHA2('{}', 224), pristine=0 WHERE id={}"""
                 query = query.format(self.email, self.password, self.id_user)
-                logging.debug("QUery: {}".format(query))
                 for retr in self.db.execute(query):
-                    logging.debug('Res: {}'.format(retr))
                     if 'Integrity' in retr:
                         return ['ERROR', 'duplicate']
                 self.pristine = 0
@@ -286,8 +284,19 @@ class HighModerator(_Interface):
 
 
 class Teacher(_Interface):
+    NEW_JOURN_STEP = 1
+    MAX_JOURN_STEPS = 2
+
+    def __init__(self, obj, *tup):
+        super().__init__(obj, *tup)
+        self.module_amount = 1
+        self.semester = 0
+        self.program_id = 0
+        self.new_time = None
+        self.new_marks = None
+
     def choice_load(self, id_user, data_like):
-        query = """SELECT d.name, l.semester
+        query = """SELECT d.name, l.semester, l.id
                    FROM disciplines AS d
                    INNER JOIN loads as l ON d.id=l.discipline_id
                    WHERE d.name LIKE '%{}%'
@@ -297,13 +306,28 @@ class Teacher(_Interface):
                    l.id NOT IN (SELECT load_id FROM journal_hours)""".format(data_like, id_user)
         return self.__exec_choice(query)
 
+    def update_journ_step(self):
+        if self.NEW_JOURN_STEP == self.MAX_JOURN_STEPS:
+            pass
+        else:
+            self.NEW_JOURN_STEP += 1
+
+    def journ_step(self, data):
+        if self.program_id != data[2]:
+            self.NEW_JOURN_STEP = 1
+        if self.NEW_JOURN_STEP <= Config.MAX_REGISTRATION_STEP:
+            with open(Config.PATH_CONTENT + 'journ{}.html'.format(self.NEW_JOURN_STEP), 'rb') as endf:
+                return endf.read().decode('utf8')
+        else:
+            return None
+
     def __exec_choice(self, query):
         result = []
         for retr in self.db.execute(query):
             if 'Error' in retr:
                 return ['ERROR']
             else:
-                result.append({'first': retr[0], 'second': '{} семестр'.format(retr[1])})
+                result.append({'first': retr[0], 'second': retr[1], 'third': retr[2]})
         return ['OK', result]
 
 

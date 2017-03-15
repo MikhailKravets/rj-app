@@ -290,6 +290,8 @@ class JournalHandler(web.RequestHandler):
                 data = json.loads(self.request.body)
                 if data[0] == 'CHOICE':
                     result = Config.users[self.get_cookie('session')].choice_load(Config.users[self.get_cookie('session')].id_user, self.application.escape_data(data[1]))
+                elif data[0] == 'STEP':
+                    result = Config.users[self.get_cookie('session')].journ_step(data[1:])
                 self.write(json.dumps(result))
             else:
                 self.write('405')
