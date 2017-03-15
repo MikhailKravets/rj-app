@@ -152,8 +152,12 @@ function Controller(){
                     queryServer('/journal/post', ["STEP", data.first, data.secon, data.third], function (data) {
                         data = JSON.parse(data);
                         console.log(data);
+                        $("#current").text(data[0]);
+                        $("#max").text(data[1]);
+                        $("#steps").css('visibility', 'visible');
                         $("#beforeView").css('display', 'none');
-                        $("#stepView").html(data);
+                        $("#stepView").html(data[2]);
+                        regInputs($(".textField"));
                     });
                 }
             }
@@ -165,12 +169,8 @@ function Controller(){
         if(e.keyCode == 13){
             if(e.target.value !== ''){
                 var key = $(e.target).attr('model');
-
                 if (load_choice.length !== 0)
-                    $(e.target).val(load_choice[0].first);
-                
-                updateModel(key, e.target.value);
-                updateChoiceView(container, [], true);
+                    $(e.target).closest(".inputTextShell").find('.comboItem:first-child').click();
             }
         }
         else if(e.keyCode === 40){
@@ -187,7 +187,6 @@ function Controller(){
         else
             queryServer('/journal/post', ["CHOICE", $(e.target).val()], function (data){
                 data = JSON.parse(data);
-
                 load_choice = data[1];
                 updateChoiceView(container, load_choice, true);
             });

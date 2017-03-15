@@ -1,4 +1,10 @@
 function regInputs(jInput){
+    jInput.each(function(){
+        if(this.value === "")
+            $(this).next().removeClass('promptExpanded');
+        else
+            $(this).next().addClass('promptExpanded');
+    });
     jInput.on('input blur', function(e){
         if(e.target.value === ""){
             if($(e.target).next().hasClass('promptExpanded'))

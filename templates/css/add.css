@@ -1,5 +1,6 @@
 #mainFrame{
     max-width: 700px !important;
+    margin: 0 0 0 0!;
 }
 
 .selectOne{
@@ -180,6 +181,26 @@ select:focus::-ms-value {background-color: white; color: inherit}
     font-family: 'Open Sans', sans-serif;
     font-size: 1.1rem;
     color: #2d6ca6;
+}
+
+#stepsContainer{
+    position: relative;
+    text-align: center;
+    height: 10px;
+}
+#steps {
+    display: inline-block;
+    position: absolute;
+    background-color: #cbd3e6;
+    color: white;
+    border-radius: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    top: -9px;
+    left: calc(50% - 17px);
+    visibility: hidden;
 }
 
 .leftHalf{

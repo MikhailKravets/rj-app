@@ -317,7 +317,7 @@ class Teacher(_Interface):
             self.NEW_JOURN_STEP = 1
         if self.NEW_JOURN_STEP <= Config.MAX_REGISTRATION_STEP:
             with open(Config.PATH_CONTENT + 'journ{}.html'.format(self.NEW_JOURN_STEP), 'rb') as endf:
-                return endf.read().decode('utf8')
+                return [self.NEW_JOURN_STEP, self.MAX_JOURN_STEPS, endf.read().decode('utf8')]
         else:
             return None
 
