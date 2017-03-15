@@ -35,12 +35,27 @@ function Controller() {
     function checkList(list, value) {
         var new_list = [];
         for(var i = 0; i < list.length; i++){
-            if(list[i].first.toLowerCase().search(value) !== -1)
+            if(list[i].first.toLowerCase().search(value.toLowerCase()) !== -1)
                 new_list.push(list[i]);
         }
+        console.log(new_list);
         if(new_list.length == 0)
-            return -1; // return list of indeces of right answers
+            return -1; // return list of values of right answers
         else return new_list;
+    }
+    
+    function validateTeacher(value){
+        right = checkList(teach_choice, value);
+        console.log(right);
+        return right !== -1
+    }
+    function validateDisc(value){
+        right = checkList(disc_choice, value);
+        return right !== -1
+    }
+    function validateGroup(value){
+        right = checkList(group_choice, value);
+        return right !== -1
     }
     
     function registerComboEvents(jContainer){
@@ -169,8 +184,22 @@ function Controller() {
     $("[choice]").on('blur', function(e){
         setTimeout(function(){
             var archi = $(e.target).closest(".inputTextShell");
-            if(!archi.find(".comboItem").is(":focus"))
+            var key = $(e.target).attr('model');
+            if(!archi.find(".comboItem").is(":focus")){
                 updateChoiceView(archi.find(".comboContainer"), [], false);
+                if (key === 'teacher'){
+                    right = validateTeacher(e.target.value);
+                }
+                else if (key === 'discipline'){
+                    right = validateDisc(e.target.value);
+                }
+                else if (key === 'group'){
+                    right = validateGroup(e.target.value);
+                }
+                if(!right)
+                    $(e.target).addClass('unvalidated');
+                else $(e.target).removeClass('unvalidated');
+            }
         }, 30);
     });
     $("[choice]").on('keydown', function(e){
