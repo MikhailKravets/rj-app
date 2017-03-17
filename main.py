@@ -56,32 +56,30 @@ class InviteHandler(web.RequestHandler):
         else:
             self.write('405')
 
+    @Decorator.authorized
     def post(self):
-        if self.application.authorized(self.get_cookie('session')):
-            if '3' in Config.users[self.get_cookie('session')].access:
-                data = json.loads(self.request.body)
-                if data[0] == 'INVITE':
-                    insert = data[1]
-                    insert = self.application.escape_data(insert)
-                    insert['password'] = Config.rand_hexline(6, millis_time=False)
-                    logging.debug(f"INVITE {insert}")
-                    query = """INSERT INTO users (login, password, first, middle, last, access, sex)
-                               VALUES
-                               ('{0[login]}', '{0[password]}', '{0[first]}', '{0[middle]}', '{0[last]}', '{0[access]}', '{0[sex]}')"""
-                    query = query.format(insert)
-                    logging.debug(query)
+        if '3' in Config.users[self.get_cookie('session')].access:
+            data = json.loads(self.request.body)
+            if data[0] == 'INVITE':
+                insert = data[1]
+                insert = self.application.escape_data(insert)
+                insert['password'] = Config.rand_hexline(6, millis_time=False)
+                logging.debug(f"INVITE {insert}")
+                query = """INSERT INTO users (login, password, first, middle, last, access, sex)
+                           VALUES
+                           ('{0[login]}', '{0[password]}', '{0[first]}', '{0[middle]}', '{0[last]}', '{0[access]}', '{0[sex]}')"""
+                query = query.format(insert)
+                logging.debug(query)
 
-                    result = ['OK', insert['password']]
-                    for retr in self.application.db_manager.execute(query):
-                        if 'Integrity' in retr:
-                            result = ['ERROR', 'duplicate']
-                        elif 'Error' in retr:
-                            result = ['ERROR', 'inner_error']
-                    self.write(json.dumps(result))
-            else:
-                self.write('405')
+                result = ['OK', insert['password']]
+                for retr in self.application.db_manager.execute(query):
+                    if 'Integrity' in retr:
+                        result = ['ERROR', 'duplicate']
+                    elif 'Error' in retr:
+                        result = ['ERROR', 'inner_error']
+                self.write(json.dumps(result))
         else:
-            self.write('DENIED')
+            self.write('405')
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -96,14 +94,12 @@ class SettingsHandler(web.RequestHandler):
                     last=user.last, middle=user.middle, first=user.first,
                     email=user.email)
 
+    @Decorator.authorized
     def post(self):
-        if self.application.authorized(self.get_cookie('session')):
-            data = json.loads(self.request.body)
-            if data[0] == 'UPDATE':
-                retr = Config.users[self.get_cookie('session')].update_settings(data[1])
-                self.write(json.dumps(retr))
-        else:
-            self.write('DENIED')
+        data = json.loads(self.request.body)
+        if data[0] == 'UPDATE':
+            retr = Config.users[self.get_cookie('session')].update_settings(data[1])
+            self.write(json.dumps(retr))
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -125,19 +121,17 @@ class GroupHandler(web.RequestHandler):
         else:
             self.write('405')
 
+    @Decorator.authorized
     def post(self, what):
-        if self.application.authorized(self.get_cookie('session')):
-            if '2' in Config.users[self.get_cookie('session')].access:
-                data = json.loads(self.request.body)
-                if data[0] == 'ADD':
-                    data[1] = self.application.escape_data(data[1])
-                    data[1]['students'] = self.application.escape_data(data[1]['students'])
-                    result = Config.users[self.get_cookie('session')].new_group(data[1])
-                self.write(json.dumps(result))
-            else:
-                self.write('405')
+        if '2' in Config.users[self.get_cookie('session')].access:
+            data = json.loads(self.request.body)
+            if data[0] == 'ADD':
+                data[1] = self.application.escape_data(data[1])
+                data[1]['students'] = self.application.escape_data(data[1]['students'])
+                result = Config.users[self.get_cookie('session')].new_group(data[1])
+            self.write(json.dumps(result))
         else:
-            self.write('DENIED')
+            self.write('405')
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -159,20 +153,18 @@ class LoadHandler(web.RequestHandler):
         else:
             self.write('405')
 
+    @Decorator.authorized
     def post(self, what):
-        if self.application.authorized(self.get_cookie('session')):
-            if '2' in Config.users[self.get_cookie('session')].access:
-                data = json.loads(self.request.body)
+        if '2' in Config.users[self.get_cookie('session')].access:
+            data = json.loads(self.request.body)
 
-                if data[0] == 'ADD':
-                    result = Config.users[self.get_cookie('session')].new_load(self.application.escape_data(data[1]))
-                elif data[0] == 'CHOICE':
-                    result = Config.users[self.get_cookie('session')].choice(self.application.escape_data(data))
-                self.write(json.dumps(result))
-            else:
-                self.write('405')
+            if data[0] == 'ADD':
+                result = Config.users[self.get_cookie('session')].new_load(self.application.escape_data(data[1]))
+            elif data[0] == 'CHOICE':
+                result = Config.users[self.get_cookie('session')].choice(self.application.escape_data(data))
+            self.write(json.dumps(result))
         else:
-            self.write('DENIED')
+            self.write('405')
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -194,17 +186,15 @@ class DisciplineHandler(web.RequestHandler):
         else:
             self.write('405')
 
+    @Decorator.authorized
     def post(self, what):
-        if self.application.authorized(self.get_cookie('session')):
-            if '3' in Config.users[self.get_cookie('session')].access:
-                data = json.loads(self.request.body)
-                if data[0] == 'ADD':
-                    result = Config.users[self.get_cookie('session')].add_discipline(self.application.escape_data(data[1]))
-                self.write(json.dumps(result))
-            else:
-                self.write('405')
+        if '3' in Config.users[self.get_cookie('session')].access:
+            data = json.loads(self.request.body)
+            if data[0] == 'ADD':
+                result = Config.users[self.get_cookie('session')].add_discipline(self.application.escape_data(data[1]))
+            self.write(json.dumps(result))
         else:
-            self.write('DENIED')
+            self.write('405')
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
@@ -226,19 +216,17 @@ class JournalHandler(web.RequestHandler):
         else:
             self.write('405')
 
+    @Decorator.authorized
     def post(self, what):
-        if self.application.authorized(self.get_cookie('session')):
-            if '1' in Config.users[self.get_cookie('session')].access:
-                data = json.loads(self.request.body)
-                if data[0] == 'CHOICE':
-                    result = Config.users[self.get_cookie('session')].choice_load(Config.users[self.get_cookie('session')].id_user, self.application.escape_data(data[1]))
-                elif data[0] == 'STEP':
-                    result = Config.users[self.get_cookie('session')].journ_step(data[1:])
-                self.write(json.dumps(result))
-            else:
-                self.write('405')
+        if '1' in Config.users[self.get_cookie('session')].access:
+            data = json.loads(self.request.body)
+            if data[0] == 'CHOICE':
+                result = Config.users[self.get_cookie('session')].choice_load(Config.users[self.get_cookie('session')].id_user, self.application.escape_data(data[1]))
+            elif data[0] == 'STEP':
+                result = Config.users[self.get_cookie('session')].journ_step(data[1:])
+            self.write(json.dumps(result))
         else:
-            self.write('DENIED')
+            self.write('405')
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
