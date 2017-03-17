@@ -47,6 +47,31 @@ class Config:
         return name
 
 
+class Decorator:
+    @staticmethod
+    def authorized(fn):
+        def wrapper(self, *args):
+            if self.application.authorized(self.get_cookie('session')):
+                fn(self, *args)
+            else:
+                inline = self.application.inline_get(self.get_argument('inline', False))
+                if inline:
+                    self.write('DENIED')
+                else:
+                    self.redirect('/auth')
+        return wrapper
+
+    @staticmethod
+    def inline(fn):
+        def wrapper(self, *args):
+            inline = self.application.inline_get(self.get_argument('inline', False))
+            if inline:
+                fn(self, *args)
+            else:
+                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+        return wrapper
+
+
 class Session:
     @staticmethod
     def create(obj):

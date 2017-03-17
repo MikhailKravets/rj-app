@@ -12,11 +12,9 @@ from system import User
 
 
 class MainHandler(web.RequestHandler):
+    @Decorator.authorized
     def get(self):
-        if self.application.authorized(self.get_cookie('session')):
-            self.render('main.html', access=Config.users[self.get_cookie('session')].access)
-        else:
-            self.redirect('/auth')
+        self.render('main.html', access=Config.users[self.get_cookie('session')].access)
 
     def post(self):
         data = json.loads(self.request.body)
@@ -32,22 +30,14 @@ class MainHandler(web.RequestHandler):
 
 
 class ProfileHandler(web.RequestHandler):
+    @Decorator.authorized
+    @Decorator.inline
     def get(self):
-        inline = self.application.inline_get(self.get_argument('inline', False))
-        if self.application.authorized(self.get_cookie('session')):
-            if inline:
-                user = Config.users[self.get_cookie('session')]
-                self.render('profile.html', login=user.login,
-                            last=user.last, middle=user.middle, first=user.first,
-                            email=user.email,
-                            sex=user.sex)
-            else:
-                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
-        else:
-            if inline:
-                self.write('DENIED')
-            else:
-                self.redirect('/auth')
+        user = Config.users[self.get_cookie('session')]
+        self.render('profile.html', login=user.login,
+                    last=user.last, middle=user.middle, first=user.first,
+                    email=user.email,
+                    sex=user.sex)
 
     def post(self):
         pass
@@ -57,22 +47,14 @@ class ProfileHandler(web.RequestHandler):
 
 
 class InviteHandler(web.RequestHandler):
+    @Decorator.authorized
+    @Decorator.inline
     def get(self):
-        inline = self.application.inline_get(self.get_argument('inline', '0'))
-        if self.application.authorized(self.get_cookie('session')):
-            if inline:
-                user = Config.users[self.get_cookie('session')]
-                if '3' in user.access:
-                    self.render('invite.html')
-                else:
-                    self.write('405')
-            else:
-                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+        user = Config.users[self.get_cookie('session')]
+        if '3' in user.access:
+            self.render('invite.html')
         else:
-            if inline:
-                self.write('DENIED')
-            else:
-                self.redirect('/auth')
+            self.write('405')
 
     def post(self):
         if self.application.authorized(self.get_cookie('session')):
@@ -106,21 +88,13 @@ class InviteHandler(web.RequestHandler):
 
 
 class SettingsHandler(web.RequestHandler):
+    @Decorator.authorized
+    @Decorator.inline
     def get(self):
-        inline = self.application.inline_get(self.get_argument('inline', False))
-        if self.application.authorized(self.get_cookie('session')):
-            if inline:
-                user = Config.users[self.get_cookie('session')]
-                self.render('settings.html', login=user.login,
-                            last=user.last, middle=user.middle, first=user.first,
-                            email=user.email)
-            else:
-                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
-        else:
-            if inline:
-                self.write('DENIED')
-            else:
-                self.redirect('/auth')
+        user = Config.users[self.get_cookie('session')]
+        self.render('settings.html', login=user.login,
+                    last=user.last, middle=user.middle, first=user.first,
+                    email=user.email)
 
     def post(self):
         if self.application.authorized(self.get_cookie('session')):
@@ -136,28 +110,20 @@ class SettingsHandler(web.RequestHandler):
 
 
 class GroupHandler(web.RequestHandler):
+    @Decorator.authorized
+    @Decorator.inline
     def get(self, what):
-        inline = self.application.inline_get(self.get_argument('inline', '0'))
-        if self.application.authorized(self.get_cookie('session')):
-            if inline:
-                user = Config.users[self.get_cookie('session')]
-                if '2' in user.access:
-                    logging.debug('WHAT: "{}"'.format(what))
-                    if what == 'add':
-                        self.render('add_group.html')
-                    elif what == 'edit':
-                        self.render('edit_group.html')
-                    else:
-                        self.redirect('/group/add')
-                else:
-                    self.write('405')
+        user = Config.users[self.get_cookie('session')]
+        if '2' in user.access:
+            logging.debug('WHAT: "{}"'.format(what))
+            if what == 'add':
+                self.render('add_group.html')
+            elif what == 'edit':
+                self.render('edit_group.html')
             else:
-                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+                self.redirect('/group/add')
         else:
-            if inline:
-                self.write('DENIED')
-            else:
-                self.redirect('/auth')
+            self.write('405')
 
     def post(self, what):
         if self.application.authorized(self.get_cookie('session')):
@@ -178,28 +144,20 @@ class GroupHandler(web.RequestHandler):
 
 
 class LoadHandler(web.RequestHandler):
+    @Decorator.authorized
+    @Decorator.inline
     def get(self, what):
-        inline = self.application.inline_get(self.get_argument('inline', '0'))
-        if self.application.authorized(self.get_cookie('session')):
-            if inline:
-                user = Config.users[self.get_cookie('session')]
-                if '2' in user.access:
-                    logging.debug('WHAT: "{}"'.format(what))
-                    if what == 'add':
-                        self.render('add_load.html')
-                    elif what == 'edit':
-                        self.render('edit_load.html')
-                    else:
-                        self.redirect('/group/add')
-                else:
-                    self.write('405')
+        user = Config.users[self.get_cookie('session')]
+        if '2' in user.access:
+            logging.debug('WHAT: "{}"'.format(what))
+            if what == 'add':
+                self.render('add_load.html')
+            elif what == 'edit':
+                self.render('edit_load.html')
             else:
-                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+                self.redirect('/group/add')
         else:
-            if inline:
-                self.write('DENIED')
-            else:
-                self.redirect('/auth')
+            self.write('405')
 
     def post(self, what):
         if self.application.authorized(self.get_cookie('session')):
@@ -221,28 +179,20 @@ class LoadHandler(web.RequestHandler):
 
 
 class DisciplineHandler(web.RequestHandler):
+    @Decorator.authorized
+    @Decorator.inline
     def get(self, what):
-        inline = self.application.inline_get(self.get_argument('inline', '0'))
-        if self.application.authorized(self.get_cookie('session')):
-            if inline:
-                user = Config.users[self.get_cookie('session')]
-                if '3' in user.access:
-                    logging.debug('WHAT: "{}"'.format(what))
-                    if what == 'add':
-                        self.render('add_discipline.html')
-                    elif what == 'edit':
-                        self.render('edit_discipline.html')
-                    else:
-                        self.redirect('/discipline/add')
-                else:
-                    self.write('405')
+        user = Config.users[self.get_cookie('session')]
+        if '3' in user.access:
+            logging.debug('WHAT: "{}"'.format(what))
+            if what == 'add':
+                self.render('add_discipline.html')
+            elif what == 'edit':
+                self.render('edit_discipline.html')
             else:
-                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+                self.redirect('/discipline/add')
         else:
-            if inline:
-                self.write('DENIED')
-            else:
-                self.redirect('/auth')
+            self.write('405')
 
     def post(self, what):
         if self.application.authorized(self.get_cookie('session')):
@@ -261,28 +211,20 @@ class DisciplineHandler(web.RequestHandler):
 
 
 class JournalHandler(web.RequestHandler):
+    @Decorator.authorized
+    @Decorator.inline
     def get(self, what):
-        inline = self.application.inline_get(self.get_argument('inline', '0'))
-        if self.application.authorized(self.get_cookie('session')):
-            if inline:
-                user = Config.users[self.get_cookie('session')]
-                if '1' in user.access:
-                    logging.debug('WHAT: "{}"'.format(what))
-                    if what == 'add':
-                        self.render('add_journal.html')
-                    elif what == 'edit':
-                        self.render('edit_journal.html')
-                    else:
-                        self.redirect('/journal/add')
-                else:
-                    self.write('405')
+        user = Config.users[self.get_cookie('session')]
+        if '1' in user.access:
+            logging.debug('WHAT: "{}"'.format(what))
+            if what == 'add':
+                self.render('add_journal.html')
+            elif what == 'edit':
+                self.render('edit_journal.html')
             else:
-                self.render('main.html', access=Config.users[self.get_cookie('session')].access)
+                self.redirect('/journal/add')
         else:
-            if inline:
-                self.write('DENIED')
-            else:
-                self.redirect('/auth')
+            self.write('405')
 
     def post(self, what):
         if self.application.authorized(self.get_cookie('session')):
