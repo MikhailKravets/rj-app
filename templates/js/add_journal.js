@@ -136,17 +136,30 @@ function Controller(){
                     data = choosen_data;
                     console.log(data);
                     if(data)
-                        queryServer('/journal/post', ["STEP", data.third], function (data) {
+                        queryServer('/journal/post', ["STEP", {'id': data.third}], function (data) {
                             data = JSON.parse(data);
                             console.log(data);
-                            $("#current").text(data[0]);
-                            $("#max").text(data[1]);
-                            $("#steps").css('visibility', 'visible');
-                            $("#beforeView").css('display', 'none');
-                            $("#stepView").html(data[2]);
-                            regInputs($(".textField"));
+                            
+                            function update(d){
+                                if(d[0] !== 'END'){
+                                    $("#current").text(d[0]);
+                                    $("#max").text(d[1]);
+                                    $("#steps").css('visibility', 'visible');
+                                    $("#beforeView").css('display', 'none');
+                                    $("#stepView").html(d[2]);
+                                    regInputs($(".textField"));
+                                    console.log("ALLOHHAD");
+                                }
+                                else{
+                                    $("#steps").css('visibility', 'hidden');
+                                    $("#beforeView").css('display', 'block');
+                                    $("#stepView").html("");
+                                    $("#load").val("");
+                                }
+                            };
+                            update(data);
 
-                            StepController(data[3]);
+                            StepController(data[3], update);
                         });
                     else $(e.target).addClass('unvalidated');
                 }

@@ -1,4 +1,4 @@
-function StepController(max_hours){
+function StepController(max_hours, update){
     var model = {}
     var rem = JSON.parse(JSON.stringify(max_hours));
     initModel(model);
@@ -49,7 +49,10 @@ function StepController(max_hours){
     
     calcRemain("remain");
     
-    
+    $('[model]').on('change', function(e){
+        model[$(e.target).attr('model')] = e.target.value;
+    });
+        
     $("#m-amount").on('change', function(e){
         if(e.target.value === '1'){
             $("#m2Container").css('display', 'none');
@@ -73,6 +76,14 @@ function StepController(max_hours){
             showMessage($(".message"), 'В некоторые поля можно ввести только числовые значения!');
         else if(!checkNumericif($("[numericif]")))
             showMessage($(".message"), 'В некоторые поля можно ввести только числовые значения!');
-        else console.log("tadammm");
+        else {
+            hideMessage($(".message"));
+            trimModel(model);
+            queryServer('/journal/post', ["ADD", model], function (data){
+                data = JSON.parse(data);
+                console.log(data);
+                update(data);
+            });
+        }
     });
 }

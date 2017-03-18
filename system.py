@@ -287,9 +287,6 @@ class HighModerator(_Interface):
 
 
 class Teacher(_Interface):
-    NEW_JOURN_STEP = 1
-    MAX_JOURN_STEPS = 2
-
     def __init__(self, obj, *tup):
         super().__init__(obj, *tup)
         self.module_amount = 1
@@ -297,7 +294,9 @@ class Teacher(_Interface):
         self.program_id = 0
         self.new_time = None
         self.new_marks = None
-        self.js_model = {}
+        self.add_dictionary = {}
+        self.NEW_JOURN_STEP = 1
+        self.MAX_JOURN_STEPS = 2
 
     def choice_load(self, id_user, data_like):
         query = """SELECT d.name, l.semester, l.id
@@ -308,19 +307,26 @@ class Teacher(_Interface):
                    l.teacher_id={}
                    AND
                    l.id NOT IN (SELECT load_id FROM journal_hours)""".format(data_like, id_user)
+        logging.debug("HERE: {}".format(self.NEW_JOURN_STEP))
         return self.__exec_choice(query)
 
-    def update_journ_step(self):
-        if self.NEW_JOURN_STEP == self.MAX_JOURN_STEPS:
+    def update_journ_step(self, data):
+        if self.NEW_JOURN_STEP == 1:
+            self.add_dictionary = data
+        elif self.NEW_JOURN_STEP == 2:
             pass
-        else:
-            self.NEW_JOURN_STEP += 1
+        self.NEW_JOURN_STEP += 1
 
     def journ_step(self, data):
-        if self.program_id != data[0]:
-            self.NEW_JOURN_STEP = 1
+        logging.debug("DATA: {}".format(data))
+        if 'id' in data:
+            id_load = data['id']
+            if self.program_id != id_load:
+                self.NEW_JOURN_STEP = 1
+                self.program_id = id_load
         if self.NEW_JOURN_STEP <= Config.MAX_REGISTRATION_STEP:
-            render_object, hours = self.__load_render(self.NEW_JOURN_STEP, data[0])
+            logging.debug("AND HERE: {}".format(self.NEW_JOURN_STEP))
+            render_object, hours = self.__load_render(self.NEW_JOURN_STEP, self.program_id)
             return [self.NEW_JOURN_STEP, self.MAX_JOURN_STEPS,
                     '{}journ{}.html'.format(Config.PATH_CONTENT, self.NEW_JOURN_STEP), render_object, hours]
         else:
@@ -358,6 +364,8 @@ class Teacher(_Interface):
                         'self_seminar': retr[8],
                     }
             return None
+        elif step == 2:
+            return {}, None
 
     def __exec_choice(self, query):
         result = []
