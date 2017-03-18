@@ -3,6 +3,7 @@ function Controller(){
     var delay = 300;
     var t;
     var isWait = false;
+    var choosen_data = false;
     
     
     function checkList(list, value) {
@@ -33,6 +34,7 @@ function Controller(){
             console.log(load_choice);
             $(input).val(load_choice[i].first);
             input.focus();
+            choosen_data = load_choice[i];
             
             updateChoiceView(container, [], true);
             
@@ -131,19 +133,22 @@ function Controller(){
                     $(e.target).addClass('unvalidated');
                 else{
                     $(e.target).removeClass('unvalidated');
-                    data = checkList(load_choice, e.target.value)[0];
-                    queryServer('/journal/post', ["STEP", data.third], function (data) {
-                        data = JSON.parse(data);
-                        console.log(data);
-                        $("#current").text(data[0]);
-                        $("#max").text(data[1]);
-                        $("#steps").css('visibility', 'visible');
-                        $("#beforeView").css('display', 'none');
-                        $("#stepView").html(data[2]);
-                        regInputs($(".textField"));
-                        
-                        StepController(data[3]);
-                    });
+                    data = choosen_data;
+                    console.log(data);
+                    if(data)
+                        queryServer('/journal/post', ["STEP", data.third], function (data) {
+                            data = JSON.parse(data);
+                            console.log(data);
+                            $("#current").text(data[0]);
+                            $("#max").text(data[1]);
+                            $("#steps").css('visibility', 'visible');
+                            $("#beforeView").css('display', 'none');
+                            $("#stepView").html(data[2]);
+                            regInputs($(".textField"));
+
+                            StepController(data[3]);
+                        });
+                    else $(e.target).addClass('unvalidated');
                 }
             }
         }, 30);
