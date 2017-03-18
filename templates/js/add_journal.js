@@ -142,7 +142,7 @@ function Controller(){
                         $("#stepView").html(data[2]);
                         regInputs($(".textField"));
                         
-                        StepController();
+                        StepController(data[3]);
                     });
                 }
             }

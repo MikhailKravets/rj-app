@@ -320,9 +320,9 @@ class Teacher(_Interface):
         if self.program_id != data[0]:
             self.NEW_JOURN_STEP = 1
         if self.NEW_JOURN_STEP <= Config.MAX_REGISTRATION_STEP:
-            render_object = self.__load_render(self.NEW_JOURN_STEP, data[0])
+            render_object, hours = self.__load_render(self.NEW_JOURN_STEP, data[0])
             return [self.NEW_JOURN_STEP, self.MAX_JOURN_STEPS,
-                    '{}journ{}.html'.format(Config.PATH_CONTENT, self.NEW_JOURN_STEP), render_object]
+                    '{}journ{}.html'.format(Config.PATH_CONTENT, self.NEW_JOURN_STEP), render_object, hours]
         else:
             return None
 
@@ -347,6 +347,15 @@ class Teacher(_Interface):
                         'self_seminar': retr[8],
                         'audit': retr[1] + retr[2] + retr[3] + retr[4],
                         'selfh': retr[8] + retr[7] + retr[6] + retr[5],
+                    }, {
+                        'lecture': retr[1],
+                        'practice': retr[2],
+                        'labor': retr[3],
+                        'seminar': retr[4],
+                        'self_lecture': retr[5],
+                        'self_practice': retr[6],
+                        'self_labor': retr[7],
+                        'self_seminar': retr[8],
                     }
             return None
 
