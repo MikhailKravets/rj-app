@@ -108,6 +108,9 @@ class _Interface:
     def choice_load(self, id_user, data_like):
         self.obj.choice_load(id_user, data_like)
 
+    def journ_step(self, data_like):
+        self.obj.journ_step(data_like)
+
     # admin
 
 
@@ -294,6 +297,7 @@ class Teacher(_Interface):
         self.program_id = 0
         self.new_time = None
         self.new_marks = None
+        self.js_model = {}
 
     def choice_load(self, id_user, data_like):
         query = """SELECT d.name, l.semester, l.id
@@ -313,12 +317,37 @@ class Teacher(_Interface):
             self.NEW_JOURN_STEP += 1
 
     def journ_step(self, data):
-        if self.program_id != data[2]:
+        if self.program_id != data[0]:
             self.NEW_JOURN_STEP = 1
         if self.NEW_JOURN_STEP <= Config.MAX_REGISTRATION_STEP:
-            with open(Config.PATH_CONTENT + 'journ{}.html'.format(self.NEW_JOURN_STEP), 'rb') as endf:
-                return [self.NEW_JOURN_STEP, self.MAX_JOURN_STEPS, endf.read().decode('utf8')]
+            render_object = self.__load_render(self.NEW_JOURN_STEP, data[0])
+            return [self.NEW_JOURN_STEP, self.MAX_JOURN_STEPS,
+                    '{}journ{}.html'.format(Config.PATH_CONTENT, self.NEW_JOURN_STEP), render_object]
         else:
+            return None
+
+    def __load_render(self, step, load_id):
+        if step == 1:
+            query = """SELECT semester,
+                       lecture, practice, labor, seminar,
+                       self_lecture, self_practice, self_labor, self_seminar
+                       FROM loads
+                       WHERE id={}""".format(load_id)
+            for retr in self.db.execute(query):
+                if 'Error' not in retr:
+                    return {
+                        'semester': retr[0],
+                        'lecture': retr[1],
+                        'practice': retr[2],
+                        'labor': retr[3],
+                        'seminar': retr[4],
+                        'self_lecture': retr[5],
+                        'self_practice': retr[6],
+                        'self_labor': retr[7],
+                        'self_seminar': retr[8],
+                        'audit': retr[1] + retr[2] + retr[3] + retr[4],
+                        'selfh': retr[8] + retr[7] + retr[6] + retr[5],
+                    }
             return None
 
     def __exec_choice(self, query):

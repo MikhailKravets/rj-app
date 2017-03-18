@@ -66,6 +66,16 @@ function checkRequired(jElem){
     }
     return true;
 }
+function checkRequiredif(jElem){
+        for(var i = 0; i < jElem.length; i++){
+        if(jElem[i].value === '' && jElem.attr('requiredif') === 'true'){
+            $(jElem[i]).addClass('unvalidated');
+            return false;
+        }
+        else $(jElem[i]).removeClass('unvalidated');
+    }
+    return true;
+}
 function checkLatin(str){
     var pattern = /[^A-Za-z0-9]+/i;
     if(pattern.test(str))
@@ -80,6 +90,17 @@ function checkNumeric(jElem){
     pattern = /[^0-9]+/i;
     for(var i = 0; i < jElem.length; i++){
         if(pattern.test(jElem[i].value)){
+            $(jElem[i]).addClass('unvalidated');
+            return false;
+        }
+        else $(jElem[i]).removeClass('unvalidated');
+    }
+    return true;
+}
+function checkNumericif(jElem){
+    pattern = /[^0-9]+/i;
+    for(var i = 0; i < jElem.length; i++){
+        if(pattern.test(jElem[i].value) && jElem.attr('numericif') == 'true'){
             $(jElem[i]).addClass('unvalidated');
             return false;
         }

@@ -1,25 +1,9 @@
 function Controller(){
-    var model = {
-        lecture: "0",
-        practice: "0",
-        labor: "0",
-        seminar: "0",
-        
-        self_lecture: "0",
-        self_practice: "0",
-        self_labor: "0",
-        self_seminar: "0"
-    };
-    
     var load_choice = [];
     var delay = 300;
     var t;
     var isWait = false;
     
-    
-    function updateModel(key, val){
-        model[key] = val;
-    }
     
     function checkList(list, value) {
         var new_list = [];
@@ -50,7 +34,6 @@ function Controller(){
             $(input).val(load_choice[i].first);
             input.focus();
             
-            updateModel(key, input.val());
             updateChoiceView(container, [], true);
             
             setTimeout(function(){
@@ -148,8 +131,8 @@ function Controller(){
                     $(e.target).addClass('unvalidated');
                 else{
                     $(e.target).removeClass('unvalidated');
-                    data = checkList(load_choice, e.target.value);
-                    queryServer('/journal/post', ["STEP", data.first, data.secon, data.third], function (data) {
+                    data = checkList(load_choice, e.target.value)[0];
+                    queryServer('/journal/post', ["STEP", data.third], function (data) {
                         data = JSON.parse(data);
                         console.log(data);
                         $("#current").text(data[0]);
@@ -158,6 +141,8 @@ function Controller(){
                         $("#beforeView").css('display', 'none');
                         $("#stepView").html(data[2]);
                         regInputs($(".textField"));
+                        
+                        StepController();
                     });
                 }
             }

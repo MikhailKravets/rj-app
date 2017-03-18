@@ -1,21 +1,25 @@
+<script src="{{ static_url('content/js/journ1.js') }}"></script>
 <div class="readonlyTextShell leftHalf alwaysBlue" >
-    <input value="" type="text" name="CommonHoursAmount" class="readonlyTextField someUp" readonly>
+    <input value="{{ audit }}" type="text" class="readonlyTextField someUp" readonly>
     <label class="bottomPrompt" >Всего аудит. часов</label>
 </div>
 <div class="readonlyTextShell rightHalf alwaysBlue" >
-    <input value="" type="text" name="selfCommonHoursAmount" class="readonlyTextField someUp" readonly>
+    <input value="{{ selfh }}" type="text" class="readonlyTextField someUp" readonly>
     <label class="bottomPrompt" >Всего самост. часов</label>
 </div>
 <div style="clear: both"></div>
 <h2 class="additionalHeader">Характеристика дисциплины</h2>
 <div class="readonlyTextShell centerOne alwaysBlue" >
-    <input ng-model="step.semester" type="text" name="Semester" class="readonlyTextField someUp" id="textField26" readonly>
+    <input value="{{ semester }}" type="text" class="readonlyTextField someUp" readonly>
     <label class="bottomPrompt" >Семестр</label>
 </div>
 <div style="clear: both"></div>
-<div class="inputTextShell centerOne">
-    <input ng-model="step.moduleAmount" type="text" name="moduleAmount" class="textField" placeholder="Количество модулей  (макс. 2)" autocomplete="off">
-    <label class="prompt promptExpanded">Количество модулей (макс. 2)</label>
+<div class="selectShell centerOne">
+    <select id="m-amount" class="selectOne" default="1" model="module_amount" value="1">
+            <option value="1" selected="selected">1</option>
+            <option value="2">2</option>
+        </select>
+    <label class="prompt promptExpanded">Количество модулей</label>
 </div>
 <div style="clear: both"></div>
 
@@ -23,57 +27,57 @@
 <h4 class="additionalHeader">Модуль 1</h4>
 <h2 class="additionalHeader">Аудиторные часы</h2>
 <div class="inputTextShell leftHalf">
-    <input  type="text" name="lectureAudit" class="textField" placeholder="Лекции" autocomplete="off">
+    <input {% if lecture == 0 %} disabled {% else %} required {% end %} type="text" model="lecture" class="textField" placeholder="Лекции" autocomplete="off" numeric>
     <label class="prompt promptExpanded">Лекции</label>
 </div>
 <div class="inputTextShell rightHalf">
-    <input type="text" name="practiceAudit" class="textField" placeholder="Практика" autocomplete="off">
+    <input {% if practice == 0 %} disabled {% else %} required {% end %} type="text" model="practice" class="textField" placeholder="Практика" autocomplete="off" numeric>
     <label class="prompt promptExpanded">Практика</label>
 </div>
 
 <div class="inputTextShell leftHalf">
-    <input type="text" name="laborAudit" class="textField" placeholder="Лабораторн." autocomplete="off">
+    <input {% if labor == 0 %} disabled {% else %} required {% end %}  type="text" model="labor" class="textField" placeholder="Лабораторн." autocomplete="off" numeric>
     <label class="prompt promptExpanded">Лабораторн.</label>
 </div>
 <div class="inputTextShell rightHalf">
-    <input type="text" name="seminarAudit" class="textField" placeholder="Семинар" autocomplete="off">
+    <input {% if seminar == 0 %} disabled {% else %} required {% end %} type="text" model="seminar" class="textField" placeholder="Семинар" autocomplete="off" numeric>
     <label class="prompt promptExpanded">Семинар</label>
 </div>
 <div style="clear: both"></div>
 
 <h2 class="additionalHeader">Самостоятельные часы</h2>
 <div class="inputTextShell leftHalf">
-    <input type="text" name="lectureAudit" class="textField" placeholder="Лекции" autocomplete="off">
+    <input {% if self_lecture == 0 %} disabled {% else %} required {% end %} type="text" model="self_lecture" class="textField" placeholder="Лекции" autocomplete="off" numeric>
     <label class="prompt promptExpanded">Лекции</label>
 </div>
 <div class="inputTextShell rightHalf">
-    <input type="text" name="practiceAudit" class="textField" placeholder="Практика" autocomplete="off">
+    <input {% if self_practice == 0 %} disabled {% else %} required {% end %} type="text" model="self_practice" class="textField" placeholder="Практика" autocomplete="off" numeric>
     <label class="prompt promptExpanded">Практика</label>
 </div>
 
 <div class="inputTextShell leftHalf">
-    <input type="text" name="laborAudit" class="textField" placeholder="Лабораторн." autocomplete="off">
+    <input {% if self_labor == 0 %} disabled {% else %} required {% end %} type="text" model="self_labor" class="textField" placeholder="Лабораторн." autocomplete="off" numeric>
     <label class="prompt promptExpanded">Лабораторн.</label>
 </div>
 <div class="inputTextShell rightHalf">
-    <input type="text" name="seminarAudit" class="textField" placeholder="Семинар" autocomplete="off">
+    <input {% if self_seminar == 0 %} disabled {% else %} required {% end %} type="text" model="self_seminar" class="textField" placeholder="Семинар" autocomplete="off" numeric>
     <label class="prompt promptExpanded">Семинар</label>
 </div>
 <div style="clear: both"></div>
 
 <h2 class="additionalHeader">Вид контроля</h2>
 <div class="inputTextShell leftHalf">
-    <input type="text" name="auditKR" class="textField" placeholder="Аудит. К.Р.">
+    <input required type="text" model="AKR" class="textField" placeholder="Аудит. К.Р." numeric>
     <label class="prompt promptExpanded">Аудит. К.Р.</label>
 </div>
 <div class="inputTextShell rightHalf">
-    <input type="text" name="domKR" class="textField" placeholder="Дом. К.Р.">
+    <input required type="text" model="DKR" class="textField" placeholder="Дом. К.Р." numeric>
     <label class="prompt promptExpanded">Дом. К.Р.</label>
 </div>
 
 <div style="clear: both"></div>
 <div class="inputTextShell centerOne">
-    <input type="text" name="MKT" class="textField" placeholder="Модульный контроль">
+    <input required type="text" model="MK" class="textField" placeholder="Модульный контроль" numeric>
     <label class="prompt promptExpanded">Модульный контроль</label>
 </div>
 <div style="clear: both"></div>
@@ -87,57 +91,57 @@
     <h4 class="additionalHeader">Модуль 2</h4>
     <h2 class="additionalHeader">Аудиторные часы</h2>
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Лекции" autocomplete="off">
+        <input {% if lecture == 0 %} disabled {% else %} requiredif="false" numericif="false" {% end %} model="lecture2" type="text" class="textField" placeholder="Лекции" autocomplete="off">
         <label class="prompt promptExpanded">Лекции</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Практика" autocomplete="off">
+        <input {% if practice == 0 %} disabled {% else %} requiredif="false" numericif="false" {% end %} model="practice2" type="text" class="textField" placeholder="Практика" autocomplete="off" >
         <label class="prompt promptExpanded">Практика</label>
     </div>
 
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Лабораторн." autocomplete="off">
+        <input {% if labor == 0 %} disabled {% else %} requiredif="false" numericif="false" {% end %} model="labor2" type="text" class="textField" placeholder="Лабораторн." autocomplete="off" >
         <label class="prompt promptExpanded">Лабораторн.</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Семинар" autocomplete="off">
+        <input {% if seminar == 0 %} disabled {% else %} requiredif="false" numericif="false" {% end %} model="seminar2" type="text" class="textField" placeholder="Семинар" autocomplete="off" >
         <label class="prompt promptExpanded">Семинар</label>
     </div>
     <div style="clear: both"></div>
 
     <h2 class="additionalHeader">Самостоятельные часы</h2>
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Лекции" autocomplete="off">
+        <input {% if self_lecture == 0 %} disabled {% else %} requiredif="false" numericif="false" {% end %} model="self_lecture2" type="text" class="textField" placeholder="Лекции" autocomplete="off" >
         <label class="prompt promptExpanded">Лекции</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Практика" autocomplete="off">
+        <input {% if self_practice == 0 %} disabled {% else %} requiredif="false" numericif="false" {% end %} model="self_practice2" type="text" class="textField" placeholder="Практика" autocomplete="off" >
         <label class="prompt promptExpanded">Практика</label>
     </div>
 
     <div class="inputTextShell leftHalf">
-        <input type="text" class="textField" placeholder="Лабораторн." autocomplete="off">
+        <input {% if self_labor == 0 %} disabled {% else %} requiredif="false" numericif="false" {% end %} model="self_labor2" type="text" class="textField" placeholder="Лабораторн." autocomplete="off" numericif>
         <label class="prompt promptExpanded">Лабораторн.</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" class="textField" placeholder="Семинар" autocomplete="off">
+        <input {% if self_seminar == 0 %} disabled {% else %} requiredif="false" numericif="false" {% end %} model="self_seminar2" type="text" class="textField" placeholder="Семинар" autocomplete="off" >
         <label class="prompt promptExpanded">Семинар</label>
     </div>
     <div style="clear: both"></div>
 
     <h2 class="additionalHeader">Вид контроля</h2>
     <div class="inputTextShell leftHalf">
-        <input type="text" name="auditKR" class="textField" placeholder="Аудит. К.Р.">
+        <input requiredif="false" type="text" model="AKR2" class="textField" placeholder="Аудит. К.Р." requiredif="false"  numericif="false">
         <label class="prompt promptExpanded">Аудит. К.Р.</label>
     </div>
     <div class="inputTextShell rightHalf">
-        <input type="text" name="domKR" class="textField" placeholder="Дом. К.Р.">
+        <input requiredif="false" type="text" model="DKR2" class="textField" placeholder="Дом. К.Р." requiredif="false"  numericif="false">
         <label class="prompt promptExpanded">Дом. К.Р.</label>
     </div>
 
     <div style="clear: both"></div>
     <div class="inputTextShell centerOne">
-        <input type="text" name="MKT" class="textField" placeholder="Модульный контроль">
+        <input requiredif="false" type="text" model="MK2" class="textField" placeholder="Модульный контроль" requiredif="false"  numericif="false">
         <label class="prompt promptExpanded">Модульный контроль</label>
     </div>
 </div>
