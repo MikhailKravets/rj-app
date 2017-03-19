@@ -1,86 +1,90 @@
 <h2 class="titleHeader">Распределение баллов</h2>
 <div class="inputTextShell leftHalf">
-    <input type="text" class="textField weight" placeholder="Весовой коеф. 1">
+    <input type="text" class="textField weight" placeholder="Весовой коеф. 1" value="{{ wc1 }}" {% if wc1 == 1 %}  readonly {% end %}>
     <label class="prompt promptExpanded">Весовой коеф. 1</label>
 </div>
 <div class="inputTextShell rightHalf">
-    <input type="text" class="textField weight" placeholder="Весовой коеф. 2">
+    <input type="text" class="textField weight" placeholder="Весовой коеф. 2" {% if wc2 == 0 %}  disabled {% else %} value="{{ wc2 }}" {% end %}>
     <label class="prompt promptExpanded">Весовой коеф. 2</label>
 </div>
 <div style="clear: both"></div>
 <h2 class="additionalHeader">Распределение баллов. Модуль 1</h2>
 <div class="flex-container">
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" value="{{ visit }}">
         <div class="flex-prompt">Посещение</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" {% if lecture != -1 %} value="{{ lecture }}" {% else %} disabled {% end %}>
         <div class="flex-prompt">Лекции</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" {% if practice != -1 %} value="{{ practice }}" {% else %} disabled {% end %}>
         <div class="flex-prompt">Практика</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" {% if labor != -1 %} value="{{ labor }}" {% else %} disabled {% end %}>
         <div class="flex-prompt">Лабор.</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" {% if seminar != -1 %} value="{{ seminar }}" {% else %} disabled {% end %}>
         <div class="flex-prompt">Семинар</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" value="{{ AKR }}">
         <div class="flex-prompt">АКР</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" value="{{ DKR }}">
         <div class="flex-prompt">ДКР</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" value="{{ MK }}">
         <div class="flex-prompt">МК</div>
     </div>
 </div>
 
-
 <div style="clear: both"></div>
+
+{% if wc1 != 1 %}
+
 <h2 class="additionalHeader">Распределение баллов. Модуль 2</h2>
 <div class="flex-container">
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" value="{{ visit }}">
         <div class="flex-prompt">Посещение</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" {% if lecture2 != -1 %} value="{{ lecture2 }}" {% else %} disabled {% end %}>
         <div class="flex-prompt">Лекции</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" {% if practice2 != -1 %} value="{{ practice2 }}" {% else %} disabled {% end %}>
         <div class="flex-prompt">Практика</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" {% if labor2 != -1 %} value="{{ labor2 }}" {% else %} disabled {% end %}>
         <div class="flex-prompt">Лабор.</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" {% if seminar2 != -1 %} value="{{ seminar2 }}" {% else %} disabled {% end %}>
         <div class="flex-prompt">Семинар</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" value="{{ AKR }}">
         <div class="flex-prompt">АКР</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" value="{{ DKR }}">
         <div class="flex-prompt">ДКР</div>
     </div>
     <div class="flex-cell">
-        <input type="text">
+        <input type="text" value="{{ MK }}">
         <div class="flex-prompt">МК</div>
     </div>
 </div>
+
+{% end %}
 
 <div class="message center"></div>
 

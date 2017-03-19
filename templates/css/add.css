@@ -206,18 +206,22 @@ select:focus::-ms-value {background-color: white; color: inherit}
 .flex-container{
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .flex-cell{
     position: relative;
-    max-width: 80px;
+    max-width: 70px;
+    min-width: 70px;
     text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 20px;
 }
 .flex-cell input{
     width: 100%;
     outline: none;
     border: none;
+    background: none;
     border-bottom: 2px solid #2d6ca6;
     color: #2d6ca6;
     font-family: 'Open Sans', sans-serif;
@@ -235,6 +239,15 @@ select:focus::-ms-value {background-color: white; color: inherit}
     color: #2d6ca6;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.75rem;
+    text-align: center;
+}
+.flex-cell input[disabled]{
+    border-color: #A6A6A6;
+    color: #A6A6A6;
+}
+.flex-cell input[disabled] + .flex-prompt{
+    border-color: #A6A6A6;
+    color: #A6A6A6;
 }
 
 .leftHalf{

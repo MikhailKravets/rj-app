@@ -326,13 +326,13 @@ class Teacher(_Interface):
                 self.program_id = id_load
         if self.NEW_JOURN_STEP <= Config.MAX_REGISTRATION_STEP:
             logging.debug("AND HERE: {}".format(self.NEW_JOURN_STEP))
-            render_object, hours = self.__load_render(self.NEW_JOURN_STEP, self.program_id)
+            render_object, cl_model = self.__render_step(self.NEW_JOURN_STEP, self.program_id)
             return [self.NEW_JOURN_STEP, self.MAX_JOURN_STEPS,
-                    '{}journ{}.html'.format(Config.PATH_CONTENT, self.NEW_JOURN_STEP), render_object, hours]
+                    '{}journ{}.html'.format(Config.PATH_CONTENT, self.NEW_JOURN_STEP), render_object, cl_model]
         else:
             return None
 
-    def __load_render(self, step, load_id):
+    def __render_step(self, step, load_id):
         if step == 1:
             query = """SELECT semester,
                        lecture, practice, labor, seminar,
@@ -363,9 +363,43 @@ class Teacher(_Interface):
                         'self_labor': retr[7],
                         'self_seminar': retr[8],
                     }
-            return None
+            return None, None
         elif step == 2:
-            return {}, None
+            rend = {
+                'visit': 0,
+                'lecture': 0,
+                'practice': 0,
+                'labor': 0,
+                'seminar': 0,
+                'AKR': 0,
+                'DKR': 0,
+                'MK': 0,
+
+                'visit2': 0,
+                'lecture2': 0,
+                'practice2': 0,
+                'labor2': 0,
+                'seminar2': 0,
+                'AKR2': 0,
+                'DKR2': 0,
+                'MK2': 0
+            }
+            if self.add_dictionary['lecture'] == '' or self.add_dictionary['lecture'] == '0': rend['lecture'] = -1
+            if self.add_dictionary['practice'] == '' or self.add_dictionary['practice'] == '0': rend['practice'] = -1
+            if self.add_dictionary['labor'] == '' or self.add_dictionary['labor'] == '0': rend['labor'] = -1
+            if self.add_dictionary['seminar'] == '' or self.add_dictionary['seminar'] == '0': rend['seminar'] = -1
+            if self.add_dictionary['lecture2'] == '' or self.add_dictionary['lecture2'] == '0': rend['lecture2'] = -1
+            if self.add_dictionary['practice2'] == '' or self.add_dictionary['practice2'] == '0': rend['practice2'] = -1
+            if self.add_dictionary['labor2'] == '' or self.add_dictionary['labor2'] == '0': rend['labor2'] = -1
+            if self.add_dictionary['seminar2'] == '' or self.add_dictionary['seminar2'] == '': rend['seminar2'] = -1
+
+            if self.add_dictionary['module_amount'] == '1':
+                rend['wc1'] = 1
+                rend['wc2'] = 0
+            else:
+                rend['wc1'] = 0.5
+                rend['wc2'] = 0.5
+            return rend, None
 
     def __exec_choice(self, query):
         result = []
