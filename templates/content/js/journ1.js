@@ -43,6 +43,7 @@ function StepController(max_hours, update){
                     e.target.value = intval;
                     rem[key] = 0;
                 }
+                $('[' + attr_name + '=' + key + ']').siblings('label').find('.rem-view').text(rem[key]);
             }
         });
     }
