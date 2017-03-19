@@ -296,7 +296,8 @@ button:active{
     border-bottom-width: 2px;
 }
 .textField[disabled]{
-    opacity: 0.4;
+    opacity: 0.7;
+    border-color: #E5E5E5;
 }
 .unvalidated{
     border-color: #E6A8A8 !important;
