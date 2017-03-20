@@ -384,14 +384,8 @@ class Teacher(_Interface):
                 'DKR2': 0,
                 'MK2': 0
             }
-            if self.add_hours['lecture'] == '0': rend['lecture'] = -1
-            if self.add_hours['practice'] == '0': rend['practice'] = -1
-            if self.add_hours['labor'] == '0': rend['labor'] = -1
-            if self.add_hours['seminar'] == '0': rend['seminar'] = -1
-            if self.add_hours['lecture2'] == '0': rend['lecture2'] = -1
-            if self.add_hours['practice2'] == '0': rend['practice2'] = -1
-            if self.add_hours['labor2'] == '0': rend['labor2'] = -1
-            if self.add_hours['seminar2'] == '0': rend['seminar2'] = -1
+
+            multiplier = 100
 
             if self.add_hours['module_amount'] == '1':
                 rend['wc1'] = 1
@@ -399,6 +393,34 @@ class Teacher(_Interface):
             else:
                 rend['wc1'] = 0.5
                 rend['wc2'] = 0.5
+
+            rend['visit'] = 0.05*multiplier*rend['wc1']
+            rend['visit2'] = 0.05*multiplier*rend['wc2']
+            if self.add_hours['lecture'] == '0': rend['lecture'] = -1
+            else: rend['lecture'] = 0.1*multiplier*rend['wc1']
+            if self.add_hours['practice'] == '0': rend['practice'] = -1
+            else: rend['practice'] = 0.1*multiplier*rend['wc1']
+            if self.add_hours['labor'] == '0': rend['labor'] = -1
+            else: rend['labor'] = 0.1*multiplier*rend['wc1']
+            if self.add_hours['seminar'] == '0': rend['seminar'] = -1
+            else: rend['seminar'] = 0.1*multiplier*rend['wc1']
+            if self.add_hours['lecture2'] == '0': rend['lecture2'] = -1
+            else: rend['lecture2'] = 0.1*multiplier*rend['wc2']
+            if self.add_hours['practice2'] == '0': rend['practice2'] = -1
+            else: rend['practice2'] = 0.1*multiplier*rend['wc2']
+            if self.add_hours['labor2'] == '0': rend['labor2'] = -1
+            else: rend['labor2'] = 0.1*multiplier*rend['wc2']
+            if self.add_hours['seminar2'] == '0': rend['seminar2'] = -1
+            else: rend['seminar2'] = 0.1*multiplier*rend['wc2']
+
+            rend['AKR'] = 0.2*multiplier*rend['wc1']
+            rend['DKR'] = 0.2*multiplier*rend['wc1']
+            rend['MK'] = 0.4*multiplier*rend['wc1']
+
+            rend['AKR2'] = 0.2 * multiplier * rend['wc2']
+            rend['DKR2'] = 0.2 * multiplier * rend['wc2']
+            rend['MK2'] = 0.4 * multiplier * rend['wc2']
+
             return rend, None
 
     def __finish_add(self):
