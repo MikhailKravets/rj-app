@@ -310,7 +310,7 @@ class Teacher(_Interface):
         logging.debug("HERE: {}".format(self.NEW_JOURN_STEP))
         return self.__exec_choice(query)
 
-    def update_journ_step(self, data):
+    def increment_journ_step(self, data):
         if self.NEW_JOURN_STEP == 1:
             self.add_hours = data
         elif self.NEW_JOURN_STEP == 2:

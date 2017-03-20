@@ -230,7 +230,7 @@ class JournalHandler(web.RequestHandler):
                 else:
                     result = ['END']
             elif data[0] == 'ADD':
-                Config.users[self.get_cookie('session')].update_journ_step(data[1])
+                Config.users[self.get_cookie('session')].increment_journ_step(data[1])
                 result = Config.users[self.get_cookie('session')].journ_step(data[1])
                 result[2] = self.render_string(result[2], **result[3]).decode('utf8')
             self.write(json.dumps(result))
