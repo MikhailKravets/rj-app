@@ -3,6 +3,14 @@ function StepController(max_hours, update){
     var rem = JSON.parse(JSON.stringify(max_hours));
     initModel(model);
     
+    function zerofy(m){
+        var k = Object.keys(m);
+
+        for(var i = 0; i < k.length; i++){
+            if(m[k[i]] === "")
+                m[k[i]] = '0';
+        }
+    }
     
     function calcRemain(attr_name){
         console.log(rem);
@@ -68,7 +76,6 @@ function StepController(max_hours, update){
     });
     
     $("#forwardButton").on('click', function(e){
-        console.log(model);
         if(!checkRequired($("[required]")))
             showMessage($(".message"), 'Не все обязательные поля заполнены!');
         else if(!checkRequiredif($("[requiredif]")))
@@ -80,9 +87,12 @@ function StepController(max_hours, update){
         else {
             hideMessage($(".message"));
             trimModel(model);
+            zerofy(model);
+            
+            console.log(model);
+            
             queryServer('/journal/post', ["ADD", model], function (data){
                 data = JSON.parse(data);
-                console.log(data);
                 update(data);
             });
         }

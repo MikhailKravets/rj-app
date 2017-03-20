@@ -294,7 +294,7 @@ class Teacher(_Interface):
         self.program_id = 0
         self.new_time = None
         self.new_marks = None
-        self.add_dictionary = {}
+        self.add_hours = {}
         self.NEW_JOURN_STEP = 1
         self.MAX_JOURN_STEPS = 2
 
@@ -312,7 +312,7 @@ class Teacher(_Interface):
 
     def update_journ_step(self, data):
         if self.NEW_JOURN_STEP == 1:
-            self.add_dictionary = data
+            self.add_hours = data
         elif self.NEW_JOURN_STEP == 2:
             pass
         self.NEW_JOURN_STEP += 1
@@ -384,22 +384,25 @@ class Teacher(_Interface):
                 'DKR2': 0,
                 'MK2': 0
             }
-            if self.add_dictionary['lecture'] == '' or self.add_dictionary['lecture'] == '0': rend['lecture'] = -1
-            if self.add_dictionary['practice'] == '' or self.add_dictionary['practice'] == '0': rend['practice'] = -1
-            if self.add_dictionary['labor'] == '' or self.add_dictionary['labor'] == '0': rend['labor'] = -1
-            if self.add_dictionary['seminar'] == '' or self.add_dictionary['seminar'] == '0': rend['seminar'] = -1
-            if self.add_dictionary['lecture2'] == '' or self.add_dictionary['lecture2'] == '0': rend['lecture2'] = -1
-            if self.add_dictionary['practice2'] == '' or self.add_dictionary['practice2'] == '0': rend['practice2'] = -1
-            if self.add_dictionary['labor2'] == '' or self.add_dictionary['labor2'] == '0': rend['labor2'] = -1
-            if self.add_dictionary['seminar2'] == '' or self.add_dictionary['seminar2'] == '': rend['seminar2'] = -1
+            if self.add_hours['lecture'] == '0': rend['lecture'] = -1
+            if self.add_hours['practice'] == '0': rend['practice'] = -1
+            if self.add_hours['labor'] == '0': rend['labor'] = -1
+            if self.add_hours['seminar'] == '0': rend['seminar'] = -1
+            if self.add_hours['lecture2'] == '0': rend['lecture2'] = -1
+            if self.add_hours['practice2'] == '0': rend['practice2'] = -1
+            if self.add_hours['labor2'] == '0': rend['labor2'] = -1
+            if self.add_hours['seminar2'] == '0': rend['seminar2'] = -1
 
-            if self.add_dictionary['module_amount'] == '1':
+            if self.add_hours['module_amount'] == '1':
                 rend['wc1'] = 1
                 rend['wc2'] = 0
             else:
                 rend['wc1'] = 0.5
                 rend['wc2'] = 0.5
             return rend, None
+
+    def __finish_add(self):
+        query = """INSERT INTO journ_hours () VALUES ()"""
 
     def __exec_choice(self, query):
         result = []

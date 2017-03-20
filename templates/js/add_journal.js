@@ -148,7 +148,6 @@ function Controller(){
                                     $("#beforeView").css('display', 'none');
                                     $("#stepView").html(d[2]);
                                     regInputs($(".textField"));
-                                    console.log("ALLOHHAD");
                                 }
                                 else{
                                     $("#steps").css('visibility', 'hidden');

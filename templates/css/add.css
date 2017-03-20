@@ -206,12 +206,12 @@ select:focus::-ms-value {background-color: white; color: inherit}
 .flex-container{
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+/*    flex-wrap: wrap;*/
 }
 .flex-cell{
     position: relative;
-    max-width: 70px;
-    min-width: 70px;
+    max-width: 80px;
+    min-width: 60px;
     text-align: center;
     margin-left: 8px;
     margin-right: 8px;
@@ -240,6 +240,7 @@ select:focus::-ms-value {background-color: white; color: inherit}
     font-family: 'Open Sans', sans-serif;
     font-size: 0.75rem;
     text-align: center;
+    overflow: hidden;
 }
 .flex-cell input[disabled]{
     border-color: #A6A6A6;
