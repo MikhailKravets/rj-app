@@ -18,7 +18,29 @@ function Controller() {
     var delay = 300;
     var t;
     var isWait = false;
-
+    
+    
+    
+    
+    function ChoiceBox(jContainer, url){
+        var list = [];
+        var delay = 100;
+        var input = jContainer.find('input');
+        var comboContainer = jContainer.find(".comboContainer");
+        
+        var checklist = function(){
+            
+        }
+    }
+    ChoiceBox.prototype.validate = function(value){
+        
+    }
+    ChoiceBox.prototype.updateChoiceView(nullify=false){
+        
+    }
+    
+    
+    
     function updateModel(key, val){
         model[key] = val;
     }
