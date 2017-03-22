@@ -8,7 +8,7 @@ import tornado.ioloop as loop
 import tornado.httpserver
 
 from config import *
-from system import User
+from system import Specify
 
 
 class MainHandler(web.RequestHandler):
@@ -266,7 +266,7 @@ class AuthHandler(web.RequestHandler):
             for retrieved in self.application.db_manager.execute(query):
                 id_user, log, passwd, fn, mn, ln, email, sex, access, p = retrieved
                 session_name = Config.rand_hexline(22)
-                Config.users[session_name] = User(id_user, log, (fn, mn, ln), access, sex, email, p).specify()
+                Config.users[session_name] = Specify(id_user, log, (fn, mn, ln), access, sex, email, p)
                 self.set_cookie('session', session_name)
                 result = True
             if result:

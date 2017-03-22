@@ -116,6 +116,7 @@ class Session:
 class DBManager:
     def __init__(self):
         self.connection = MySQLdb.connect(**Config.DB, charset='utf8')
+        logging.debug("CREATE CONNECTION TO DB")
         self.cursor = self.connection.cursor()
 
     def connect(self):
