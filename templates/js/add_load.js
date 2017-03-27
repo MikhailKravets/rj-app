@@ -298,6 +298,9 @@ function Controller() {
         else{
             trimModel(model);
            // intifyModel(model);
+            
+            // TODO: append here validation of choice boxes
+            
             console.log(model);
             queryServer('/load/post', ['ADD', model], function(data){
                 data = JSON.parse(data);
