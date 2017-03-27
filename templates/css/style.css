@@ -388,3 +388,16 @@ button:active{
     box-shadow: 3px 0 0 0 #5f80b2 inset, 2px 2px 0 0 #ebebeb !important;
     color: #2d6ca6 !important;
 }
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #4f7ca5;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #4f7ca5;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #4f7ca5;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #4f7ca5;
+}

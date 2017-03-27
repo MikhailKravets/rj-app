@@ -35,7 +35,7 @@ function Controller() {
     ChoiceBox.prototype.validate = function(value){
         
     }
-    ChoiceBox.prototype.updateChoiceView(nullify=false){
+    ChoiceBox.prototype.updateChoiceView = function(nullify=false){
         
     }
     
