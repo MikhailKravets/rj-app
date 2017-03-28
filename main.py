@@ -17,7 +17,7 @@ class MainHandler(web.RequestHandler):
         self.render('main.html', access=Config.users[self.get_cookie('session')].access)
 
     def post(self):
-        data = json.loads(self.request.body)
+        data = json.loads(self.request.body.decode('utf8'))
         if data[0] == 'QUIT':
             try:
                 del Config.users[self.get_cookie('session')]
@@ -59,12 +59,11 @@ class InviteHandler(web.RequestHandler):
     @Decorator.authorized
     def post(self):
         if '3' in Config.users[self.get_cookie('session')].access:
-            data = json.loads(self.request.body)
+            data = json.loads(self.request.body.decode('utf8'))
             if data[0] == 'INVITE':
                 insert = data[1]
                 insert = self.application.escape_data(insert)
                 insert['password'] = Config.rand_hexline(6, millis_time=False)
-                logging.debug(f"INVITE {insert}")
                 query = """INSERT INTO users (login, password, first, middle, last, access, sex)
                            VALUES
                            ('{0[login]}', '{0[password]}', '{0[first]}', '{0[middle]}', '{0[last]}', '{0[access]}', '{0[sex]}')"""
@@ -96,7 +95,7 @@ class SettingsHandler(web.RequestHandler):
 
     @Decorator.authorized
     def post(self):
-        data = json.loads(self.request.body)
+        data = json.loads(self.request.body.decode('utf8'))
         if data[0] == 'UPDATE':
             retr = Config.users[self.get_cookie('session')].update_settings(data[1])
             self.write(json.dumps(retr))
@@ -124,7 +123,7 @@ class GroupHandler(web.RequestHandler):
     @Decorator.authorized
     def post(self, what):
         if '2' in Config.users[self.get_cookie('session')].access:
-            data = json.loads(self.request.body)
+            data = json.loads(self.request.body.decode('utf8'))
             if data[0] == 'ADD':
                 data[1] = self.application.escape_data(data[1])
                 data[1]['students'] = self.application.escape_data(data[1]['students'])
@@ -156,7 +155,7 @@ class LoadHandler(web.RequestHandler):
     @Decorator.authorized
     def post(self, what):
         if '2' in Config.users[self.get_cookie('session')].access:
-            data = json.loads(self.request.body)
+            data = json.loads(self.request.body.decode('utf8'))
 
             if data[0] == 'ADD':
                 result = Config.users[self.get_cookie('session')].new_load(self.application.escape_data(data[1]))
@@ -189,7 +188,7 @@ class DisciplineHandler(web.RequestHandler):
     @Decorator.authorized
     def post(self, what):
         if '3' in Config.users[self.get_cookie('session')].access:
-            data = json.loads(self.request.body)
+            data = json.loads(self.request.body.decode('utf8'))
             if data[0] == 'ADD':
                 result = Config.users[self.get_cookie('session')].add_discipline(self.application.escape_data(data[1]))
             self.write(json.dumps(result))
@@ -219,7 +218,7 @@ class JournalHandler(web.RequestHandler):
     @Decorator.authorized
     def post(self, what):
         if '1' in Config.users[self.get_cookie('session')].access:
-            data = json.loads(self.request.body)
+            data = json.loads(self.request.body.decode('utf8'))
             if data[0] == 'CHOICE':
                 result = Config.users[self.get_cookie('session')].choice_load(Config.users[self.get_cookie('session')].id_user, self.application.escape_data(data[1]))
             elif data[0] == 'STEP':
@@ -255,7 +254,8 @@ class AuthHandler(web.RequestHandler):
                 self.render('auth.html')
 
     def post(self):
-        data = json.loads(self.request.body)
+        logging.debug("DATA: {}".format(self.request.body))
+        data = json.loads(self.request.body.decode('utf8'))
         if data[0] == 'LOGIN':
             result = False
             logging.debug("Data: {}".format(data))
@@ -305,7 +305,7 @@ class EndregHandler(web.RequestHandler):
                 self.redirect('/auth')
 
     def post(self):
-        data = json.loads(self.request.body)
+        data = json.loads(self.request.body.decode('utf8'))
         result = False
         if data[0] == 'EMAIL':
             data[1] = Config.escape(data[1])
@@ -402,9 +402,9 @@ class Application(web.Application):
         first, middle, last = 'Ronald', 'The First', 'Everdone'
         email = 'creategoolemail@gmail.com'
         access = '1234'
-        query = f"""INSERT INTO users (login, password, email, first, middle, last, access)
+        query = """INSERT INTO users (login, password, email, first, middle, last, access)
                    VALUES
-                   ('{login}', SHA2('{password}', 224), '{email}', '{first}', '{middle}', '{last}', '{access}')"""
+                   ('{0}', SHA2('{1}', 224), '{2}', '{3}', '{4}', '{5}', '{6}')""".format(login, password, email, first, middle, last, access)
         for i in self.db_manager.execute(query):
             print(i)
 
