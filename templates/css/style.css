@@ -85,7 +85,9 @@ hr{
     z-index: 7;
 }
 .navigation{
-    display: block;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
     top: 0;
     width: 50px !important;
     max-width: 50px;
@@ -188,15 +190,15 @@ hr{
     margin-left: auto;
     margin-right: auto;
     height: 45px;
-
 }
 
 .menuItem{
     display: inline-block;
-    vertical-align: middle;
-    font-size: 1.3rem;
-    height: 60px;
+    flex-basis: 100px;
+    flex-shrink: 2;
     width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
     box-shadow: -1px 1px 0 0 #327cb2, -1px -1px 0 0 #24587f;
     color: white;
@@ -205,9 +207,8 @@ hr{
     -webkit-transition: background 0.1s linear, color 0.1s linear;
 }
 .menuItem svg{
-    margin-top: 25%;
     width: 50%;
-    height: 50%;
+    height: auto;
     fill: white;
     transition: transform 0.1s ease-out;
 }

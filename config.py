@@ -7,7 +7,7 @@ import logging
 
 
 class Config:
-    PATH = '/home/dtk/rj'
+    PATH = 'C:/rj'
     TEMPLATE_PATH = PATH + '/templates'
     PATH_SESSIONS = PATH + '/tmp/'
     PATH_CONTENT = TEMPLATE_PATH + '/content/'
