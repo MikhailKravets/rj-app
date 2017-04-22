@@ -280,7 +280,6 @@ button:active{
     background: none;
     font-family: "Open Sans", sans-serif;
     font-size: 0.84rem;
-    border: none;
     outline: none;
     border: 1px solid #cbd3e6;
     box-sizing: content-box;
@@ -290,6 +289,11 @@ button:active{
     width: 100%;
     transition: border-color 0.2s linear, box-shadow 0.2s linear;
     -webkit-transition: border-color 0.2s linear, box-shadow 0.2s linear;
+}
+.textField:invalid, .textField:required{
+    border: 1px solid #cbd3e6;
+    outline: none;
+    box-shadow: none;
 }
 .textField:focus{
     border-bottom-color: #6790B5;
@@ -393,7 +397,8 @@ button:active{
   color: #4f7ca5;
 }
 ::-moz-placeholder { /* Firefox 19+ */
-  color: #4f7ca5;
+  color: #4f7ca5 !important;
+    opacity: 1
 }
 :-ms-input-placeholder { /* IE 10+ */
   color: #4f7ca5;

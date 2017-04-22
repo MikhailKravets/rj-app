@@ -85,6 +85,7 @@ input[type=text], input[type=password], input[type="email"]{
     margin-left: 20px;
     border: none;
     color: #737373;
+    background-color: white;
 }
 .signInIcon{
     display: block;
@@ -221,7 +222,7 @@ a{
     text-decoration: none;
 }
 
-@media screen and (max-height: 600px){
+@media screen and (max-height: 650px){
     html, body{
         height: auto;!important;
         overflow: visible;!important;

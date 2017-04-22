@@ -7,13 +7,13 @@ import logging
 
 
 class Config:
-    PATH = 'c:/rj'
+    PATH = '/home/dtk/rj'
     TEMPLATE_PATH = PATH + '/templates'
     PATH_SESSIONS = PATH + '/tmp/'
     PATH_CONTENT = TEMPLATE_PATH + '/content/'
     PATH_SVG = PATH_CONTENT + 'svg/'
 
-    PORT = 83
+    PORT = 80
 
     DB = {
         'host': 'localhost',
