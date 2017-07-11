@@ -7,6 +7,8 @@ import logging
 
 
 class Config:
+
+    # TODO: change the path on os.getcd or smth
     PATH = 'C:/rj'
     TEMPLATE_PATH = PATH + '/templates'
     PATH_SESSIONS = PATH + '/tmp/'
@@ -72,6 +74,7 @@ class Decorator:
         return wrapper
 
 
+# TODO: Remove this and connect Redis for sessions instead
 class Session:
     @staticmethod
     def create(obj):
@@ -113,6 +116,7 @@ class Session:
             return None
 
 
+# TODO: sort out this shit. Use sqlalchemy
 class DBManager:
     def __init__(self):
         self.connection = MySQLdb.connect(**Config.DB, charset='utf8')
