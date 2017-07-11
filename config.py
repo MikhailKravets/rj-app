@@ -15,7 +15,7 @@ class Config:
     PATH_CONTENT = TEMPLATE_PATH + '/content/'
     PATH_SVG = PATH_CONTENT + 'svg/'
 
-    PORT = 83
+    PORT = 80
 
     DB = {
         'host': 'localhost',

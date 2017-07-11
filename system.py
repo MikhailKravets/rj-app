@@ -2,6 +2,7 @@ import logging
 
 from config import Config, DBManager
 
+# TODO: delete all this shit and makle it adequatly with Redis
 
 def Specify(id_user, login, name, access='1', sex='M', email=None, pristine=0, ws=None):
     follow = []
