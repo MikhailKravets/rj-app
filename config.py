@@ -7,15 +7,13 @@ import logging
 
 
 class Config:
-
-    # TODO: change the path on os.getcd or smth
-    PATH = 'C:/rj'
+    PATH = 'C:/develop/rj'
     TEMPLATE_PATH = PATH + '/templates'
     PATH_SESSIONS = PATH + '/tmp/'
     PATH_CONTENT = TEMPLATE_PATH + '/content/'
     PATH_SVG = PATH_CONTENT + 'svg/'
 
-    PORT = 80
+    PORT = 81
 
     DB = {
         'host': 'localhost',
@@ -52,9 +50,9 @@ class Config:
 class Decorator:
     @staticmethod
     def authorized(fn):
-        def wrapper(self, *args):
+        async def wrapper(self, *args):
             if self.application.authorized(self.get_cookie('session')):
-                fn(self, *args)
+                await fn(self, *args)
             else:
                 inline = self.application.inline_get(self.get_argument('inline', False))
                 if inline:
@@ -65,10 +63,10 @@ class Decorator:
 
     @staticmethod
     def inline(fn):
-        def wrapper(self, *args):
+        async def wrapper(self, *args):
             inline = self.application.inline_get(self.get_argument('inline', False))
             if inline:
-                fn(self, *args)
+                await fn(self, *args)
             else:
                 self.render('main.html', access=Config.users[self.get_cookie('session')].access)
         return wrapper

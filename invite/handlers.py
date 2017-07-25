@@ -6,15 +6,16 @@ from config import *
 class InviteHandler(web.RequestHandler):
     @Decorator.authorized
     @Decorator.inline
-    def get(self):
+    async def get(self):
         user = Config.users[self.get_cookie('session')]
         if '3' in user.access:
             self.render('invite.html')
         else:
             self.write('405')
+            self.finish()
 
     @Decorator.authorized
-    def post(self):
+    async def post(self):
         if '3' in Config.users[self.get_cookie('session')].access:
             data = json.loads(self.request.body)
             if data[0] == 'INVITE':
@@ -37,6 +38,7 @@ class InviteHandler(web.RequestHandler):
                 self.write(json.dumps(result))
         else:
             self.write('405')
+        self.finish()
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH

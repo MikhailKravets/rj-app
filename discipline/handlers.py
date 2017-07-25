@@ -6,7 +6,7 @@ from config import *
 class DisciplineHandler(web.RequestHandler):
     @Decorator.authorized
     @Decorator.inline
-    def get(self, what):
+    async def get(self, what):
         user = Config.users[self.get_cookie('session')]
         if '3' in user.access:
             logging.debug('WHAT: "{}"'.format(what))
@@ -18,9 +18,10 @@ class DisciplineHandler(web.RequestHandler):
                 self.redirect('/discipline/add')
         else:
             self.write('405')
+            self.finish()
 
     @Decorator.authorized
-    def post(self, what):
+    async def post(self, what):
         if '3' in Config.users[self.get_cookie('session')].access:
             data = json.loads(self.request.body)
             if data[0] == 'ADD':
@@ -28,6 +29,7 @@ class DisciplineHandler(web.RequestHandler):
             self.write(json.dumps(result))
         else:
             self.write('405')
+        self.finish()
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH

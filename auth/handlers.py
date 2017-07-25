@@ -1,3 +1,5 @@
+import random
+
 import tornado.web as web
 
 from config import *
@@ -5,7 +7,7 @@ from system import Specify
 
 
 class AuthHandler(web.RequestHandler):
-    def get(self):
+    async def get(self):
         if self.application.authorized(self.get_cookie('session')):
             self.redirect('/')
         else:
@@ -17,7 +19,7 @@ class AuthHandler(web.RequestHandler):
             else:
                 self.render('auth.html')
 
-    def post(self):
+    async def post(self):
         data = json.loads(self.request.body)
         if data[0] == 'LOGIN':
             result = False
@@ -39,13 +41,14 @@ class AuthHandler(web.RequestHandler):
                     self.write('OK')
             else:
                 self.write('ERROR')
+        self.finish()
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
 
 
 class EndregHandler(web.RequestHandler):
-    def get(self):
+    async def get(self):
         if self.application.authorized(self.get_cookie('session')):
             self.redirect('/')
         else:
@@ -66,8 +69,9 @@ class EndregHandler(web.RequestHandler):
                         self.redirect('/')
             else:
                 self.redirect('/auth')
+        self.finish()
 
-    def post(self):
+    async def post(self):
         data = json.loads(self.request.body)
         result = False
         if data[0] == 'EMAIL':
@@ -96,6 +100,7 @@ class EndregHandler(web.RequestHandler):
                 data = Config.users[self.get_cookie('session')].endreg_step()
                 result = ['NEXT', data]
         self.write(json.dumps(result))
+        self.finish()
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH

@@ -6,7 +6,7 @@ from config import *
 class JournalHandler(web.RequestHandler):
     @Decorator.authorized
     @Decorator.inline
-    def get(self, what):
+    async def get(self, what):
         user = Config.users[self.get_cookie('session')]
         if '1' in user.access:
             logging.debug('WHAT: "{}"'.format(what))
@@ -18,9 +18,10 @@ class JournalHandler(web.RequestHandler):
                 self.redirect('/journal/add')
         else:
             self.write('405')
+            self.finish()
 
     @Decorator.authorized
-    def post(self, what):
+    async def post(self, what):
         if '1' in Config.users[self.get_cookie('session')].access:
             data = json.loads(self.request.body)
             if data[0] == 'CHOICE':
@@ -39,6 +40,7 @@ class JournalHandler(web.RequestHandler):
             self.write(json.dumps(result))
         else:
             self.write('405')
+        self.finish()
 
     def get_template_path(self):
         return Config.TEMPLATE_PATH
