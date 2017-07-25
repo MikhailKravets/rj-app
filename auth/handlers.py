@@ -64,7 +64,7 @@ class EndregHandler(web.RequestHandler):
                                     step=user.endreg,
                                     max_step=Config.MAX_REGISTRATION_STEP,
                                     step_view=data,
-                                    pict_number=str(random.randint(0, Config.MAX_REGISTRATIO_PICT_NUMBER)))
+                                    pict_number=str(random.randint(0, Config.MAX_REGISTRATION_PICT_NUMBER)))
                     else:
                         self.redirect('/')
             else:

@@ -7,7 +7,7 @@ import logging
 
 
 class Config:
-    PATH = 'C:/develop/rj'
+    PATH = os.getcwd()
     TEMPLATE_PATH = PATH + '/templates'
     PATH_SESSIONS = PATH + '/tmp/'
     PATH_CONTENT = TEMPLATE_PATH + '/content/'
@@ -25,7 +25,7 @@ class Config:
     users = {} # dict that contains connected users
 
     MAX_REGISTRATION_STEP = 2
-    MAX_REGISTRATIO_PICT_NUMBER = 5
+    MAX_REGISTRATION_PICT_NUMBER = 5
 
     @staticmethod
     def escape(string):
