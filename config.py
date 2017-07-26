@@ -47,6 +47,7 @@ class Config:
         return name
 
 
+# TODO: it must be removed. Use lib.decorators instead
 class Decorator:
     @staticmethod
     def authorized(fn):
@@ -72,7 +73,7 @@ class Decorator:
         return wrapper
 
 
-# TODO: Remove this and connect Redis for sessions instead
+# TODO: Remove this. Use lib.HashSession instead
 class Session:
     @staticmethod
     def create(obj):

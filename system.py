@@ -1,4 +1,5 @@
 import logging
+import redis
 
 from config import Config, DBManager
 
