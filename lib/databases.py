@@ -1,6 +1,26 @@
 r"""
 
-This file contains classes that simplifies the work with sqlalchemy
+This file contains classes that simplifies the work with sqlalchemy.
+
+From official documentation:
+
+The MySQL dialect uses mysql-python as the default DBAPI. There are many MySQL DBAPIs available, including MySQL-connector-python and OurSQL:
+
+# default
+
+``engine = create_engine('mysql://scott:tiger@localhost/foo')``
+
+# mysql-python
+
+``engine = create_engine('mysql+mysqldb://scott:tiger@localhost/foo')``
+
+# MySQL-connector-python
+
+``engine = create_engine('mysql+mysqlconnector://scott:tiger@localhost/foo')``
+
+# OurSQL
+
+``engine = create_engine('mysql+oursql://scott:tiger@localhost/foo')``
 
 """
 
