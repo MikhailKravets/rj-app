@@ -35,7 +35,7 @@ def SQLExecutor(use_mysqldb=True):
     reasonable to use mysql.connector. But it is preferable to use MySQLdb because it is
     implemented on C while mysql.connector is implemented on Python.
 
-    :param: ``use_mysqldb``: set this variable to ``False`` if you want to work with mysql.connector.
+    :param use_mysqldb: set this variable to ``False`` if you want to work with mysql.connector.
     :return: One of the child of __AbstractMySQL: class object that simplifies the work with MySQL.
     """
     if use_mysqldb:
