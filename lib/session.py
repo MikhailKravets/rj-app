@@ -1,3 +1,8 @@
+"""
+
+Here must be laid classes and functions of managing of client sessions.
+
+"""
 import redis
 
 
