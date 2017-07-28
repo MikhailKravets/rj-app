@@ -1,8 +1,11 @@
 r"""
 
 This file must contain classes for easy managing of databases modules.
-I.e. make an opportunity to choose between mysqldb or mysql-connector.
-Provide functionality for sqlalchemy with earlier (↑) created classes.
+
+It can work either with MySQLdb library or mysql.connector. Just use
+``SQLExecutor(...)`` function. By default it choose MySQLdb because
+it is implemented on C and therefore is faster than mysql.connector
+but you can choose mysql.connector by setting the argument ``use_mysqldb=False``
 
 """
 
@@ -16,20 +19,23 @@ from config import Config
 
 def ModelBase():
     r"""
-    Use this method to generate sqlalchemy Base class in order to extend models.
+    Use this function in order to construct your own object-relational models.
+
+    :return: sqlalchemy declarative base link
     """
     return declarative_base()
 
 
 def SQLExecutor(use_mysqldb=True):
     r"""
-    This is class-like function. Such as there is a problom with installing of MySQLdb on Linux,
-    it is reasonable to use mysql.connector.
-    It is preferable to use MySQLdb beacue it is implemented on C while mysql.connector is
-    implemented on Python.
+    This function returns one of the ``AbstractMySQL`` child class object
+    (depending on the library it should use).
 
-    The function imports needed library and then return class that works with this library.
-    :param use_mysqldb: boolean variable that defines whether it should be used MySQLdb or not.
+    Sometimes there is a problem with installing of MySQLdb on Linux, so it is
+    reasonable to use mysql.connector. But it is preferable to use MySQLdb because it is
+    implemented on C while mysql.connector is implemented on Python.
+
+    :param: ``use_mysqldb``: set this variable to ``False`` if you want to work with mysql.connector.
     :return: One of the child of __AbstractMySQL: class object that simplifies the work with MySQL.
     """
     if use_mysqldb:
@@ -40,7 +46,7 @@ def SQLExecutor(use_mysqldb=True):
         return __MySQLConnector()
 
 
-class __AbstractMySQL:
+class AbstractMySQL:
     @abstractmethod
     def connect(self):
         pass
@@ -56,7 +62,7 @@ class __AbstractMySQL:
 
 # TODO: sort out this shit and delete it from config.py
 # TODO: create the same but for mysql-connector
-class __MySQLdb(__AbstractMySQL):
+class __MySQLdb(AbstractMySQL):
     def __init__(self):
         self.connection = MySQLdb.connect(**Config.DB, charset='utf8')
         logging.debug("CREATE CONNECTION TO DB")
@@ -90,7 +96,7 @@ class __MySQLdb(__AbstractMySQL):
         self.connection.close()
 
 
-class __MySQLConnector(__AbstractMySQL):
+class __MySQLConnector(AbstractMySQL):
     def __init__(self):
         pass
 
