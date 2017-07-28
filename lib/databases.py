@@ -1,6 +1,6 @@
 r"""
 
-This file contains classes that simplifies the work widh sqlalchemy
+This file contains classes that simplifies the work with sqlalchemy
 
 """
 
@@ -19,3 +19,5 @@ def ModelBase():
     :return: sqlalchemy declarative base link
     """
     return declarative_base()
+
+# TODO: anyway we need to explicitly choose the right engine (mysqldb or mysqlconnector) for sqlalchemy
