@@ -14,7 +14,7 @@ from abc import abstractmethod
 from config import Config
 
 
-def Base():
+def ModelBase():
     r"""
     Use this method to generate sqlalchemy Base class in order to extend models.
     """
