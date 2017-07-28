@@ -28,7 +28,7 @@ class AuthHandler(web.RequestHandler):
                         FROM users
                         WHERE login = '{0}' AND (password = SHA2('{1}', 224) OR password = '{1}')"""
             query = query.format(data[1], data[2])
-            for retrieved in self.application.db_manager.execute(query):
+            for retrieved in self.application.db_manager.raw(query):
                 id_user, log, passwd, fn, mn, ln, email, sex, access, p = retrieved
                 session_name = Config.rand_hexline(22)
                 Config.users[session_name] = Specify(id_user, log, (fn, mn, ln), access, sex, email, p)
@@ -78,7 +78,7 @@ class EndregHandler(web.RequestHandler):
             data[1] = Config.escape(data[1])
             query = """SELECT id FROM users WHERE email='{}' LIMIT 1""".format(data[1])
             duplicate = False
-            for retr in self.application.db_manager.execute(query):
+            for retr in self.application.db_manager.raw(query):
                 duplicate = True
             if duplicate:
                 result = ['ERROR', 'duplicate']

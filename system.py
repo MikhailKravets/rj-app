@@ -116,7 +116,7 @@ class LowModerator:
                    ('{0[name]}', '{0[specialty]}', '{0[finance_form]}',
                    '{0[study_form]}', '{0[university]}', '{0[qualification]}')"""
         query = query.format(data)
-        for retr in self.db.execute(query):
+        for retr in self.db.raw(query):
             logging.debug(retr)
             if 'Integrity' in retr:
                 self.db.connection.rollback()
@@ -138,7 +138,7 @@ class LowModerator:
             query += "({1}, '{0[first]}', '{0[middle]}', '{0[last]}', '{0[sex]}', '{0[privilege]}', '{0[finance_form]}'), ".format(v, last_id)
         query = query[:-2]
 
-        for retr in self.db.execute(query):
+        for retr in self.db.raw(query):
             logging.debug(retr)
             if 'Error' in retr:
                 self.db.connection.rollback()
@@ -162,7 +162,7 @@ class LowModerator:
                      {0[self_lecture]}, {0[self_practice]}, {0[self_labor]}, {0[self_seminar]})"""
         query = query.format(data)
 
-        for retr in self.db.execute(query):
+        for retr in self.db.raw(query):
             if 'Error' in retr:
                 self.db.connection.rollback()
                 self.db.connection.autocommit(True)
@@ -179,7 +179,7 @@ class LowModerator:
         query = query.format(data)
 
         length = 0
-        for retr in self.db.execute(query):
+        for retr in self.db.raw(query):
             length = retr[0]
         logging.debug('LENGTH: {}'.format(length))
         if length > 1:
@@ -225,7 +225,7 @@ class LowModerator:
 
     def __exec_choice(self, query):
         result = []
-        for retr in self.db.execute(query):
+        for retr in self.db.raw(query):
             if 'Error' in retr:
                 return ['ERROR']
             else:
@@ -242,7 +242,7 @@ class HighModerator:
                    VALUES ('{0[name]}', '{0[feature]}', '{0[cycle]}', '{0[code]}')"""
         query = query.format(data)
         logging.debug("Query: {}".format(query))
-        for retr in self.db.execute(query):
+        for retr in self.db.raw(query):
             if 'Integrity' in retr:
                 self.db.connection.rollback()
                 return ['ERROR', 'duplicate']
@@ -306,7 +306,7 @@ class Teacher:
                        self_lecture, self_practice, self_labor, self_seminar
                        FROM loads
                        WHERE id={}""".format(load_id)
-            for retr in self.db.execute(query):
+            for retr in self.db.raw(query):
                 if 'Error' not in retr:
                     return {
                         'semester': retr[0],
@@ -395,7 +395,7 @@ class Teacher:
 
     def __exec_choice(self, query):
         result = []
-        for retr in self.db.execute(query):
+        for retr in self.db.raw(query):
             if 'Error' in retr:
                 return ['ERROR']
             else:

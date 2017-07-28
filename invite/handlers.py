@@ -30,7 +30,7 @@ class InviteHandler(web.RequestHandler):
                 logging.debug(query)
 
                 result = ['OK', insert['password']]
-                for retr in self.application.db_manager.execute(query):
+                for retr in self.application.db_manager.raw(query):
                     if 'Integrity' in retr:
                         result = ['ERROR', 'duplicate']
                     elif 'Error' in retr:
