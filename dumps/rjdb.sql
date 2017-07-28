@@ -269,13 +269,13 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(85) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `first` varchar(85) NOT NULL,
-  `middle` varchar(85) DEFAULT NULL,
-  `last` varchar(85) NOT NULL,
+  `first_name` varchar(85) NOT NULL,
+  `middle_name` varchar(85) DEFAULT NULL,
+  `last_name` varchar(85) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `sex` varchar(1) NOT NULL DEFAULT 'M',
   `access` varchar(10) NOT NULL DEFAULT '1',
-  `pristine` tinyint(1) NOT NULL DEFAULT '1',
+  `activated` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
@@ -300,4 +300,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-28 16:02:44
+-- Dump completed on 2017-07-28 17:23:36
