@@ -2,17 +2,20 @@ import unittest
 from lib.session import HashSession
 
 
-class test_hash_sessions(unittest.TestCase):
+class TestHashSessions(unittest.TestCase):
+    def setUp(self):
+        self.session = HashSession()
+    
     def test_get_set_item(self):
-        session = HashSession()
-        key = session.gen_key()
+        
+        key = self.session.gen_key()
         data = {
             'login': 'Mikhalych',
             'email': 'mikh@mail.org',
             'access': '1'
         }
-        session[key] = data
-        result = session[key]
+        self.session[key] = data
+        result = self.session[key]
         print(self.assertEqual(data, result))
 
     def test_gen_key_len(self):
