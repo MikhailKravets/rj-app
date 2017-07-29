@@ -21,6 +21,13 @@ class Config:
         'passwd': 'rjournal',
         'db': 'rjdb'
     }
+    DB_ATTR = {
+        'user': 'rjournal',
+        'password': 'rjournal',
+        'host': 'localhost',
+        'database': 'rjdb'
+    }
+
 
     users = {} # dict that contains connected users
 

@@ -8,18 +8,16 @@ This file contains classes that simplifies the work with sqlalchemy.
 import logging
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
-from abc import abstractmethod
-
 from config import Config
 
 
 def ModelBase():
     """
-    Use this function in order to construct your own object-relational models.
+    This method is just wrapper for DBManager.Base attribute
 
-    :return: sqlalchemy declarative base link
+    :return: sqlalchemy declarative_base link
     """
-    return declarative_base()
+    return DBManager(**Config.DB_ATTR).Base
 
 
 class __Meta(type):
@@ -58,8 +56,8 @@ class DBManager(metaclass=__Meta):
 
         The variable can be set to next values:
 
-            #. mysqldb
-            #. mysqlconnector
+            * mysqldb
+            * mysqlconnector
 
         """
         waterfall = False
@@ -82,3 +80,4 @@ class DBManager(metaclass=__Meta):
         if self.engine is None:
             print("IT IS COMPLETELY NONE. CRITICAL ERROR")
         print("EXCELLENT")
+        self.Base = declarative_base()
