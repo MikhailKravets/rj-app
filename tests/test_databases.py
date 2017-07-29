@@ -19,6 +19,6 @@ class TestDBManager(unittest.TestCase):
     def test_del_singleton(self):
         elem = DBManager(**self.db_attributes)
         h1 = hash(elem)
-        del elem
+        elem.clear()
         elem1 = DBManager(**self.db_attributes)
         self.assertNotEqual(h1, hash(elem1))
