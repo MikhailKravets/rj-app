@@ -73,17 +73,17 @@ class DBManager(metaclass=__Meta):
             waterfall = True
             driver = 'mysqldb'
 
-        url = f"mysql+{driver}://{user}:{password}@{host}/{database}"
+        url = f"mysql+{driver}://{user}:{password}@{host}/{database}?charset=utf8"
         try:
-            self.engine = sqlalchemy.create_engine(url)
+            self.engine = sqlalchemy.create_engine(url, encoding='utf8')
         except ModuleNotFoundError as error:
             pass
             if waterfall:
                 logging.info("Try to find mysql.connector")
                 try:
                     driver = 'mysqlconnector'
-                    url = f"mysql+{driver}://{user}:{password}@{host}/{database}"
-                    self.engine = sqlalchemy.create_engine(url)
+                    url = f"mysql+{driver}://{user}:{password}@{host}/{database}?charset=utf8"
+                    self.engine = sqlalchemy.create_engine(url, encoding='utf8')
                 except ModuleNotFoundError as error:
                     pass
         if self.engine is None:
