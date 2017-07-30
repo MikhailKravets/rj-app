@@ -8,6 +8,7 @@ This file contains classes that simplifies the work with sqlalchemy.
 import logging
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 import config
 
 
@@ -86,6 +87,7 @@ class DBManager(metaclass=__Meta):
                 except ModuleNotFoundError as error:
                     pass
         if self.engine is None:
-            logging.critical("There is no intalled any of mysql drivers!")
+            raise ModuleNotFoundError("There is no intalled any of mysql drivers!")
         logging.info(f"Mysql engine created; {driver} driver was chosen")
         self.Base = declarative_base()
+        self.Session = sessionmaker(bind=self.engine)
