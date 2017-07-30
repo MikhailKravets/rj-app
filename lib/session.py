@@ -7,6 +7,7 @@ import random
 import redis
 
 
+# TODO: make this to be a singleton
 class HashSession:
     """
     The wrapper that easily manages of sessions through Redis

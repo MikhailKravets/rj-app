@@ -1,4 +1,3 @@
-from config import Config
 
 
 def authorized(fn):
@@ -14,6 +13,7 @@ def authorized(fn):
     return wrapper
 
 
+# TODO: update the 'access=...'
 def inline(fn):
     async def wrapper(self, *args):
         inline = self.application.inline_get(self.get_argument('inline', False))
