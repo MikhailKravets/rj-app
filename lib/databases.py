@@ -1,4 +1,4 @@
-r"""
+"""
 
 This file contains classes that simplifies the work with sqlalchemy.
 
@@ -8,7 +8,7 @@ This file contains classes that simplifies the work with sqlalchemy.
 import logging
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
-from config import Config
+import config
 
 
 def ModelBase():
@@ -17,7 +17,7 @@ def ModelBase():
 
     :return: sqlalchemy declarative_base link
     """
-    return DBManager(**Config.DB_ATTR).Base
+    return DBManager(**config.DB_ATTR).Base
 
 
 class __Meta(type):
@@ -37,7 +37,11 @@ class __Meta(type):
     def clear(cls):
         del cls.__obj
 
+
 # TODO: append adequate logging
+logging.basicConfig(format="%(filename)8s[line: %(lineno)s] %(levelname)3s - %(message)s", level=logging.DEBUG)
+
+
 class DBManager(metaclass=__Meta):
     """
     This class implements singleton pattern in order to have one sqlalchemy engine.
@@ -72,15 +76,16 @@ class DBManager(metaclass=__Meta):
         try:
             self.engine = sqlalchemy.create_engine(url)
         except Exception as error:
-            print(error)
+            pass
             if waterfall:
+                logging.info("Try to find mysql.connector")
                 try:
                     driver = 'mysqlconnector'
                     url = f"mysql+{driver}://{user}:{password}@{host}/{database}"
                     self.engine = sqlalchemy.create_engine(url)
                 except Exception as error:
-                    print(error)
+                    pass
         if self.engine is None:
-            print("IT IS COMPLETELY NONE. CRITICAL ERROR")
-        print("EXCELLENT")
+            logging.critical("There is no intalled any of mysql drivers!")
+        logging.info(f"Mysql engine created; {driver} driver was chosen")
         self.Base = declarative_base()
