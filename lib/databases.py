@@ -75,7 +75,7 @@ class DBManager(metaclass=__Meta):
         url = f"mysql+{driver}://{user}:{password}@{host}/{database}"
         try:
             self.engine = sqlalchemy.create_engine(url)
-        except Exception as error:
+        except ModuleNotFoundError as error:
             pass
             if waterfall:
                 logging.info("Try to find mysql.connector")
@@ -83,7 +83,7 @@ class DBManager(metaclass=__Meta):
                     driver = 'mysqlconnector'
                     url = f"mysql+{driver}://{user}:{password}@{host}/{database}"
                     self.engine = sqlalchemy.create_engine(url)
-                except Exception as error:
+                except ModuleNotFoundError as error:
                     pass
         if self.engine is None:
             logging.critical("There is no intalled any of mysql drivers!")
