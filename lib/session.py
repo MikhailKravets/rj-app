@@ -3,12 +3,12 @@
 Here must be laid classes and functions of managing of client sessions.
 
 """
+from lib import __Meta
 import random
 import redis
 
 
-# TODO: make this to be a singleton
-class HashSession:
+class HashSession(metaclass=__Meta):
     """
     The wrapper that easily manages of sessions through Redis
     """

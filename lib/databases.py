@@ -5,6 +5,7 @@ This file contains classes that simplifies the work with sqlalchemy.
 """
 
 
+from lib import __Meta
 import logging
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
@@ -19,24 +20,6 @@ def ModelBase():
     :return: sqlalchemy declarative_base link
     """
     return DBManager(**config.DB_ATTR).Base
-
-
-class __Meta(type):
-    """
-    This is the metaclass for DBManager class. Such as sqlalchemy creates
-    its own connection pool, it would be wise to implement singleton pattern.
-    """
-    __obj = None
-
-    def __call__(cls, *args, **kwargs):
-        if cls.__obj is None:
-            cls.__obj = cls.__new__(cls, *args, **kwargs)
-            cls.__obj.clear = cls.clear
-            cls.__obj.__init__(*args, **kwargs)
-        return cls.__obj
-
-    def clear(cls):
-        del cls.__obj
 
 
 # TODO: append adequate logging
