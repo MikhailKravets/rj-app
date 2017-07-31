@@ -1,14 +1,10 @@
-import json
+import config
+
 import logging
-import random
 
 import tornado.web as web
-import tornado.websocket as websocket
 import tornado.ioloop as loop
 import tornado.httpserver
-
-from config import *
-from system import Specify
 
 from main.handlers import MainHandler
 from auth.handlers import AuthHandler, EndregHandler
@@ -39,61 +35,13 @@ class Application(web.Application):
         settings = {
             'debug': True,
             'compiled_template_cache': False,
-            'static_path': Config.TEMPLATE_PATH
+            'static_path': config.TEMPLATE_PATH
         }
-        self.db_manager = DBManager()
         super().__init__(handlers, **settings)
-
-    def authorized(self, session_name):
-        if session_name in Config.users:
-            if Config.users[session_name].pristine != 1:
-                return True
-        return False
-
-    def inline_get(self, argument):
-        if argument == '1':
-            return True
-        else:
-            return False
-
-    def has_access(self, session, access_level):
-        if self.authorized(session_name=session):
-            if access_level in Config.users[session]:
-                return True
-        return False
-
-    def escape_data(self, data):
-        if type(data) == list:
-            for i in range(1, len(data)):
-                try:
-                    data[i] = Config.escape(data[i])
-                except Exception as error:
-                    logging.debug("Escaping error list: {}".format(error))
-        elif type(data) == dict:
-            for k in data.keys():
-                try:
-                    data[k] = Config.escape(data[k])
-                except Exception as error:
-                    logging.debug("Escaping error dict: {}".format(error))
-        elif type(data) == str:
-            data = Config.escape(data)
-        return data
-
-    def __create_god(self):
-        login = 'admin'
-        password = 'admin'
-        first, middle, last = 'Ronald', 'The First', 'Everdone'
-        email = 'creategoolemail@gmail.com'
-        access = '1234'
-        query = f"""INSERT INTO users (login, password, email, first, middle, last, access)
-                   VALUES
-                   ('{login}', SHA2('{password}', 224), '{email}', '{first}', '{middle}', '{last}', '{access}')"""
-        for i in self.db_manager.execute(query):
-            print(i)
 
 
 if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(Application())
-    http_server.listen(Config.PORT)
+    http_server.listen(config.PORT)
     print("Server starts")
     loop.IOLoop.current().start()

@@ -9,13 +9,12 @@ PATH_SVG = PATH_CONTENT + 'svg/'
 
 PORT = 81
 
-DB = {
+REDIS_ATTR = {
     'host': 'localhost',
-    'user': 'rjournal',
-    'passwd': 'rjournal',
-    'db': 'rjdb'
+    'port': 6379
 }
-DB_ATTR = {
+
+MYSQL_ATTR = {
     'user': 'rjournal',
     'password': 'rjournal',
     'host': 'localhost',

@@ -6,9 +6,9 @@ Easily saying it is an 'engine' of application.
 """
 
 
-class __Meta(type):
+class __SingletonMeta(type):
     """
-    This is the metaclass to implement Singleton pattern.
+    Use this class as metaclass if you want to implement singleton pattern.
     """
     __obj = None
 

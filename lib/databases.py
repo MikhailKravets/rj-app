@@ -5,7 +5,7 @@ This file contains classes that simplifies the work with sqlalchemy.
 """
 
 
-from lib import __Meta
+from lib import __SingletonMeta
 import logging
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
@@ -19,14 +19,14 @@ def ModelBase():
 
     :return: sqlalchemy declarative_base link
     """
-    return DBManager(**config.DB_ATTR).Base
+    return DBManager(**config.MYSQL_ATTR).Base
 
 
 # TODO: append adequate logging
 logging.basicConfig(format="%(filename)8s[line: %(lineno)s] %(levelname)3s - %(message)s", level=logging.DEBUG)
 
 
-class DBManager(metaclass=__Meta):
+class DBManager(metaclass=__SingletonMeta):
     """
     This class implements singleton pattern in order to have one sqlalchemy engine.
     By default **DBManager** will look up the mysqldb driver but if it is not found
