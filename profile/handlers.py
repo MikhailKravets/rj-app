@@ -1,20 +1,22 @@
+import json
+import logging
+import config
+import lib.decorators as decorator
 import tornado.web as web
-
-from config import *
 
 
 class ProfileHandler(web.RequestHandler):
-    @Decorator.authorized
-    @Decorator.inline
+    @decorator.authorized(access_level='1')
+    @decorator.inline
     async def get(self):
-        user = Config.users[self.get_cookie('session')]
-        self.render('profile.html', login=user.login,
-                    last=user.last, middle=user.middle, first=user.first,
-                    email=user.email,
-                    sex=user.sex)
+        # TODO: ask Mysql for user information
+        self.render('profile.html', login='',
+                    last='', middle='', first='',
+                    email='',
+                    sex='')
 
     async def post(self):
         pass
 
     def get_template_path(self):
-        return Config.TEMPLATE_PATH
+        return config.TEMPLATE_PATH
