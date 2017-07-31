@@ -1,14 +1,19 @@
+import json
+
+import logging
+
+import config
+import lib.decorators as decorator
 import tornado.web as web
 
-from config import *
+from lib.session import HashSession
 
 
 class DisciplineHandler(web.RequestHandler):
-    @Decorator.authorized
-    @Decorator.inline
+    @decorator.authorized
+    @decorator.inline
     async def get(self, what):
-        user = Config.users[self.get_cookie('session')]
-        if '3' in user.access:
+        if '3' in self.session['access']:
             logging.debug('WHAT: "{}"'.format(what))
             if what == 'add':
                 self.render('add_discipline.html')
@@ -20,16 +25,16 @@ class DisciplineHandler(web.RequestHandler):
             self.write('405')
             self.finish()
 
-    @Decorator.authorized
+    @decorator.authorized
     async def post(self, what):
-        if '3' in Config.users[self.get_cookie('session')].access:
+        if '3' in self.session['access']:
             data = json.loads(self.request.body)
             if data[0] == 'ADD':
-                result = Config.users[self.get_cookie('session')].add_discipline(self.application.escape_data(data[1]))
-            self.write(json.dumps(result))
+                pass
+            self.write(json.dumps([]))
         else:
             self.write('405')
         self.finish()
 
     def get_template_path(self):
-        return Config.TEMPLATE_PATH
+        return config.TEMPLATE_PATH
