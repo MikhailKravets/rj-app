@@ -1,7 +1,5 @@
 import json
-
 import logging
-
 import config
 import lib.decorators as decorator
 import tornado.web as web

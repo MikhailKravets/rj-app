@@ -3,10 +3,11 @@ from lib.session import HashSession
 
 def authorized(access_level='1'):
     async def higher_wrapper(fn):
-        def write(self):
+        async def write(self):
             inline = self.get_argument('inline', False)
             if inline == '1':
                 self.write('DENIED')
+                self.finish()
             else:
                 self.redirect('/auth')
 
