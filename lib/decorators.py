@@ -2,7 +2,7 @@ from lib.session import HashSession
 
 
 def authorized(access_level='1'):
-    async def higher_wrapper(fn):
+    def higher_wrapper(fn):
         async def write(self):
             inline = self.get_argument('inline', False)
             if inline == '1':
@@ -15,11 +15,15 @@ def authorized(access_level='1'):
             redis_session = HashSession()
             key = self.get_cookie('session')
             if key not in redis_session:
-                write(self)
+                await write(self)
             else:
                 self.session = redis_session[key]
-                if self.session['activated'] == '0' and access_level not in self.session['access']:
-                    write(self)
+                if self.session['activated'] == '0':
+                    await write(self)
+                    return
+                if access_level != '0' and access_level not in self.session['access']:
+                    await write(self)
+                    return
                 await fn(self, *args)
         return wrapper
     return higher_wrapper

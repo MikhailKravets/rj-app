@@ -86,7 +86,7 @@ class HashSession(metaclass=__SingletonMeta):
         self.redis.expire(name, 600)
 
     def __contains__(self, key):
-        return self.redis.exists(key)
+        return self.redis.exists(f"session:{key}")
 
     @staticmethod
     def gen_key(length=64):

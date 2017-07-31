@@ -6,7 +6,7 @@ import tornado.web as web
 
 
 class MainHandler(web.RequestHandler):
-    @decorator.authorized
+    @decorator.authorized(access_level='0')
     async def get(self):
         self.render('main.html', access=self.session['access'])
 
