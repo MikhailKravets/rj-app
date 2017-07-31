@@ -1,6 +1,6 @@
 from tornado.testing import AsyncHTTPTestCase
-
 from lib.session import HashSession
+import app
 
 """
     |  HTTP Response object.
@@ -37,7 +37,6 @@ from lib.session import HashSession
 
 class TestMainHandler(AsyncHTTPTestCase):
     def get_app(self):
-        import app
         return app.Application()
 
     def test_unauthorized_main_get(self):
