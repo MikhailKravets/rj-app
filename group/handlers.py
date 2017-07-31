@@ -1,14 +1,15 @@
+import json
+import logging
 import tornado.web as web
-
-from config import *
+import config
+import lib.decorators as decorator
 
 
 class GroupHandler(web.RequestHandler):
-    @Decorator.authorized
-    @Decorator.inline
+    @decorator.authorized
+    @decorator.inline
     async def get(self, what):
-        user = Config.users[self.get_cookie('session')]
-        if '2' in user.access:
+        if '2' in self.session['access']:
             logging.debug('WHAT: "{}"'.format(what))
             if what == 'add':
                 self.render('add_group.html')
@@ -19,18 +20,16 @@ class GroupHandler(web.RequestHandler):
         else:
             self.write('405')
 
-    @Decorator.authorized
+    @decorator.authorized
     async def post(self, what):
-        if '2' in Config.users[self.get_cookie('session')].access:
+        if '2' in self.session['access']:
             data = json.loads(self.request.body)
             if data[0] == 'ADD':
-                data[1] = self.application.escape_data(data[1])
-                data[1]['students'] = self.application.escape_data(data[1]['students'])
-                result = Config.users[self.get_cookie('session')].new_group(data[1])
-            self.write(json.dumps(result))
+                pass
+            self.write(json.dumps([]))
         else:
             self.write('405')
         self.finish()
 
     def get_template_path(self):
-        return Config.TEMPLATE_PATH
+        return config.TEMPLATE_PATH

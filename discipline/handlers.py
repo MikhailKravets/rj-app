@@ -6,8 +6,6 @@ import config
 import lib.decorators as decorator
 import tornado.web as web
 
-from lib.session import HashSession
-
 
 class DisciplineHandler(web.RequestHandler):
     @decorator.authorized
