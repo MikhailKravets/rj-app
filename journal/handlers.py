@@ -17,7 +17,7 @@ class JournalHandler(web.RequestHandler):
         else:
             self.redirect('/journal/add')
 
-    @decorator.authorized
+    @decorator.authorized(access_level='1')
     async def post(self, what):
         data = json.loads(self.request.body)
         # TODO: create adequate client/server messaging system
